@@ -1,12 +1,10 @@
 <template>
-  <div class='app'>
     <!-- vue3.0配置 -->
     <router-view v-slot='{ Component, route }'>
       <keep-alive :include='keepLiveRoute' :exclude='exclude'>
         <component :is='Component' :key='route.name' />
       </keep-alive>
     </router-view>
-  </div>
 </template>
 <script lang='ts'>
 import { useStore } from 'vuex';
@@ -24,8 +22,9 @@ export default {
   },
 };
 </script>
-<style lang='scss' scoped>
-.app {
-  //background-color: $v-theme-bg-color1;
+<style lang='scss'>
+html,body,#app{
+  width:100%;
+  height: 100%;
 }
 </style>
