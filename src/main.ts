@@ -5,10 +5,10 @@ import router from './router';
 import store from './store';
 import 'vant/lib/index.css';
 import 'amfe-flexible';
-import MyHeader from '@/components/MyHeader.vue'
+import ComHeader from '@/components/ComHeader.vue'
 
 const app = createApp(App);
-app.component('MyHeader', MyHeader)
+app.component('ComHeader', ComHeader)
 app
   .use(store)
   .use(router)
