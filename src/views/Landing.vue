@@ -28,7 +28,7 @@ export default defineComponent({
     const state = reactive({
       logoUrl,
       iconUrl,
-    })
+    });
     return {state}
   }
 })
@@ -58,7 +58,7 @@ export default defineComponent({
   left: 31px;
   position: absolute;
   font-weight: 700;
-  color: $white;
+  color: #fff;
   font-size: 32px;
   line-height: 45px;
   text-align: center;
@@ -70,7 +70,7 @@ export default defineComponent({
   left: 37px;
   top: 638px;
   position: absolute;
-  color: $gray-1;
+  //color: $gray-1;
   font-size: 15px;
   line-height: 18px;
   text-align: center;
@@ -81,7 +81,7 @@ export default defineComponent({
   height: 16px;
   font-size: 16px;
   line-height: 16px;
-  color: $white;
+  color: #fff;
   position: absolute;
   right: 16px;
   top: 734px;
