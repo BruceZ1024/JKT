@@ -38,19 +38,19 @@ module.exports = {
   },
   css: {
     loaderOptions: {
-      postcss: {
-        postcssOptions: {
-          plugins: [
-            autoprefixer(),
-            postcssPxtorem({
-              rootValue: 54,
-              selectorBlackList: ['.van-', '.black-'],
-              propList: ['*'],
-              exclude: /node_modules/,
-            }),
-          ],
-        },
-      },
+      // postcss: {
+      //   postcssOptions: {
+      //     plugins: [
+      //       autoprefixer(),
+      //       postcssPxtorem({
+      //         rootValue: 54,
+      //         selectorBlackList: ['.van-', '.black-'],
+      //         propList: ['*'],
+      //         exclude: /node_modules/,
+      //       }),
+      //     ],
+      //   },
+      // },
     },
   },
   chainWebpack: (config) => {

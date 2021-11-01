@@ -554,38 +554,32 @@ footer {
     padding-left: 35px;
 }
 .price .price-no.sliver {
-    background: url("../../icons/svg/sliver.svg") no-repeat;
     color: #BEBEBE;
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
     letter-spacing: 0.2px;
     text-align: left;
-    padding-left: 40px;
     margin: -10px 0 -20px 40px;
     font-family: 'Open Sans', sans-serif;
 }
 .price .price-no.gold {
-    background: url("../../icons/svg/gold.svg") no-repeat;
     color: #FFD700;
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
     letter-spacing: 0.2px;
     text-align: left;
-    padding-left: 40px;
     margin: -10px 0 -20px 40px;
     font-family: 'Open Sans', sans-serif;
 }
 .price .price-no.platinum {
-    background: url("../../icons/svg/platinum.svg") no-repeat;
     color: #89DCF6;
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
     letter-spacing: 0.2px;
     text-align: left;
-    padding-left: 40px;
     margin: -10px 0 -20px 40px;
     font-family: 'Open Sans', sans-serif;
 }

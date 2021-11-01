@@ -9,13 +9,14 @@ import './assets/css/landingPage/bootstrap.min.css';
 import './assets/css/landingPage/style.css';
 import 'amfe-flexible';
 import ComHeader from '@/components/ComHeader.vue'
-import '@/assets/icons'
+import {registerSvgIconComp} from '@/assets/icons'
 
 
 const app = createApp(App);
-app.component('ComHeader', ComHeader);
-app
+// svg-icon
+registerSvgIconComp(app);
+
+app.use(router)
   .use(store)
-  .use(router)
   .use(Vant)
   .mount('#app');
