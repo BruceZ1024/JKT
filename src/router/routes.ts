@@ -1,4 +1,4 @@
-import {RouteRecordRaw} from 'vue-router';
+import { RouteRecordRaw } from 'vue-router';
 
 import Landing from '../views/Landing.vue';
 import Home from '../views/Home.vue';
@@ -6,15 +6,15 @@ import Layout from '../components/Layout.vue';
 import LandingPage from '../views/LandingPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/landingPage',
-    name: 'landingPage',
-    component:LandingPage,
-    meta: {
-      title: '入口',
-      keepAlive: false,
+    {
+      path: '/landingPage',
+      name: 'landingPage',
+      component: LandingPage,
+      meta: {
+        title: '入口',
+        keepAlive: false,
+      },
     },
-  },
     {
       path: '/',
       name: 'index',
@@ -33,15 +33,15 @@ const routes: Array<RouteRecordRaw> = [
         keepAlive: false,
       },
     },
-  {
-    path: '/home',
-    name: 'home',
-    component: Layout,
-    meta: {
-      title: 'Home',
-      keepAlive: false,
+    {
+      path: '/home',
+      name: 'home',
+      component: Layout,
+      meta: {
+        title: 'Home',
+        keepAlive: false,
+      },
     },
-  }
   ]
 ;
 

@@ -532,7 +532,7 @@ footer {
     background: #191A1E;
 }
 .price .inner-box {
-    background: #575962 none repeat scroll 0 0;
+    background: #202125 none repeat scroll 0 0;
     border-radius: 15px;
     margin: 20px auto 0;
     max-width: 320px;
@@ -584,7 +584,6 @@ footer {
     font-family: 'Open Sans', sans-serif;
 }
 .price .price-no {
-    background: #575962;
     color: #BEBEBE;
     font-size: 24px;
     font-weight: bold;

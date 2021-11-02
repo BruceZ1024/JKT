@@ -130,10 +130,8 @@
             style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
             Connect You
             Wallet</h3>
-          <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You will
-            first need to connect
-            a BSC network compatible wallet to be able to access our LP pools and get rewards in
-            your wallet.</p>
+          <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You will first need to connect
+            a BSC network compatible wallet to be able to access our Defi pools and get rewards in your wallet.</p>
         </div>
         <div data-wow-delay='.4s' class='col-xs-12 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon2' style='width: 64px; height: 64px;'></svg-icon>
@@ -141,10 +139,8 @@
             style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
             Play
             Games</h3>
-          <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can
-            browse your favorite
-            metaverse games and click play to be directed to start playing and earning power
-            points.</p>
+          <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can browse your favorite
+            metaverse games and click play to be directed to start playing and earning power points.</p>
         </div>
         <div data-wow-delay='.5s' class='col-xs-12 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon3' style='width: 64px; height: 64px;'></svg-icon>
@@ -152,10 +148,8 @@
             style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
             Stake In LP
             Pools</h3>
-          <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can
-            add liquidity on the
-            platform and stake in the LP pools of our farm to earn rewards in our native token
-            Squid.</p>
+          <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can add liquidity on the
+            platform and stake in the Defi pools of our farm to earn rewards in our native token JKT.</p>
         </div>
         <div data-wow-delay='.6s' class='col-xs-12 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon4' style='width: 64px; height: 64px;'></svg-icon>
@@ -163,10 +157,8 @@
             style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
             Invite
             Friends & Earn</h3>
-          <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can
-            invite friends to
-            power up your earnings and upgrade to VIP to get extra rewards from your invitees’
-            staking rewards.</p>
+          <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can invite friends to
+            power up your earnings and upgrade account to get extra rewards from your invitees’ computing power.</p>
         </div>
       </div>
     </div>
@@ -192,16 +184,18 @@
                       <h1 class='price-title'>$100<span>~ JKT</span></h1>
                       <div>
                         <h2 class='price-no sliver'>
-                          <svg-icon icon-class='sliver'></svg-icon> Silver</h2>
+                          <svg-icon icon-class='sliver'></svg-icon>
+                          Silver
+                        </h2>
                       </div>
                       <div class='price-stats text-center'>
                         <p>You will get the benefits from the upgrades if your invitees stake.</p>
                       </div>
                     </div>
                     <ul class='price-stats text-left'>
-                      <li>15% extra earnings proportional your or your invitees’ staking rewards.
+                      <li>15% extra computing power from your invitees’ pledged power.
                       </li>
-                      <li>5% extra earnings proportional your or your invitees' staking rewards.
+                      <li>5% extra computing power from your secondary invitees’ invitees’ pledged power.
                       </li>
                     </ul>
                     <!--						 <div class="text-center">-->
@@ -216,16 +210,18 @@
                       <h1 class='price-title'>$500<span>~ JKT</span></h1>
                       <div>
                         <h2 class='price-no gold'>
-                          <svg-icon icon-class='gold'></svg-icon> Gold</h2>
+                          <svg-icon icon-class='gold'></svg-icon>
+                          Gold
+                        </h2>
                       </div>
                       <div class='price-stats text-center'>
                         <p>You will get the benefits from the upgrades if your invitees stake.</p>
                       </div>
                     </div>
                     <ul class='price-stats text-left'>
-                      <li>20% extra earnings proportional your or your invitees' staking rewards.
+                      <li>20% extra computing power from your invitees’ pledged power.
                       </li>
-                      <li>15% extra earnings proportional your or your invitees' staking rewards.
+                      <li>15% extra computing power from your secondary invitees’ invitees’ pledged power.
                       </li>
                     </ul>
                     <!--						 <div class="text-center">-->
@@ -241,16 +237,17 @@
                       <div>
                         <h2 class='price-no platinum'>
                           <svg-icon icon-class='platinum'></svg-icon>
-                          Platinum</h2>
+                          Platinum
+                        </h2>
                       </div>
                       <div class='price-stats text-center'>
                         <p>You will get the benefits from the upgrades if your invitees stake.</p>
                       </div>
                     </div>
                     <ul class='price-stats text-left'>
-                      <li>30% extra earnings proportional your or your invitees' staking rewards.
+                      <li>30% extra computing power from your invitees’ pledged power.
                       </li>
-                      <li>20% extra earnings proportional your or your invitees' staking rewards.
+                      <li>20% extra computing power from your secondary invitee’s invitees’ pledged power.
                       </li>
                     </ul>
                     <!--						 <div class="text-center">-->
@@ -261,9 +258,8 @@
               </div>
               <p
                 style='font-size: 18px;font-weight:normal;color: #FFFFFF;line-height: 32px;text-align: center;padding-top: 50px'>
-                With the free basic player plan, you can invite friends to power up your LP pool
-                share and have extra
-                earnings equal to 10% of your, or your invitee’s staked amount.</p>
+                With the free basic player plan, you can invite friends to power up your Defi pool share and have extra
+                computing power equal to 10% of your, or your invitee’s staked amount.</p>
             </div>
             <!-- end col -->
           </div>
@@ -398,20 +394,20 @@
           <ul style='background-color: #191A1E'>
             <li>
               <a href='#'>
-                <svg-icon icon-class='position1' style='width: 171px; height: 171px;' />
+                <svg-icon icon-class='position1' style='width: 171px; height: 171px;'/>
               </a>
             </li>
             <li><a href='#'>
-              <svg-icon icon-class='position2' style='width: 171px; height: 171px;' />
+              <svg-icon icon-class='position2' style='width: 171px; height: 171px;'/>
             </a></li>
             <li><a href='#'>
-              <svg-icon icon-class='position3' style='width: 171px; height: 171px;' />
+              <svg-icon icon-class='position3' style='width: 171px; height: 171px;'/>
             </a></li>
             <li><a href='#'>
-              <svg-icon icon-class='position4' style='width: 171px; height: 171px;' />
+              <svg-icon icon-class='position4' style='width: 171px; height: 171px;'/>
             </a></li>
             <li><a href='#'>
-              <svg-icon icon-class='position5' style='width: 171px; height: 171px;' />
+              <svg-icon icon-class='position5' style='width: 171px; height: 171px;'/>
             </a></li>
           </ul>
         </div>
@@ -465,32 +461,32 @@
         <div class='row' style='padding-top: 200px;padding-bottom: 175px'>
           <div class='col-xs-12 col-sm-2 col-md-2'>
             <a href='#'>
-              <svg-icon icon-class='partner1' style='width: 96px; height: 32px' />
+              <svg-icon icon-class='partner1' style='width: 96px; height: 32px'/>
             </a>
           </div>
           <div class='col-xs-12 col-sm-2 col-md-2'>
             <a href='#'>
-              <svg-icon icon-class='partner2' style='width: 96px; height: 32px' />
+              <svg-icon icon-class='partner2' style='width: 96px; height: 32px'/>
             </a>
           </div>
           <div class='col-xs-12 col-sm-2 col-md-2'>
             <a href='#'>
-              <svg-icon icon-class='partner3' style='width: 96px; height: 32px' />
+              <svg-icon icon-class='partner3' style='width: 96px; height: 32px'/>
             </a>
           </div>
           <div class='col-xs-12 col-sm-2 col-md-2'>
             <a href='#'>
-              <svg-icon icon-class='partner4' style='width: 96px; height: 32px' />
+              <svg-icon icon-class='partner4' style='width: 96px; height: 32px'/>
             </a>
           </div>
           <div class='col-xs-12 col-sm-2 col-md-2'>
             <a href='#'>
-              <svg-icon icon-class='partner5' style='width: 96px; height: 32px' />
+              <svg-icon icon-class='partner5' style='width: 96px; height: 32px'/>
             </a>
           </div>
           <div class='col-xs-12 col-sm-2 col-md-2'>
             <a class='btn-partner' href='mailto:business@jokerfi.com'>Become a partner
-              <svg-icon icon-class='arrow' style='width: 13px; height: 13px' />
+              <svg-icon icon-class='arrow' style='width: 13px; height: 13px'/>
             </a>
           </div>
         </div>
@@ -537,27 +533,27 @@
 
 
 <script lang='ts'>
-import { reactive } from 'vue';
-import { defineComponent } from 'vue';
-import SvgIcon from '@/components/SvgIcon.vue';
-import '@/assets/icons/svg/contact1.svg';
-import '@/assets/icons/svg/contact2.svg';
-import '@/assets/icons/svg/contact3.svg';
-import '@/assets/icons/svg/contact3.svg';
-import '@/assets/icons/svg/sliver.svg';
-import '@/assets/icons/svg/contact3.svg';
-import '@/assets/icons/svg/contact3.svg';
-import '@/assets/icons/svg/contact3.svg';
-import '@/assets/icons/svg/contact3.svg';
+  import { reactive } from 'vue';
+  import { defineComponent } from 'vue';
+  import SvgIcon from '@/components/SvgIcon.vue';
+  import '@/assets/icons/svg/contact1.svg';
+  import '@/assets/icons/svg/contact2.svg';
+  import '@/assets/icons/svg/contact3.svg';
+  import '@/assets/icons/svg/contact3.svg';
+  import '@/assets/icons/svg/sliver.svg';
+  import '@/assets/icons/svg/contact3.svg';
+  import '@/assets/icons/svg/contact3.svg';
+  import '@/assets/icons/svg/contact3.svg';
+  import '@/assets/icons/svg/contact3.svg';
 
-export default defineComponent({
-  name: 'landingPage',
-  components: { SvgIcon },
-  setup() {
-    const imageUrls = reactive({});
-    return { imageUrls };
-  },
-});
+  export default defineComponent({
+    name: 'landingPage',
+    components: { SvgIcon },
+    setup() {
+      const imageUrls = reactive({});
+      return { imageUrls };
+    },
+  });
 </script>
 
 <style scoped>
