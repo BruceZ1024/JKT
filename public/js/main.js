@@ -200,6 +200,7 @@ $(document).ready(function() {
               fontSize: 4,
               padding: [10, 10],
               fontFamily: 'Open Sans',
+              fontWeight: 'bold',
             },
             b: {
               color: '#FFFFFF',
@@ -246,6 +247,7 @@ $(document).ready(function() {
               name: {
                 fontSize: 6,
                 color: 'white',
+                fontWeight: 'normal',
               },
             },
           },
@@ -270,7 +272,7 @@ $(document).ready(function() {
           '{a|TOTAL TOKEN ISSUANCE}',
           '{b|1,000,000,000 JKT}',
           '{c|50% DeFi mining | 40% in-game mining\n' +
-          '|10% Technical team, investors & makreting fees}',
+            '|10% Technical team, investors & makreting fees}',
         ].join('\n'),
         left: 'center',
         top: 'middle',
@@ -282,10 +284,12 @@ $(document).ready(function() {
               height: 20,
               padding: [10, 10],
               fontFamily: 'Open Sans',
+              fontSize: 14,
+              fontWeight: 'bold',
             },
             b: {
               color: '#FFFFFF',
-              fontSize: 18,
+              fontSize: 32,
               fontWeight: 'bold',
               padding: 10,
               fontFamily: 'Open Sans',
@@ -295,6 +299,7 @@ $(document).ready(function() {
               fontSize: 14,
               padding: 10,
               fontFamily: 'Open Sans',
+              fontWeight: 'normal',
             },
           },
         },
@@ -332,8 +337,9 @@ $(document).ready(function() {
             formatter: '{name|{b}: {c}%}',
             rich: {
               name: {
-                fontSize: 12,
+                fontSize: 18,
                 color: 'white',
+                fontWeight: 'normal',
               },
             },
           },
