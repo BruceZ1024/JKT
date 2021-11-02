@@ -5,6 +5,7 @@ import Layout from '../components/Layout.vue';
 import LandingPage from '../views/landing/LandingPage.vue';
 import Loader from '@/views/landing/Loader.vue';
 import ComTabBar from '../components/ComTabBar.vue';
+import ComHeader from '@/components/ComHeader.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -48,7 +49,16 @@ const routes: Array<RouteRecordRaw> = [
     //   name: 'comtabbar',
     //   component: ComTabBar,
     //   meta: {
-    //     title: 'ComTabbar',
+    //     title: 'ComTabBar',
+    //     keepAlive: false,
+    //   },
+    // },
+    // {
+    //   path: '/comheader',
+    //   name: 'comheader',
+    //   component: ComHeader,
+    //   meta: {
+    //     title: 'ComHeader',
     //     keepAlive: false,
     //   },
     // },
