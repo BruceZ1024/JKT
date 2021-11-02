@@ -4,6 +4,7 @@ import Home from '../views/home/Home.vue';
 import Layout from '../components/Layout.vue';
 import LandingPage from '../views/landing/LandingPage.vue';
 import Loader from '@/views/landing/Loader.vue';
+import ComTabBar from '../components/ComTabBar.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -42,6 +43,15 @@ const routes: Array<RouteRecordRaw> = [
         keepAlive: false,
       },
     },
+    // {
+    //   path: '/comtabbar',
+    //   name: 'comtabbar',
+    //   component: ComTabBar,
+    //   meta: {
+    //     title: 'ComTabbar',
+    //     keepAlive: false,
+    //   },
+    // },
   ]
 ;
 
