@@ -274,7 +274,7 @@
         <div class='col-xs-12 col-sm-12 col-md-12'>
           <div class='title'>
             <h2>Token Metrics</h2>
-            <p>Squid token will be used to power GameFi ecosystem and DeFI</p>
+            <p>JKT token will be used to power GameFi ecosystem and DeFI</p>
           </div>
           <div class='row'>
             <div
