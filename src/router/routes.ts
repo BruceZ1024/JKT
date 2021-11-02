@@ -1,9 +1,9 @@
 import { RouteRecordRaw } from 'vue-router';
 
-import Landing from '../views/Landing.vue';
-import Home from '../views/Home.vue';
+import Home from '../views/home/Home.vue';
 import Layout from '../components/Layout.vue';
-import LandingPage from '../views/LandingPage.vue';
+import LandingPage from '../views/landing/LandingPage.vue';
+import Loader from '@/views/landing/Loader.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -25,9 +25,9 @@ const routes: Array<RouteRecordRaw> = [
       },
     },
     {
-      path: '/landing',
-      name: 'landing',
-      component: Landing,
+      path: '/loader',
+      name: 'loader',
+      component: Loader,
       meta: {
         title: '入口',
         keepAlive: false,
