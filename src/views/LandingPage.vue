@@ -16,10 +16,10 @@
           <span class='icon-bar'></span>
         </button>
         <a class='navbar-brand' href='#'>
-          <svg-icon icon-class='logo' style='width:100px; height:100px;'></svg-icon>
+          <svg-icon icon-class='logo' style='width:94px; height:94px;'></svg-icon>
         </a>
         <a class='navbar-brand' href='#'>
-          <svg-icon icon-class='jokermanor' style='width:100px; height:100px'></svg-icon>
+          <svg-icon icon-class='jokermanor' style='width:122px; height:40px;margin-top: 30px'></svg-icon>
         </a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,19 +78,19 @@
             <div class='row'>
               <div class='col-xs-7 col-sm-7 col-md-7'>
                 <div class='row'>
-                  <div class='col-xs-4 col-sm-4 col-md-4' style='padding-right: 0;'>
+                  <div class='col-xs-4 col-sm-4 col-md-4'>
                     <button class='header-btn'
                             onclick="window.location.href='https://pancakeswap.finance/swap?outputCurrency=0xc864019047b864b6ab609a968ae2725dfaee808a'">
                       Buy JKT
                     </button>
                   </div>
-                  <div class='col-xs-6 col-sm-6 col-md-6' style='padding-left: 0;'>
+                  <div class='col-xs-6 col-sm-6 col-md-6'>
                     <button class='header-btn2' onclick=''>BscScan Contract</button>
                   </div>
-                  <div class='col-xs-2 col-sm-2 col-md-2' style='padding-left: 0;'>
+                  <div class='col-xs-2 col-sm-2 col-md-2'>
                     <div class='popup' onclick='copyContract()'>
-                      <svg-icon icon-class='icon7'></svg-icon>
-                      <span class='popuptext' id='myPopup'>Copy contract to the paste board</span>
+                      <svg-icon icon-class='icon7' style="width: 20px; height: 20px"></svg-icon>
+                      <span class='popuptext' id='myPopup' style="font-family: 'Open Sans', sans-serif">Copied</span>
                     </div>
                   </div>
                 </div>
@@ -184,7 +184,7 @@
                       <h1 class='price-title'>$100<span>~ JKT</span></h1>
                       <div>
                         <h2 class='price-no sliver'>
-                          <svg-icon icon-class='sliver'></svg-icon>
+                          <svg-icon icon-class='sliver' style="width: 32px;height: 32px"></svg-icon>
                           Silver
                         </h2>
                       </div>
@@ -193,9 +193,13 @@
                       </div>
                     </div>
                     <ul class='price-stats text-left'>
-                      <li>15% extra computing power from your invitees’ pledged power.
+                      <li>
+                        <svg-icon icon-class='icon5' style="width: 24px;height: 24px;margin-left: -30px"></svg-icon>
+                        15% extra computing power from your invitees’ pledged power.
                       </li>
-                      <li>5% extra computing power from your secondary invitees’ invitees’ pledged power.
+                      <li>
+                        <svg-icon icon-class='icon5' style="width: 24px;height: 24px;margin-left: -30px"></svg-icon>
+                        5% extra computing power from your secondary invitees’ invitees’ pledged power.
                       </li>
                     </ul>
                     <!--						 <div class="text-center">-->
@@ -210,7 +214,7 @@
                       <h1 class='price-title'>$500<span>~ JKT</span></h1>
                       <div>
                         <h2 class='price-no gold'>
-                          <svg-icon icon-class='gold'></svg-icon>
+                          <svg-icon icon-class='gold' style="width: 32px;height: 32px"></svg-icon>
                           Gold
                         </h2>
                       </div>
@@ -219,9 +223,13 @@
                       </div>
                     </div>
                     <ul class='price-stats text-left'>
-                      <li>20% extra computing power from your invitees’ pledged power.
+                      <li>
+                        <svg-icon icon-class='icon5' style="width: 24px;height: 24px;margin-left: -30px"></svg-icon>
+                        20% extra computing power from your invitees’ pledged power.
                       </li>
-                      <li>15% extra computing power from your secondary invitees’ invitees’ pledged power.
+                      <li>
+                        <svg-icon icon-class='icon5' style="width: 24px;height: 24px;margin-left: -30px"></svg-icon>
+                        15% extra computing power from your secondary invitees’ invitees’ pledged power.
                       </li>
                     </ul>
                     <!--						 <div class="text-center">-->
@@ -236,7 +244,7 @@
                       <h1 class='price-title'>$1000<span> ~JKT</span></h1>
                       <div>
                         <h2 class='price-no platinum'>
-                          <svg-icon icon-class='platinum'></svg-icon>
+                          <svg-icon icon-class='platinum' style="width: 32px;height: 32px"></svg-icon>
                           Platinum
                         </h2>
                       </div>
@@ -245,9 +253,13 @@
                       </div>
                     </div>
                     <ul class='price-stats text-left'>
-                      <li>30% extra computing power from your invitees’ pledged power.
+                      <li>
+                        <svg-icon icon-class='icon5' style="width: 24px;height: 24px;margin-left: -30px"></svg-icon>
+                        30% extra computing power from your invitees’ pledged power.
                       </li>
-                      <li>20% extra computing power from your secondary invitee’s invitees’ pledged power.
+                      <li>
+                        <svg-icon icon-class='icon5' style="width: 24px;height: 24px;margin-left: -30px"></svg-icon>
+                        20% extra computing power from your secondary invitee’s invitees’ pledged power.
                       </li>
                     </ul>
                     <!--						 <div class="text-center">-->
@@ -302,7 +314,7 @@
           <div class='clearfix'></div>
           <div class='ch-bott1'>
             <span class='botted'>
-              <svg-icon icon-class='dot'></svg-icon>
+              <svg-icon icon-class='dot' style="width: 24px;height: 24px"></svg-icon>
             </span>
           </div>
           <div class='roadmap-block'>
@@ -320,7 +332,7 @@
           <div class='clearfix'></div>
           <div class='ch-bott1'>
             <span class='botted'>
-              <svg-icon icon-class='dot'></svg-icon>
+              <svg-icon icon-class='dot' style="width: 24px;height: 24px"></svg-icon>
             </span>
           </div>
           <div class='roadmap-block-snd'>
@@ -340,7 +352,7 @@
           <div class='clearfix'></div>
           <div class='ch-bott1'>
             <span class='botted'>
-               <svg-icon icon-class='dot'></svg-icon>
+               <svg-icon icon-class='dot' style="width: 24px;height: 24px"></svg-icon>
             </span>
           </div>
           <div class='roadmap-block-trd'>
@@ -357,7 +369,7 @@
           <div class='clearfix'></div>
           <div class='ch-bott1'>
             <span class='botted'>
-              <svg-icon icon-class='dot'></svg-icon>
+              <svg-icon icon-class='dot' style="width: 24px;height: 24px"></svg-icon>
             </span>
           </div>
           <div class='roadmap-block-forth'>
@@ -392,23 +404,26 @@
         </div>
         <div class='col-xs-12 col-sm-12 col-md-12 col-xs-offset-1 col-sm-offset-1 col-md-offset-1'>
           <ul style='background-color: #191A1E'>
-            <li>
-              <a href='#'>
-                <svg-icon icon-class='position1' style='width: 171px; height: 171px;'/>
-              </a>
+            <li><a href='#'>
+              <svg-icon icon-class='position1' style='width: 171px; height: 171px;'/>
+            </a>
             </li>
             <li><a href='#'>
               <svg-icon icon-class='position2' style='width: 171px; height: 171px;'/>
-            </a></li>
+            </a>
+            </li>
             <li><a href='#'>
               <svg-icon icon-class='position3' style='width: 171px; height: 171px;'/>
-            </a></li>
+            </a>
+            </li>
             <li><a href='#'>
               <svg-icon icon-class='position4' style='width: 171px; height: 171px;'/>
-            </a></li>
+            </a>
+            </li>
             <li><a href='#'>
               <svg-icon icon-class='position5' style='width: 171px; height: 171px;'/>
-            </a></li>
+            </a>
+            </li>
           </ul>
         </div>
         <div class='col-xs=12 col-sm-12 col-md-12 col-xs-offset-1 col-sm-offset-1 col-md-offset-1'
@@ -508,13 +523,13 @@
       <div class='row'>
         <div class='col-md-12'>
           <a href='https://t.me/jokermanor' class='contact1'>
-            <svg-icon icon-class='contact1'></svg-icon>
+            <svg-icon icon-class='contact1' style="width: 43px;height: 42px"></svg-icon>
           </a>
           <a href='http://www.twitter.com/JokerManor' class='contact2'>
-            <svg-icon icon-class='contact2'></svg-icon>
+            <svg-icon icon-class='contact2' style="width: 43px;height: 42px"></svg-icon>
           </a>
           <a href='http://www.medium.com/@JokerManorMetaverse' class='contact3'>
-            <svg-icon icon-class='contact3'></svg-icon>
+            <svg-icon icon-class='contact3' style="width: 43px;height: 42px"></svg-icon>
           </a>
         </div>
       </div>
@@ -536,15 +551,6 @@
   import { reactive } from 'vue';
   import { defineComponent } from 'vue';
   import SvgIcon from '@/components/SvgIcon.vue';
-  import '@/assets/icons/svg/contact1.svg';
-  import '@/assets/icons/svg/contact2.svg';
-  import '@/assets/icons/svg/contact3.svg';
-  import '@/assets/icons/svg/contact3.svg';
-  import '@/assets/icons/svg/sliver.svg';
-  import '@/assets/icons/svg/contact3.svg';
-  import '@/assets/icons/svg/contact3.svg';
-  import '@/assets/icons/svg/contact3.svg';
-  import '@/assets/icons/svg/contact3.svg';
 
   export default defineComponent({
     name: 'landingPage',
