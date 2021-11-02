@@ -1,4 +1,4 @@
-import {createApp} from 'vue';
+import { createApp } from 'vue';
 import Vant from 'vant';
 import App from './App.vue';
 import router from './router';
@@ -8,15 +8,10 @@ import './assets/css/landingPage/animate.css';
 import './assets/css/landingPage/bootstrap.min.css';
 import './assets/css/landingPage/style.css';
 import 'amfe-flexible';
-import ComHeader from '@/components/ComHeader.vue'
-import {registerSvgIconComp} from '@/assets/icons'
-
+import { registerSvgIconComp } from '@/assets/icons/index';
 
 const app = createApp(App);
 // svg-icon
 registerSvgIconComp(app);
 
-app.use(router)
-  .use(store)
-  .use(Vant)
-  .mount('#app');
+app.use(router).use(store).use(Vant).mount('#app');

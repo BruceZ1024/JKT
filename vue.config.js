@@ -103,6 +103,9 @@ module.exports = {
     },
   },
   devServer: {
+    historyApiFallback: {
+      landingPage: '/index.html',
+    },
     proxy: {
       '/api': {
         target: 'https://bsp-ai-service.dev.k8s.chehejia.com',
