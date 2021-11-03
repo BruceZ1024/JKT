@@ -29,7 +29,7 @@ module.exports = {
   publicPath: './',
 
   configureWebpack: {
-    name: 'squid',
+    name: 'jkt',
     resolve: {
       alias: {
         '@': resolve('src'),
