@@ -27,10 +27,10 @@
       <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1' style='max-height: none;'>
         <ul class='nav navbar-nav navbar-right'>
           <li>
-            <a class='page-scroll' href='#home'>Home</a>
+            <a class='page-scroll' style="cursor: pointer" @click="returnHome()">Home</a>
           </li>
           <li>
-            <a class='page-scroll' href='#about'>About</a>
+            <a class='page-scroll' style="cursor: pointer" @click="returnAbout()">About</a>
           </li>
           <!--		  <li>-->
           <!--			 <a class="page-scroll" href="#price">Contract Audit</a>-->
@@ -472,7 +472,7 @@
       <div class='row'>
         <div class='col-xs-12 col-sm-2 col-md-2 col-sm-offset-1 col-md-offset-1'>
           <a href='#'>
-            <svg-icon icon-class='position1' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position1' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Chief Technology Officer & Co-Founder</h5>
           <p class='name'>Lorenzo</p>
@@ -480,7 +480,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position2' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position2' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Strategic Development & Partnerships</h5>
           <p class='name'>John</p>
@@ -490,7 +490,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position3' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position3' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Chief Executive Officer & Founder</h5>
           <p class='name'>Barry</p>
@@ -498,7 +498,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position4' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position4' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Chief Marketing Officer</h5>
           <p class='name'>Doris</p>
@@ -507,7 +507,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position5' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position5' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Chief Operations Officer</h5>
           <p class='name'>Eric</p>
@@ -531,32 +531,32 @@
       <div class='row partner-imgs'>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner1' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner1' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner2' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner2' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner3' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner3' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner4' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner4' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner5' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner5' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2 mobile-hidden'>
           <a class='btn-partner' href='mailto:business@jokerfi.com'>Become a partner
-            <svg-icon icon-class='arrow' style='width: 13px; height: 13px' />
+            <svg-icon icon-class='arrow' style='width: 13px; height: 13px'/>
           </a>
         </div>
       </div>
@@ -602,18 +602,29 @@
 
 
 <script lang='ts'>
-import { reactive } from 'vue';
-import { defineComponent } from 'vue';
-import SvgIcon from '@/components/SvgIcon.vue';
+  import { reactive } from 'vue';
+  import { defineComponent } from 'vue';
+  import SvgIcon from '@/components/SvgIcon.vue';
 
-export default defineComponent({
-  name: 'landingPage',
-  components: { SvgIcon },
-  setup() {
-    const imageUrls = reactive({});
-    return { imageUrls };
-  },
-});
+  export default defineComponent({
+    name: 'landingPage',
+    components: { SvgIcon },
+    setup() {
+      const imageUrls = reactive({});
+
+      function returnHome() {
+        const home = document.querySelector('#home');
+        home && home.scrollIntoView(true);
+      }
+
+      function returnAbout() {
+        const about = document.querySelector('#about');
+        about && about.scrollIntoView(true);
+      }
+
+      return { imageUrls, returnHome, returnAbout };
+    },
+  });
 </script>
 
 <style scoped>

@@ -9,20 +9,20 @@ import ComHeader from '@/components/ComHeader.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
-      path: '/landingPage',
-      name: 'landingPage',
-      component: LandingPage,
-      meta: {
-        title: '入口',
-        keepAlive: false,
-      },
-    },
-    {
       path: '/',
       name: 'index',
       redirect: '/landingPage',
       meta: {
-        title: '入口',
+        title: 'landingPage',
+        keepAlive: false,
+      },
+    },
+    {
+      path: '/landingPage',
+      name: 'landingPage',
+      component: LandingPage,
+      meta: {
+        title: 'landingPage',
         keepAlive: false,
       },
     },
@@ -44,24 +44,24 @@ const routes: Array<RouteRecordRaw> = [
         keepAlive: false,
       },
     },
-    // {
-    //   path: '/comtabbar',
-    //   name: 'comtabbar',
-    //   component: ComTabBar,
-    //   meta: {
-    //     title: 'ComTabBar',
-    //     keepAlive: false,
-    //   },
-    // },
-    // {
-    //   path: '/comheader',
-    //   name: 'comheader',
-    //   component: ComHeader,
-    //   meta: {
-    //     title: 'ComHeader',
-    //     keepAlive: false,
-    //   },
-    // },
+    {
+      path: '/comtabbar',
+      name: 'comtabbar',
+      component: ComTabBar,
+      meta: {
+        title: 'ComTabBar',
+        keepAlive: false,
+      },
+    },
+    {
+      path: '/comheader',
+      name: 'comheader',
+      component: ComHeader,
+      meta: {
+        title: 'ComHeader',
+        keepAlive: false,
+      },
+    },
   ]
 ;
 
