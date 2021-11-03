@@ -432,6 +432,7 @@ nav .socialfooter {
     overflow: hidden;
     position: relative;
 }
+
 .header .header-background {
     background: url(../../img/background.gif);
     background-size: cover;
@@ -997,16 +998,20 @@ span.botted {
 .web-hidden {
     display: none;
 }
+
 .mobile-hidden {
     display: block;
 }
+
 @media (min-width: 768px) and (max-width: 1024px) {
     .web-hidden {
         display: block;
     }
-    .mobile-hidden{
+
+    .mobile-hidden {
         display: none;
     }
+
     .header-text {
         padding: 55% 0 0;
     }
@@ -1047,6 +1052,7 @@ span.botted {
     .header {
         background-size: 100% auto;
     }
+
     .header-img > img {
         width: 83%;
     }
@@ -1069,100 +1075,123 @@ span.botted {
     .top-header {
         display: none;
     }
+
     .navbar-brand-logo {
         width: 42px;
         height: 42px;
         padding: 0;
         margin: 14px 0 0 16px;
     }
+
     .navbar-brand-logo svg {
         width: 100% !important;
         height: 100% !important;
     }
+
     .navbar-brand-text {
         margin: 29px 0 0 8px;
         padding: 0;
         height: auto;
     }
-    .navbar-brand-text .svg-icon{
-        width:63px!important;
-        height: 20px!important;
-        margin: 0!important;
+
+    .navbar-brand-text .svg-icon {
+        width: 63px !important;
+        height: 20px !important;
+        margin: 0 !important;
     }
-    #bs-example-navbar-collapse-1{
+
+    #bs-example-navbar-collapse-1 {
         max-height: none;
     }
+
     #bs-example-navbar-collapse-1 .navbar-nav {
         height: 1000px;
     }
+
     .mobile-hidden {
         display: none !important;
     }
+
     .web-hidden {
         display: block;
     }
+
     .header {
         min-height: 200px;
         height: auto;
     }
+
     .header .header-background {
         height: 200px;
         background-position: center;
     }
+
     .header-text .header-title {
         font-size: 28px;
         line-height: 40px;
         text-align: center;
     }
+
     .header-mobile {
         text-align: center;
         margin-top: 44px;
     }
+
     .header-mobile-btn {
         display: inline-block;
         font-size: 14px;
-        line-height:32px;
+        line-height: 32px;
         border-radius: 16px;
         background-color: #fff;
-        color:#191A1E;
+        color: #191A1E;
         width: 120px;
         font-weight: 700;
     }
+
     .header-mobile-btn:nth-child(2) {
         margin-left: 16px;
         color: #fff;
         background-color: #CD2A16;
     }
+
     .introduce {
         padding-top: 15px;
         padding-bottom: 30px;
     }
+
     .introduce .title {
         padding: 0;
     }
+
     .introduce h1 {
-        font-size: 28px!important;
-        line-height: 43px!important;
+        font-size: 28px !important;
+        line-height: 43px !important;
     }
+
     .introduce p {
-        font-size: 12px!important;
-        line-height: 24px!important;
+        font-size: 12px !important;
+        line-height: 24px !important;
         margin-top: 15px;
     }
+
     .works {
         padding: 50px 0 30px 0;
     }
+
     .works h3 {
         font-size: 18px !important;
     }
+
     .price {
         padding: 50px 0 30px 0;
     }
-    .price .title h2,.price h2 span {
+
+    .price .title h2, .price h2 span {
         margin: 0;
         font-size: 28px !important;
         line-height: 43px !important;
     }
+
     .price .title p {
         font-size: 12px;
         line-height: 24px;
@@ -1173,24 +1202,30 @@ span.botted {
         width: 100%;
         height: 220px;
     }
-    .price .inner-box-big #jktchart{
-        height: 200px!important;
+
+    .price .inner-box-big #jktchart {
+        height: 200px !important;
     }
+
     .web-price {
         text-align: center;
     }
+
     .web-price svg {
         margin-top: 28px;
     }
+
     .web-price .price-no {
         margin: 8px 0 0 0 !important;
-        text-align: center!important;
-        margin-bottom: 8px!important;
+        text-align: center !important;
+        margin-bottom: 8px !important;
     }
-    .web-price .inner-text{
+
+    .web-price .inner-text {
         font-size: 20px;
         line-height: 24px;
     }
+
     .web-price .inner-text span {
         font-size: 14px;
         line-height: 24px;
@@ -1201,102 +1236,130 @@ span.botted {
     .roadmap {
         padding: 50px 0 30px 0;
     }
+
     .roadmap .title {
         padding: 0;
     }
+
     .roadmap .title h1 {
         font-size: 32px;
         line-height: 32px;
         margin: 0;
     }
+
     .roadmap .title p {
         font-size: 12px;
         line-height: 24px;
         margin-bottom: 0;
     }
-    .roadmap .changer-main{
+
+    .roadmap .changer-main {
         margin-top: 24px;
     }
+
     span.devide-line {
         height: 100%;
         border: 1px dashed;
     }
-    .roadmap-block,.roadmap-block-snd,.roadmap-block-trd,.roadmap-block-forth{
+
+    .roadmap-block, .roadmap-block-snd, .roadmap-block-trd, .roadmap-block-forth {
         margin: 0;
     }
-    .changer-right,.changer-left-snd,.changer-right-trd,.changer-left-forth{
+
+    .changer-right, .changer-left-snd, .changer-right-trd, .changer-left-forth {
         margin-top: 0;
     }
+
     .changer-right h3 {
         font-size: 14px;
         line-height: 20px;
     }
+
     .changer-right h5 {
         font-size: 12px;
+        font-weight: normal;
         line-height: 16px;
     }
+
     .changer-left-snd h3 {
         font-size: 14px;
         line-height: 20px;
     }
+
     .changer-left-snd h5 {
         font-size: 12px;
+        font-weight: normal;
         line-height: 16px;
     }
+
     .changer-right-trd h3 {
         font-size: 14px;
         line-height: 20px;
     }
+
     .changer-right-trd h5 {
         font-size: 12px;
+        font-weight: normal;
         line-height: 16px;
     }
+
     .changer-left-forth h3 {
         font-size: 14px;
         line-height: 20px;
     }
+
     .changer-left-forth h5 {
         font-size: 12px;
+        font-weight: normal;
         line-height: 16px;
     }
+
     span.botted {
         margin-left: -3px;
         width: 3px;
         height: 3px;
     }
-    .botted svg{
-        width:7px !important;
-        height: 7px!important;
+
+    .botted svg {
+        width: 7px !important;
+        height: 7px !important;
     }
 
-        /*executiveteam*/
-    .executiveteam{
+    /*executiveteam*/
+    .executiveteam {
         padding: 50px 0 30px 0;
     }
+
     .executiveteam .title {
         padding: 0;
     }
+
     .executiveteam .title h2 {
         font-size: 32px;
         line-height: 32px;
     }
+
     .executiveteam .title p {
         font-size: 12px;
         line-height: 24px;
     }
+
     .executiveteam .svg-icon {
         margin-top: 24px;
     }
+
     .executiveteam .position {
         font-size: 18px;
         line-height: 24px;
         min-height: auto;
         margin-bottom: 0;
     }
+
     .executiveteam .name {
         font-size: 16px;
         line-height: 24px;
     }
+
     .executiveteam .resume {
         font-size: 16px;
         line-height: 24px;
@@ -1332,42 +1395,51 @@ span.botted {
     }
 
     .partner .partner-imgs svg:nth-child(1) {
-        width: 168px!important;
-        height: 22px!important;
+        width: 168px !important;
+        height: 22px !important;
     }
+
     .partner .partner-imgs svg:nth-child(2) {
-        width: 133px!important;
-        height: 32px!important;
+        width: 133px !important;
+        height: 32px !important;
     }
+
     .partner .partner-imgs svg:nth-child(3) {
-        width: 118px!important;
-        height: 32px!important;
+        width: 118px !important;
+        height: 32px !important;
     }
+
     .partner .partner-imgs svg:nth-child(4) {
-        width: 158px!important;
-        height: 32px!important;
+        width: 158px !important;
+        height: 32px !important;
     }
+
     .partner .partner-imgs svg:nth-child(2) {
-        width: 88px!important;
-        height: 32px!important;
+        width: 88px !important;
+        height: 32px !important;
     }
+
     /*footer*/
     .footer {
         padding-top: 30px;
     }
-    .footer .logo svg{
+
+    .footer .logo svg {
         width: 146px !important;
-        height: 48px!important;
+        height: 48px !important;
     }
+
     .footer .links {
         margin-top: 22px;
     }
+
     .footer .cpright {
         margin-top: 22px;
         font-size: 16px;
         line-height: 22px;
     }
 }
+
 /*@media (min-width: 240px) and (max-width: 320px) {*/
 /*    .header-text p {*/
 /*        display: block !important;*/
