@@ -7,6 +7,7 @@ import 'vant/lib/index.css';
 import './assets/css/landingPage/animate.css';
 import './assets/css/landingPage/bootstrap.min.css';
 import './assets/css/landingPage/style.css';
+import './assets/css/landingPage/baguetteBox.css';
 import 'amfe-flexible';
 import { registerSvgIconComp } from '@/assets/icons/index';
 

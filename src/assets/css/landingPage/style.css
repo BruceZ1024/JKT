@@ -823,7 +823,6 @@ span.devide-line {
 span.botted {
     width: 24px;
     height: 24px;
-    background: url(../../icons/svg/dot.svg) no-repeat;
     display: block;
     border-radius: 36px;
     position: absolute;
