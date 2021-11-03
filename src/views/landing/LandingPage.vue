@@ -24,8 +24,8 @@
         </a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
-        <ul class='nav navbar-nav navbar-right'>
+      <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1' style='max-height: none;'>
+        <ul class='nav navbar-nav navbar-right' style='height: 1000px;'>
           <li>
             <a class='page-scroll' href='#home'>Home</a>
           </li>
@@ -38,11 +38,11 @@
           <li>
             <a class='page-scroll' href='mailto:business@jokerfi.com'>Contact Us</a>
           </li>
-          <li>
+          <li class='mobile-hidden'>
             <a class='page-scroll whitepaper'
                href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf'>Whitepaper</a>
           </li>
-          <li>
+          <li class='mobile-hidden'>
             <a id='launchapp' class='page-scroll launchapp' href='#' onmouseover='onHover()'
                onmouseout='offHover()'>Launch
               App</a>
@@ -134,7 +134,7 @@
     <div class='container'>
       <div class='row'>
         <div data-wow-delay='.3s'
-             class='col-xs-10 col-xs-offset-1 col-sm-3 col-md-3 wow fadeInUp  animated'>
+             class='col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon1' style='width: 64px; height: 64px;'></svg-icon>
           <h3
             style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
@@ -146,7 +146,7 @@
             your wallet.</p>
         </div>
         <div data-wow-delay='.4s'
-             class='col-xs-10 col-xs-offset-1 col-sm-3 col-md-3 wow fadeInUp  animated'>
+             class='col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon2' style='width: 64px; height: 64px;'></svg-icon>
           <h3
             style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
@@ -158,7 +158,7 @@
             points.</p>
         </div>
         <div data-wow-delay='.5s'
-             class='col-xs-10 col-xs-offset-1 col-sm-3 col-md-3 wow fadeInUp  animated'>
+             class='col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon3' style='width: 64px; height: 64px;'></svg-icon>
           <h3
             style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
@@ -170,7 +170,7 @@
             JKT.</p>
         </div>
         <div data-wow-delay='.6s'
-             class='col-xs-10 col-xs-offset-1 col-sm-3 col-md-3 wow fadeInUp  animated'>
+             class='col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon4' style='width: 64px; height: 64px;'></svg-icon>
           <h3
             style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
