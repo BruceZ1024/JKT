@@ -25,7 +25,7 @@
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1' style='max-height: none;'>
-        <ul class='nav navbar-nav navbar-right' style='height: 1000px;'>
+        <ul class='nav navbar-nav navbar-right'>
           <li>
             <a class='page-scroll' href='#home'>Home</a>
           </li>

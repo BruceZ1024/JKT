@@ -1089,6 +1089,12 @@ span.botted {
         height: 20px!important;
         margin: 0!important;
     }
+    #bs-example-navbar-collapse-1{
+        max-height: none;
+    }
+    #bs-example-navbar-collapse-1 .navbar-nav {
+        height: 1000px;
+    }
     .mobile-hidden {
         display: none !important;
     }
