@@ -105,15 +105,8 @@ const routes: Array<RouteRecordRaw> = [
           },
           component: () => import('@/views/account/Account.vue'),
         },
-      ],
-    },
-    {
-      path: '/setting',
-      name: 'setting',
-      component: Layout,
-      children: [
         {
-          path: '/account',
+          path: '/setting',
           name: 'AccountSetting',
           meta: {
             title: 'Settings',
