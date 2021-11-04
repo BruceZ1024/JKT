@@ -1,6 +1,6 @@
 <template>
   <div class="background-wrapper">
-    <van-image :src="state.logoUrl" class="logo-icon"></van-image>
+    <svg-icon icon-class='blackLogo' class="logo-icon"></svg-icon>
     <div class="landing-text">
       The Best of GameFi + DeFi
     </div>
@@ -12,49 +12,76 @@
         <span>
           View more
         </span>
-      <van-image class="view-icon" :src="state.iconUrl"></van-image>
+      <svg-icon icon-class='enter' class="view-icon"></svg-icon>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive } from 'vue';
-  import logoUrl from '../../assets/images/home/logo.png';
-  import iconUrl from '../../assets/images/home/logo.png';
+  import { defineComponent } from 'vue';
+  import SvgIcon from '@/components/SvgIcon.vue';
   import detectEthereumProvider from '@metamask/detect-provider';
 
   export default defineComponent(
     {
       name: 'splashScreen',
+      components: { SvgIcon },
       setup() {
-        const state = reactive({
-          logoUrl,
-          iconUrl,
-        });
-
         async function checkMetaMask() {
           const provider: any = await detectEthereumProvider();
 
           if (provider) {
 
-            console.log('Ethereum successfully detected!');
+            console.info('Ethereum successfully detected!');
 
             // From now on, this should always be true:
             // provider === window.ethereum
+            await getChainId();
+            await getAccount();
+          } else {
+            // if the provider is not detected, detectEthereumProvider resolves to null
+            console.error('Please install MetaMask!');
+          }
 
-            // Access the decentralized web!
+          async function getChainId() {
             const chainId = await provider.request({
               method: 'eth_chainId',
             });
             console.info(`chainId: ${chainId}`);
-          } else {
+          }
 
-            // if the provider is not detected, detectEthereumProvider resolves to null
-            console.error('Please install MetaMask!');
+          async function getAccount() {
+            let currentAccount: any = null;
+
+            try {
+              const accounts = await provider.request({ method: 'eth_requestAccounts' });
+              currentAccount = accounts[0];
+              console.info(`currentAccount: ${currentAccount}`);
+            } catch (error) {
+              // Some unexpected error.
+              // For backwards compatibility reasons, if no accounts are available,
+              // eth_accounts will return an empty array.
+              console.error(error);
+            }
+
+            // Note that this event is emitted on page load.
+            // If the array of accounts is non-empty, you're already connected.
+            provider.on('accountsChanged', handleAccountsChanged);
+
+            // For now, 'eth_accounts' will continue to always return an array
+            function handleAccountsChanged(accounts: any) {
+              if (accounts.length === 0) {
+                // MetaMask is locked or the user has not connected any accounts
+                console.log('Please connect to MetaMask.');
+              } else if (accounts[0] !== currentAccount) {
+                currentAccount = accounts[0];
+                console.info(`currentAccount: ${currentAccount}`);
+              }
+            }
           }
         }
 
-        return { state, checkMetaMask };
+        return { checkMetaMask };
       },
     },
   );
@@ -64,14 +91,14 @@
   .background-wrapper {
     width: 100%;
     height: 100%;
-    background-image: url("../../assets/images/home/background.jpg");
+    background-image: url("../../assets/images/home/background.png");
     background-size: cover;
     background-position: center center;
   }
 
   .logo-icon {
-    width: 92px;
-    height: 92px;
+    width: 94px;
+    height: 94px;
     top: 415.9px;
     left: 142px;
     position: absolute;
@@ -103,18 +130,20 @@
   }
 
   .view-more {
-    width: 100px;
-    height: 16px;
+    width: 120px;
+    height: 24px;
     font-size: 16px;
     line-height: 16px;
     color: #fff;
     position: absolute;
-    right: 16px;
+    right: 30px;
     top: 734px;
 
     .view-icon {
-      width: 13px;
-      height: 13px;
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      vertical-align: middle;
     }
   }
 </style>
