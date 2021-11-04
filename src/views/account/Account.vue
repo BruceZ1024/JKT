@@ -1,10 +1,10 @@
 <template>
-    
+
 </template>
 
-<script>
+<script lang='ts'>
   export default {
-    name: 'Account',
+    name: 'account',
   };
 </script>
 

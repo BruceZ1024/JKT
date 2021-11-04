@@ -1,13 +1,14 @@
 <template>
-    
+
 </template>
 
-<script>
-  export default {
-    name: 'DeFi',
-  };
-</script>
+<script lang="ts">
+import button from 'vant';
 
+export default {
+  name: 'deFi',
+};
+</script>
 <style scoped>
 
 </style>

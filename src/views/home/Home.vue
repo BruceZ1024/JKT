@@ -10,7 +10,7 @@
   import { defineComponent } from 'vue';
 
   export default defineComponent({
-    name: 'Home',
+    name: 'home',
     setup() {
       const images = [
         '1.jpg',

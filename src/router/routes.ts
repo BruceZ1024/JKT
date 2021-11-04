@@ -1,9 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 
-import Home from '@/views/home/Home.vue';
 import Layout from '@/components/Layout.vue';
-import ComTabBar from '@/components/ComTabBar.vue';
-import ComHeader from '@/components/ComHeader.vue';
 import Loader from '@/views/landing/Loader.vue';
 import LandingPage from '@/views/landing/LandingPage.vue';
 import SplashScreen from '@/views/landing/SplashScreen.vue';
@@ -49,28 +46,65 @@ const routes: Array<RouteRecordRaw> = [
       path: '/home',
       name: 'home',
       component: Layout,
-      meta: {
-        title: 'Home',
-        keepAlive: false,
-      },
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          meta: {
+            title: 'Home',
+            keepAlive: false,
+          },
+          component: () => import('@/views/home/Home.vue'),
+        },
+      ],
     },
     {
-      path: '/comtabbar',
-      name: 'comtabbar',
-      component: ComTabBar,
-      meta: {
-        title: 'ComTabBar',
-        keepAlive: false,
-      },
+      path: '/gameFi',
+      name: 'gameFi',
+      component: Layout,
+      children: [
+        {
+          path: '/gameFi',
+          name: 'gameFi',
+          meta: {
+            title: 'GameFi',
+            keepAlive: false,
+          },
+          component: () => import('@/views/gamefi/GameFi.vue'),
+        },
+      ],
     },
     {
-      path: '/comheader',
-      name: 'comheader',
-      component: ComHeader,
-      meta: {
-        title: 'ComHeader',
-        keepAlive: false,
-      },
+      path: '/deFi',
+      name: 'deFi',
+      component: Layout,
+      children: [
+        {
+          path: '/deFi',
+          name: 'deFi',
+          meta: {
+            title: 'Defi',
+            keepAlive: false,
+          },
+          component: () => import('@/views/defi/DeFi.vue'),
+        },
+      ],
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: Layout,
+      children: [
+        {
+          path: '/account',
+          name: 'Account',
+          meta: {
+            title: 'DiFi',
+            keepAlive: false,
+          },
+          component: () => import('@/views/account/Account.vue'),
+        },
+      ],
     },
   ]
 ;

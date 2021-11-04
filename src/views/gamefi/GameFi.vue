@@ -1,6 +1,6 @@
 <template>
   <div class="gamefi-earning">
-    <vant-button icon="" type="danger" size="large"></vant-button>
+    <van-button icon="" type="danger" size="large"></van-button>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
   import button from 'vant';
 
   export default {
-    name: 'GameFi',
+    name: 'gameFi',
   };
 </script>
 
