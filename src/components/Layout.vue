@@ -1,7 +1,7 @@
 <template>
   <com-header :title='state.title'></com-header>
   <router-view/>
-  <com-tab-bar></com-tab-bar>
+  <com-tab-bar :defaultFocus='state.title'></com-tab-bar>
 </template>
 
 <script>

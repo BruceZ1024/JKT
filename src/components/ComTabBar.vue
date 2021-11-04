@@ -10,7 +10,7 @@
 </template>
 
 <script lang='ts'>
-import { ref, defineComponent, watchEffect } from 'vue';
+import { ref, defineComponent } from 'vue';
 import homeActive from '../assets/images/tabbar/home-active.png';
 import homeInactive from '../assets/images/tabbar/home-inactive.png';
 import gamefiActive from '../assets/images/tabbar/gamefi-active.png';
@@ -19,13 +19,11 @@ import defiIActive from '../assets/images/tabbar/defi-active.png';
 import defiInactive from '../assets/images/tabbar/defi-inactive.png';
 import accountActive from '../assets/images/tabbar/account-active.png';
 import accountInactive from '../assets/images/tabbar/account-inactive.png';
-import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'ComTabBar',
-  props: {activeTabIndex: Number},
+  props: { defaultFocus: String },
   setup(props) {
-    const router = useRouter();
     const active = ref(0);
 
     const tabBarList = ref();
@@ -55,6 +53,12 @@ export default defineComponent({
         inactive: accountInactive,
       },
     ];
+
+    if (props.defaultFocus) {
+      active.value = tabBarList.value.findIndex((val: any) =>
+        val.title === props.defaultFocus,
+      );
+    }
 
     return {
       tabBarList,
