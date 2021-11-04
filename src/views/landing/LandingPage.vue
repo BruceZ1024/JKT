@@ -29,8 +29,11 @@
           <li>
             <a class='page-scroll' style="cursor: pointer" @click="returnHome()">Home</a>
           </li>
-          <li>
+          <li class='mobile-hidden'>
             <a class='page-scroll' style="cursor: pointer" @click="returnAbout()">About</a>
+          </li>
+          <li class="web-hidden">
+            <a class='page-scroll' style="cursor: pointer" @click="returnTokenMetrics()">TokenMetrics</a>
           </li>
           <!--		  <li>-->
           <!--			 <a class="page-scroll" href="#price">Contract Audit</a>-->
@@ -353,7 +356,7 @@
     </div>
   </section>
   <!-- START PIE CHART SECTION -->
-  <section id='' class='section-padding price' style='display: block'>
+  <section id='tokenMetrics' class='section-padding price' style='display: block'>
     <div class='container'>
       <div class='row'>
         <div class='col-xs-12 col-sm-12 col-md-12'>
@@ -576,13 +579,13 @@
       </div>
       <div class='row links'>
         <div class='col-md-12'>
-          <a href='https://t.me/jokermanor' class='contact1'>
+          <a href='https://twitter.com/joker_manor' class='contact1'>
             <svg-icon icon-class='contact1' style='width: 43px;height: 42px'></svg-icon>
           </a>
-          <a href='http://www.twitter.com/JokerManor' class='contact2'>
+          <a href='http://www.medium.com/@JokerManorMetaverse' class='contact2'>
             <svg-icon icon-class='contact2' style='width: 43px;height: 42px'></svg-icon>
           </a>
-          <a href='http://www.medium.com/@JokerManorMetaverse' class='contact3'>
+          <a href='https://t.me/joinchat/OrA6XUXBpeYzZmRl' class='contact3'>
             <svg-icon icon-class='contact3' style='width: 43px;height: 42px'></svg-icon>
           </a>
         </div>
@@ -622,7 +625,12 @@
         about && about.scrollIntoView(true);
       }
 
-      return { imageUrls, returnHome, returnAbout };
+      function returnTokenMetrics() {
+        const about = document.querySelector('#tokenMetrics');
+        about && about.scrollIntoView(true);
+      }
+
+      return { imageUrls, returnHome, returnAbout, returnTokenMetrics };
     },
   });
 </script>
