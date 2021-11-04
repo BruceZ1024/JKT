@@ -9,8 +9,7 @@ import { defineComponent, reactive } from 'vue';
 import ComHeader from "./ComHeader.vue";
 import ComTabBar from '@/components/ComTabBar';
 import {
-  onBeforeRouteUpdate,
-  RouteLocationNormalized,
+  onBeforeRouteLeave,
   useRoute,
 } from 'vue-router';
 
@@ -29,9 +28,8 @@ export default defineComponent({
     console.log(meta);
     state.title = meta.title;
 
-    onBeforeRouteUpdate(async (to, from) => {
-      console.log(to);
-      // state.title = to.meta.title;
+    onBeforeRouteLeave(async (to, from) => {
+      state.title = to.meta.title;
     })
 
     return {state};
