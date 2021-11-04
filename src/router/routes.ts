@@ -5,6 +5,7 @@ import Loader from '@/views/landing/Loader.vue';
 import LandingPage from '@/views/landing/LandingPage.vue';
 import SplashScreen from '@/views/landing/SplashScreen.vue';
 
+
 const routes: Array<RouteRecordRaw> = [
     {
       path: '/',
@@ -97,12 +98,28 @@ const routes: Array<RouteRecordRaw> = [
       children: [
         {
           path: '/account',
-          name: 'Account',
+          name: 'account',
           meta: {
-            title: 'DiFi',
+            title: 'Account',
             keepAlive: false,
           },
           component: () => import('@/views/account/Account.vue'),
+        },
+      ],
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: Layout,
+      children: [
+        {
+          path: '/account',
+          name: 'AccountSetting',
+          meta: {
+            title: 'Settings',
+            keepAlive: false,
+          },
+          component: () => import('@/views/account/AccountSetting.vue'),
         },
       ],
     },
