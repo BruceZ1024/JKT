@@ -1,11 +1,12 @@
 import { RouteRecordRaw } from 'vue-router';
 
-import Home from '../views/home/Home.vue';
-import Layout from '../components/Layout.vue';
-import LandingPage from '../views/landing/LandingPage.vue';
-import Loader from '@/views/landing/Loader.vue';
-import ComTabBar from '../components/ComTabBar.vue';
+import Home from '@/views/home/Home.vue';
+import Layout from '@/components/Layout.vue';
+import ComTabBar from '@/components/ComTabBar.vue';
 import ComHeader from '@/components/ComHeader.vue';
+import Loader from '@/views/landing/Loader.vue';
+import LandingPage from '@/views/landing/LandingPage.vue';
+import SplashScreen from '@/views/landing/SplashScreen.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -27,11 +28,20 @@ const routes: Array<RouteRecordRaw> = [
       },
     },
     {
+      path: '/splashScreen',
+      name: 'splashScreen',
+      component: SplashScreen,
+      meta: {
+        title: 'splashScreen',
+        keepAlive: false,
+      },
+    },
+    {
       path: '/loader',
       name: 'loader',
       component: Loader,
       meta: {
-        title: '入口',
+        title: 'loader',
         keepAlive: false,
       },
     },

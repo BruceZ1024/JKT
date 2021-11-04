@@ -20,7 +20,8 @@
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3",
     "vue-tsx-support": "^3.2.0",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "@metamask/detect-provider": "^1.2.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
