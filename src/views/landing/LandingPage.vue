@@ -94,7 +94,7 @@
                   </div>
                   <div class='col-xs-2 col-sm-2 col-md-2'>
                     <div class='popup' onclick='copyContract()'>
-                      <svg-icon icon-class='icon7' style='width: 20px; height: 20px'></svg-icon>
+                      <svg-icon icon-class='big-copy' style='width: 20px; height: 20px'></svg-icon>
                       <span class='popuptext' id='myPopup'
                             style="font-family: 'Open Sans', sans-serif">Copied</span>
                     </div>
@@ -559,7 +559,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2 mobile-hidden'>
           <a class='btn-partner' href='mailto:business@jokerfi.com'>Become a partner
-            <svg-icon icon-class='arrow' style='width: 13px; height: 13px'/>
+            <svg-icon icon-class='right-arrow' style='width: 13px; height: 13px'/>
           </a>
         </div>
       </div>

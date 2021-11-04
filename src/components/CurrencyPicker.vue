@@ -1,6 +1,6 @@
 <template>
 <van-cell center is-link @click="showPicker = true">Currency<template #icon>
-        <svg-icon icon-class='currency' style='width:24px; height:24px;' class="right-icon-account"></svg-icon>
+        <svg-icon icon-class='currency' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
     </template>
     <template #right-icon>
         <span class="right-icon-account">USD</span>

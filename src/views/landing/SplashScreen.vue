@@ -1,6 +1,6 @@
 <template>
   <div class="background-wrapper">
-    <svg-icon icon-class='blackLogo' class="logo-icon"></svg-icon>
+    <svg-icon icon-class='black-logo' class="logo-icon"></svg-icon>
     <div class="landing-text">
       The Best of GameFi + DeFi
     </div>
