@@ -9,6 +9,7 @@ import './assets/css/landingPage/bootstrap.min.css';
 import './assets/css/landingPage/style.css';
 import './assets/css/landingPage/baguetteBox.css';
 import 'amfe-flexible';
+import './assets/css/Account.css';
 import { registerSvgIconComp } from '@/assets/icons/index';
 
 const app = createApp(App);
