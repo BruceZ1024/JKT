@@ -100,7 +100,7 @@
             <svg-icon icon-class='invite-friends' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
         </template>
         <template #right-icon>
-            <van-button class="btn-small-account-min-width" type="danger" size="small">Invite</van-button>
+            <van-button class="btn-small-account-min-width" type="danger" size="small" @click="goTo('/account/invite')">Invite</van-button>
         </template>
     </van-cell>
     <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
@@ -113,13 +113,13 @@
         </template>
     </van-cell>
     <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
-    <van-cell title="Contact Us" is-link icon="phone-o">
+    <van-cell center title="Contact Us" is-link icon="phone-o">
         <template #icon>
             <svg-icon icon-class='contact-us' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
         </template>
     </van-cell>
     <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
-    <van-cell title="Settings" is-link icon="setting-o" @click="goTo('/account/setting')">
+    <van-cell center title="Settings" is-link icon="setting-o" @click="goTo('/account/setting')">
         <template #icon>
             <svg-icon icon-class='settings' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
         </template>

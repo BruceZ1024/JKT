@@ -58,10 +58,13 @@
         </van-radio-group>
         <div class="account-safe-area-bottom"></div>
     </van-popup>
-    <van-cell title="Price in JKT">
+    <van-cell center title="Price in JKT">
         <template #right-icon>
-            <van-button plain size="small" icon="https://img.yzcdn.cn/vant/user-active.png" class="btn-small-account-min-width right-icon-account btn-plain-dark-white-dark">
+            <van-button plain size="small" class="btn-small-account-min-width right-icon-account btn-plain-dark-white-dark">
                 3233.3
+                <template #icon>
+                        <svg-icon icon-class='app-icon' style='width:26px; height:26px;' class="right-icon-account"></svg-icon>
+                    </template>
             </van-button>
         </template>
     </van-cell>

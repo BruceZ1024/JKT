@@ -2,7 +2,7 @@
     --van-cell-group-background-color: #202125;
     --van-cell-text-color: #FFFFFF;
     --van-cell-background-color: #202125;
-    --van-cell-label-color: #FFFFFF;
+    --van-cell-label-color: #575962;
     --van-cell-label-margin-top: 0px;
     --van-text-color: #FFFFFF;
     --van-popup-background-color: var(--van-cell-group-background-color);
@@ -27,13 +27,14 @@
 }
 .btn-small-account-min-width {
     min-width: 71px;
-    height: 24px;
+    height: 30px;
 }
 
 .right-icon-account {
     font-size: 13px;
     line-height: inherit;
     margin-right: 5px;
+    padding-top: 2px;
 }
 
 .van-cell-group-margin {

@@ -2,7 +2,7 @@
   <van-cell-group inset class="van-cell-group-margin">
     <language-picker></language-picker>
     <currency-picker></currency-picker>
-    <van-cell title="Version">
+    <van-cell center title="Version">
       <template #icon>
         <svg-icon icon-class='version' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
       </template>
