@@ -13,6 +13,7 @@
         <span>
           View more
         </span>
+        <svg-icon icon-class='enter' class="view-icon"></svg-icon>
     </div>
   </div>
 </template>
