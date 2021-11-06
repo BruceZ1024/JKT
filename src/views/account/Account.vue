@@ -1,5 +1,9 @@
 <template>
 <van-cell center title="$ 34221" label="ID: 342324">
+    <template #title>
+        $ 34221
+        <svg-icon :icon-class="showAmount ? 'show' : 'hidden'" @click="toggleShow()" style='width:16px; height:16px;' class="right-icon-account"></svg-icon>
+    </template>
     <template #icon>
         <svg-icon icon-class='big-wallet' style='width:48px; height:48px;' class="right-icon-account"></svg-icon>
     </template>
@@ -9,6 +13,9 @@
 
 </van-cell>
 <van-cell title="" label="Address: dfasdouewoiruoqiwer798">
+    <template #right-icon>
+        <svg-icon icon-class='copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
+    </template>
 </van-cell>
 <!-- <van-cell-group inset class="van-cell-group-margin">
 
@@ -146,6 +153,7 @@ export default {
 
         const showDeposit = ref(false);
         const showWithdraw = ref(false);
+        const showAmount = ref(true);
         const amountDeposit = ref('');
         const goTo = (r, query) => {
             router.push({
@@ -153,11 +161,17 @@ export default {
                 query: query || {},
             });
         };
+
+        const toggleShow = () => {
+            showAmount.value = !showAmount.value;
+        };
         return {
             goTo,
             showDeposit,
             showWithdraw,
             amountDeposit,
+            showAmount,
+            toggleShow
 
         };
     },

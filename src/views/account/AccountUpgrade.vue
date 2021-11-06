@@ -1,5 +1,5 @@
 <template>
-<van-cell center title="$ 34221" label="ID: 342324">
+<van-cell center title="VIP Level: Gold" label="Rewards: 34,32">
     <template #icon>
         <svg-icon icon-class='big-wallet' style='width:48px; height:48px;' class="right-icon-account"></svg-icon>
     </template>

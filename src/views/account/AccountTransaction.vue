@@ -6,6 +6,9 @@
 
 </van-cell>
 <van-cell title="" label="Address: dfasdouewoiruoqiwer798">
+    <template #right-icon>
+        <svg-icon icon-class='copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
+    </template>
 </van-cell>
 <van-tabs v-model:active="activeName">
     <van-tab title="Withdraw" name="Withdraw">
@@ -17,10 +20,11 @@
                     </template>
                     <template #right-icon>
                         <div><span>JKT</span>
-                        <br/>
-                        <svg-icon icon-class='small-copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon></div>
+                            <br />
+                            <svg-icon icon-class='small-copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
+                        </div>
                     </template>
-                    
+
                 </van-cell>
                 <p class="transaction-date-label">{{item.dateTime}}</p>
             </van-cell-group>
@@ -35,10 +39,11 @@
                     </template>
                     <template #right-icon>
                         <div><span>JKT</span>
-                        <br/>
-                        <svg-icon icon-class='small-copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon></div>
+                            <br />
+                            <svg-icon icon-class='small-copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
+                        </div>
                     </template>
-                    
+
                 </van-cell>
                 <p class="transaction-date-label">{{item.dateTime}}</p>
             </van-cell-group>
@@ -81,7 +86,12 @@ export default {
             // setTimeout 仅做示例，真实场景中一般为 ajax 请求
             setTimeout(() => {
                 for (let i = 0; i < 10; i++) {
-                    list.value.push({key: i, number: "3595,45345.0" + list.value.length + 1,account: "dufgergrv335764csdfvfjvdfjdnjcnsjndcn.", dateTime: "10/23 02:12:32"});
+                    list.value.push({
+                        key: i,
+                        number: "3595,45345.0" + list.value.length + 1,
+                        account: "dufgergrv335764csdfvfjvdfjdnjcnsjndcn.",
+                        dateTime: "10/23 02:12:32"
+                    });
                 }
 
                 // 加载状态结束
@@ -108,12 +118,13 @@ export default {
 </script>
 
 <style scoped>
-.transaction-date-label{
+.transaction-date-label {
     margin-left: 55px;
     font-size: 10pt;
     color: #96979B;
 }
-.padding-bottom-0{
+
+.padding-bottom-0 {
     padding-bottom: 0px;
 }
 </style>
