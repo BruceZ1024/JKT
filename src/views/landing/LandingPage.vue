@@ -8,8 +8,11 @@
     <div class='container'>
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class='navbar-header'>
-        <button type='button' class='navbar-toggle collapsed' data-toggle='collapse'
-                data-target='#bs-example-navbar-collapse-1'>
+        <button
+          type='button'
+          class='navbar-toggle collapsed'
+          data-toggle='collapse'
+          data-target='#bs-example-navbar-collapse-1'>
           <span class='sr-only'>Toggle navigation</span>
           <span class='icon-bar'></span>
           <span class='icon-bar'></span>
@@ -24,7 +27,8 @@
         </a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1' style='max-height: none;'>
+      <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'
+           style='max-height: none;'>
         <ul class='nav navbar-nav navbar-right'>
           <li>
             <a class='page-scroll' style="cursor: pointer" @click="returnHome()">Home</a>
@@ -33,11 +37,16 @@
             <a class='page-scroll' style="cursor: pointer" @click="returnAbout()">About</a>
           </li>
           <li class="web-hidden">
-            <a class='page-scroll' style="cursor: pointer" @click="returnTokenMetrics()">TokenMetrics</a>
+            <a
+              class='page-scroll'
+              style="cursor: pointer"
+              @click="returnTokenMetrics()">
+              TokenMetrics
+            </a>
           </li>
-          <!--		  <li>-->
-          <!--			 <a class="page-scroll" href="#price">Contract Audit</a>-->
-          <!--		  </li>-->
+          <!--<li>-->
+          <!--<a class="page-scroll" href="#price">Contract Audit</a>-->
+          <!--</li>-->
           <li>
             <a class='page-scroll' href='mailto:business@jokerfi.com'>Contact Us</a>
           </li>
@@ -136,11 +145,14 @@
   <section id='about' class='works'>
     <div class='container'>
       <div class='row'>
-        <div data-wow-delay='.3s'
-             class='col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
+        <div
+          data-wow-delay='.3s'
+          class='
+          col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon1' style='width: 64px; height: 64px;'></svg-icon>
           <h3
-            style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
+            style='
+            font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
             Connect You
             Wallet</h3>
           <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You will
@@ -148,11 +160,14 @@
             a BSC network compatible wallet to be able to access our Defi pools and get rewards in
             your wallet.</p>
         </div>
-        <div data-wow-delay='.4s'
-             class='col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
+        <div
+          data-wow-delay='.4s'
+          class='
+          col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon2' style='width: 64px; height: 64px;'></svg-icon>
           <h3
-            style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
+            style='
+            font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
             Play
             Games</h3>
           <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can
@@ -160,11 +175,14 @@
             metaverse games and click play to be directed to start playing and earning power
             points.</p>
         </div>
-        <div data-wow-delay='.5s'
-             class='col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
+        <div
+          data-wow-delay='.5s'
+          class='
+          col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon3' style='width: 64px; height: 64px;'></svg-icon>
           <h3
-            style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
+            style='
+            font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
             Stake In LP
             Pools</h3>
           <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can
@@ -172,11 +190,14 @@
             platform and stake in the Defi pools of our farm to earn rewards in our native token
             JKT.</p>
         </div>
-        <div data-wow-delay='.6s'
-             class='col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
+        <div
+          data-wow-delay='.6s'
+          class='
+          col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 wow fadeInUp  animated'>
           <svg-icon icon-class='icon4' style='width: 64px; height: 64px;'></svg-icon>
           <h3
-            style='font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
+            style='
+            font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
             Invite
             Friends & Earn</h3>
           <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can
@@ -229,9 +250,6 @@
                         power.
                       </li>
                     </ul>
-                    <!--						 <div class="text-center">-->
-                    <!--							<a href="" class="btn-wt-bdr3">Connect and Upgrade  <embed src="assets/img/icon6.svg" width="13" height="13" type="image/svg+xml"></a>-->
-                    <!--						 </div>-->
                   </div>
                 </article>
                 <!--Pricing Column-->
@@ -262,9 +280,6 @@
                         power.
                       </li>
                     </ul>
-                    <!--						 <div class="text-center">-->
-                    <!--							 <a href="" class="btn-wt-bdr3">Connect and Upgrade  <embed src="assets/img/icon6.svg" width="13" height="13" type="image/svg+xml"></a>-->
-                    <!--						 </div>-->
                   </div>
                 </article>
                 <!--Pricing Column-->
@@ -296,14 +311,17 @@
                         power.
                       </li>
                     </ul>
-                    <!--						 <div class="text-center">-->
-                    <!--							 <a href="" class="btn-wt-bdr3">Connect and Upgrade  <embed src="assets/img/icon6.svg" width="13" height="13" type="image/svg+xml"></a>-->
-                    <!--						 </div>-->
                   </div>
                 </article>
               </div>
               <p
-                style='font-size: 18px;font-weight:normal;color: #FFFFFF;line-height: 32px;text-align: center;padding-top: 50px'>
+                style='
+                font-size: 18px;
+                font-weight:normal;
+                color: #FFFFFF;
+                line-height: 32px;
+                text-align: center;
+                padding-top: 50px'>
                 With the free basic player plan, you can invite friends to power up your Defi pool
                 share and have extra
                 computing power equal to 10% of your, or your invitee’s staked amount.</p>
@@ -368,7 +386,8 @@
             <div
               class='col-xs-12 col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1'>
               <div class='inner-box-big'
-                   style='text-align: center !important;vertical-align: middle;background-color: #202125'>
+                   style='
+                   text-align: center !important;vertical-align: middle;background-color: #202125'>
                 <div id='jktchart' style='height: 600px;'></div>
               </div>
             </div>
@@ -573,8 +592,14 @@
           <svg-icon icon-class='jokermanor' style='width: 122px; height: 40px;'></svg-icon>
         </div>
       </div>
-      <div class='row mobile-hidden'
-           style="font-size: 18px;font-weight: normal;font-family: 'Open Sans', sans-serif;line-height: 28px;color: #979797">
+      <div
+        class='row mobile-hidden'
+        style="
+        font-size: 18px;
+        font-weight: normal;
+        font-family: 'Open Sans',sans-serif;
+        line-height: 28px;
+        color: #979797">
         <p>You can contact us with questions using the channel of your choice</p>
       </div>
       <div class='row links'>
@@ -598,43 +623,53 @@
     </div>
   </footer>
   <!-- Back to top -->
-  <a href='#' class='back-to-top' id='back-to-top'> <i class='fa fa-chevron-up'
-                                                       aria-hidden='true'></i>
+  <a href='#' class='back-to-top' id='back-to-top'>
+    <i class='fa fa-chevron-up' aria-hidden='true'></i>
   </a>
 </template>
 
-
 <script lang='ts'>
-  import { reactive } from 'vue';
-  import { defineComponent } from 'vue';
-  import SvgIcon from '@/components/SvgIcon.vue';
+import { reactive, defineComponent } from 'vue';
+import SvgIcon from '@/components/SvgIcon.vue';
 
-  export default defineComponent({
-    name: 'landingPage',
-    components: { SvgIcon },
-    setup() {
-      const imageUrls = reactive({});
+export default defineComponent({
+  name: 'landingPage',
+  components: { SvgIcon },
+  setup() {
+    const imageUrls = reactive({});
 
-      function returnHome() {
-        const home = document.querySelector('#home');
-        home && home.scrollIntoView(true);
+    function returnHome() {
+      const home = document.querySelector('#home');
+      if (home) {
+        home.scrollIntoView(true);
       }
+    }
 
-      function returnAbout() {
-        const about = document.querySelector('#about');
-        about && about.scrollIntoView(true);
+    function returnAbout() {
+      const about = document.querySelector('#about');
+      if (about) {
+        about.scrollIntoView(true);
       }
+    }
 
-      function returnTokenMetrics() {
-        const about = document.querySelector('#tokenMetrics');
-        about && about.scrollIntoView(true);
+    function returnTokenMetrics() {
+      const about = document.querySelector('#tokenMetrics');
+      if (about) {
+        about.scrollIntoView(true);
       }
+    }
 
-      return { imageUrls, returnHome, returnAbout, returnTokenMetrics };
-    },
-  });
+    return {
+      imageUrls,
+      returnHome,
+      returnAbout,
+      returnTokenMetrics,
+    };
+  },
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped src="../../assets/css/landingPage/animate.css"></style>
+<style scoped src="../../assets/css/landingPage/bootstrap.min.css"></style>
+<style scoped src="../../assets/css/landingPage/style.css"></style>
+<style scoped src="../../assets/css/landingPage/baguetteBox.css"></style>

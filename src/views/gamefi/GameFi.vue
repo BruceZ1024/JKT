@@ -5,11 +5,12 @@
 </template>
 
 <script lang="ts">
-  import button from 'vant';
 
-  export default {
-    name: 'gameFi',
-  };
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'gameFi',
+});
 </script>
 
 <style scoped>

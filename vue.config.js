@@ -1,14 +1,10 @@
 const path = require('path');
-const autoprefixer = require('autoprefixer');
-const postcssPxtorem = require('postcss-pxtorem');
+const { merge } = require('webpack-merge');
+const tsImportPluginFactory = require('ts-import-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-
-const { merge } = require('webpack-merge');
-const tsImportPluginFactory = require('ts-import-plugin');
-
 function addStyleResource(rule) {
   rule
     .use('style-resource')
@@ -34,23 +30,6 @@ module.exports = {
       alias: {
         '@': resolve('src'),
       },
-    },
-  },
-  css: {
-    loaderOptions: {
-      // postcss: {
-      //   postcssOptions: {
-      //     plugins: [
-      //       autoprefixer(),
-      //       postcssPxtorem({
-      //         rootValue: 54,
-      //         selectorBlackList: ['.van-', '.black-'],
-      //         propList: ['*'],
-      //         exclude: /node_modules/,
-      //       }),
-      //     ],
-      //   },
-      // },
     },
   },
   chainWebpack: (config) => {
@@ -95,23 +74,5 @@ module.exports = {
       .end()
       .use('file-loader')
       .loader('file-loader');
-  },
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      patterns: [],
-    },
-  },
-  devServer: {
-    proxy: {
-      '/api': {
-        target: 'http://www.jokerfi.com/',
-        ws: true,
-        changeOrigin: true,
-        pathRewrite: {
-          '/api/': '',
-        },
-      },
-    },
   },
 };

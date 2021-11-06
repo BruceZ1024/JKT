@@ -3,7 +3,7 @@
     <van-tabbar-item v-for='item in tabBarList' :key='item.title' :to='item.path'>
       <span>{{ item.title }}</span>
       <template #icon='props'>
-        <img :src='props.active ? item.active : item.inactive' />
+        <img :src='props.active ? item.active : item.inactive'/>
       </template>
     </van-tabbar-item>
   </van-tabbar>
@@ -55,9 +55,7 @@ export default defineComponent({
     ];
 
     if (props.defaultFocus) {
-      active.value = tabBarList.value.findIndex((val: any) =>
-        val.title === props.defaultFocus,
-      );
+      active.value = tabBarList.value.findIndex((val: any) => val.title === props.defaultFocus);
     }
 
     return {

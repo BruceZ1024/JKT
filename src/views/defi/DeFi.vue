@@ -1,13 +1,14 @@
 <template>
-
+<div></div>
 </template>
 
 <script lang="ts">
-import button from 'vant';
 
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: 'deFi',
-};
+});
 </script>
 <style scoped>
 

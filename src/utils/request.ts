@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Toast } from 'vant';
-import baseConfig from './baseconfig';
-
+import baseConfig from './baseConfig';
 
 const service = axios.create({
   baseURL: baseConfig.baseUrl, // url = base url + request url
@@ -10,15 +9,13 @@ const service = axios.create({
 
 // request interceptor
 service.interceptors.request.use(
-  (config) => {
-    return config;
-  },
-  (error) => (Promise.reject(error)),
+  (config: any) => config,
+  (error: Error) => (Promise.reject(error)),
 );
 
 // response interceptor
 service.interceptors.response.use(
-  (response) => {
+  (response: any) => {
     const res = response.data;
     if (res.code !== '0') {
       return Toast.fail(res.msg || 'Error');
@@ -26,7 +23,7 @@ service.interceptors.response.use(
     }
     return res;
   },
-  (error) => {
+  (error: Error) => {
     Toast.fail(error.message);
     return Promise.reject(error);
   },

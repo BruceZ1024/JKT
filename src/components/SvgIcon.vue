@@ -1,49 +1,51 @@
 <template>
-  <div v-if="isExternalIcon" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-bind="$attrs" />
+  <div v-if="isExternalIcon" :style="styleExternalIcon" class="svg-external-icon svg-icon"
+       v-bind="$attrs"/>
   <svg v-else :class="svgClass" aria-hidden="true" v-bind="$attrs">
-    <use :xlink:href="iconName" />
+    <use :xlink:href="iconName"/>
   </svg>
 </template>
 
 <script>
-import { isExternal } from '@/utils/validate'
-import { computed } from 'vue'
+import { computed } from 'vue';
+import { isExternal } from '@/utils/validate';
+
 export default {
-  name: 'SvgIcon',
+  name: 'svgIcon',
   props: {
     iconClass: {
       type: String,
-      required: true
+      required: true,
     },
     className: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   setup(props) {
-    const isExternalIcon = computed(() => isExternal(props.iconClass))
-    const iconName = computed(() => `#icon-${props.iconClass}`)
+    const isExternalIcon = computed(() => isExternal(props.iconClass));
+    const iconName = computed(() => `#icon-${props.iconClass}`);
     const svgClass = computed(() => {
       if (props.className) {
-        return 'svg-icon ' + props.className
-      } else {
-        return 'svg-icon'
+        return `svg-icon ${props.className}`;
       }
-    })
+      return 'svg-icon';
+    });
     const styleExternalIcon = computed(() => {
+      console.log(1);
       return {
         mask: `url(${props.iconClass}) no-repeat 50% 50%`,
-        '-webkit-mask': `url(${props.iconClass}) no-repeat 50% 50%`
-      }
-    })
+        '-webkit-mask': `url(${props.iconClass}) no-repeat 50% 50%`,
+      };
+    });
     return {
       isExternalIcon,
       iconName,
       svgClass,
-      styleExternalIcon
-    }
-  }
-}
+      styleExternalIcon,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -54,9 +56,10 @@ export default {
   fill: currentColor;
   overflow: hidden;
 }
+
 .svg-external-icon {
   background-color: currentColor;
-  mask-size: cover!important;
+  mask-size: cover !important;
   display: inline-block;
 }
 </style>

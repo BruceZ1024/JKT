@@ -1,39 +1,7 @@
 (jQuery),function($) {
 /*--------------------------
-	baguetteBoxOne map
----------------------------- */	
-onload = function() {
-    if(typeof oldIE === 'undefined' && Object.keys)
-        hljs.initHighlighting();
-
-    baguetteBox.run('.baguetteBoxOne');
-    baguetteBox.run('.baguetteBoxTwo');
-    baguetteBox.run('.baguetteBoxThree', {
-        animation: 'fadeIn'
-    });
-    baguetteBox.run('.baguetteBoxFour', {
-        buttons: false
-    });
-    baguetteBox.run('.baguetteBoxFive', {
-        captions: function(element) {
-            return element.getElementsByTagName('img')[0].alt;
-        }
-    });
-};
-
-/*--------------------------
-	owlCarousel 
----------------------------- */	
- $("#owl-demo").owlCarousel({
-                autoPlay: 3000,
-                items: 3,
-                itemsDesktop: [1199, 3],
-                itemsDesktopSmall: [979, 3]
-            });
-            
-/*--------------------------
-	navbar 
----------------------------- */	
+	navbar
+---------------------------- */
     var Page = function() {
         this.$topNavbar = $("#navbar-menu"),
         this.$stickyElem = $("#sticky-nav"),
@@ -66,7 +34,7 @@ $.Page = new Page, $.Page.Constructor = Page
 }
 /*--------------------------
 	use strict
----------------------------- */	
+---------------------------- */
 (jQuery),
     "use strict"; // Start of use strict
     // jQuery for page scrolling feature - requires jQuery Easing plugin
@@ -90,7 +58,7 @@ $.Page = new Page, $.Page.Constructor = Page
     })
 /*--------------------------
 	counter
----------------------------- */	
+---------------------------- */
       // custom formatting example
       $('#earth').data('countToOptions', {
         formatter: function (value, options) {
@@ -98,26 +66,26 @@ $.Page = new Page, $.Page.Constructor = Page
         }
       });
       // start all the timers
-      $('.timer').each(count);     
+      $('.timer').each(count);
       function count(options) {
         var $this = $(this);
         options = $.extend({}, options || {}, $this.data('countToOptions') || {});
         $this.countTo(options);
       }
-      
+
  /*--------------------------
 	map scroll off
----------------------------- */	     
+---------------------------- */
     $('.maps').click(function () {
         $('.maps iframe').css("pointer-events", "auto");
     });
-    
+
     $( ".maps" ).mouseleave(function() {
-      $('.maps iframe').css("pointer-events", "none"); 
+      $('.maps iframe').css("pointer-events", "none");
     });
 /*--------------------------
 	Preloader
----------------------------- */	
+---------------------------- */
 	$(window).load(function() {
 		$('#loading').fadeOut();
 		$('#preloader').delay(300).fadeOut('slow');

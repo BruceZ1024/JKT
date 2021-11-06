@@ -6,20 +6,20 @@
 
 <script>
 import { defineComponent, reactive } from 'vue';
-import ComHeader from "./ComHeader.vue";
-import ComTabBar from '@/components/ComTabBar';
 import {
   onBeforeRouteLeave,
   useRoute,
 } from 'vue-router';
+import ComHeader from './ComHeader.vue';
+import ComTabBar from '@/components/ComTabBar.vue';
 
 export default defineComponent({
-  name: "layout",
+  name: 'layout',
   components: {
     ComHeader,
     ComTabBar,
   },
-  setup: function() {
+  setup() {
     const route = useRoute();
     const state = reactive({
       title: '',
@@ -30,11 +30,11 @@ export default defineComponent({
 
     onBeforeRouteLeave(async (to, from) => {
       state.title = to.meta.title;
-    })
+    });
 
-    return {state};
+    return { state };
   },
-})
+});
 </script>
 
 <style scoped>

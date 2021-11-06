@@ -1,7 +1,7 @@
 const PROTOCAL = 'https';
-const PROJECT_NAME = 'bsp-comm-ui';
-const SERVICE_NAME = 'bsp-diag-service';
-const DOMAIN = 'k8s.chehejia.com';
+const PROJECT_NAME = '';
+const SERVICE_NAME = '';
+const DOMAIN = '';
 
 function getURL() {
   const config: any = {

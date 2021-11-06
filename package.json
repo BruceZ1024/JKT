@@ -5,71 +5,59 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "amfe-flexible": "^2.2.1",
-    "axios": "^0.21.1",
-    "core-js": "^3.8.3",
-    "js-cookie": "^2.2.1",
-    "lodash": "^4.17.21",
-    "path": "^0.12.7",
-    "vant": "^3.1.2",
-    "vue": "^3.0.4",
-    "vue-class-component": "^8.0.0-0",
-    "vue-router": "^4.0.3",
-    "vue-tsx-support": "^3.2.0",
-    "vuex": "^4.0.0",
-    "@metamask/detect-provider": "^1.2.0"
+    "@metamask/detect-provider": "^1.2.0",
+    "axios": "^0.24.0",
+    "core-js": "^3.6.5",
+    "vant": "^3.2.7",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "web3": "^1.6.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.20",
-    "@types/js-cookie": "^2.2.7",
-    "@types/lodash": "^4.14.171",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
-    "@vue/cli-plugin-babel": "~5.0.0-beta.2",
-    "@vue/cli-plugin-eslint": "~5.0.0-beta.2",
-    "@vue/cli-plugin-router": "~5.0.0-beta.2",
-    "@vue/cli-plugin-typescript": "~5.0.0-beta.2",
-    "@vue/cli-plugin-unit-jest": "~5.0.0-beta.2",
-    "@vue/cli-plugin-vuex": "~5.0.0-beta.2",
-    "@vue/cli-service": "~5.0.0-beta.2",
-    "@vue/compiler-sfc": "^3.0.4",
-    "@vue/eslint-config-airbnb": "^5.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/eslint-config-typescript": "^7.0.0",
-    "@vue/test-utils": "^2.0.0-0",
-    "autoprefixer": "^10.2.6",
-    "babel-plugin-import": "^1.13.3",
-    "eslint": "^7.20.0",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^7.2.0",
-    "node-sass": "^6.0.1",
-    "postcss": "^8.3.5",
-    "postcss-focus": "^5.0.1",
-    "postcss-loader": "^6.1.1",
-    "postcss-pxtorem": "^6.0.0",
-    "sass": "^1.32.7",
-    "sass-loader": "^11.1.1",
-    "sass-resources-loader": "^2.2.3",
-    "style-resources-loader": "^1.4.1",
+    "eslint-plugin-vue": "^7.20.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
     "svg-sprite-loader": "^6.0.11",
-    "ts-import-plugin": "^1.6.7",
-    "ts-jest": "^26.5.3",
     "typescript": "~4.1.5",
-    "vue-cli-plugin-style-resources-loader": "~0.1.5",
-    "vue-jest": "^5.0.0-0",
-    "webpack-cli": "^4.7.2",
     "webpack-merge": "^5.8.0"
   },
-  "optionalDependencies": {
-    "fsevents": "*"
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "@vue/airbnb",
+      "@vue/typescript/recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-console": "off",
+      "no-debugger": "off"
+    }
   },
-  "engines": {
-    "node": ">= 12.18.0",
-    "npm": ">= 6.14.0"
-  }
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

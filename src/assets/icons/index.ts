@@ -4,6 +4,6 @@ const req = require.context('@/assets/icons/svg', false, /\.svg$/);
 const requireAll = (requireContext: any) => requireContext.keys().map(requireContext);
 requireAll(req);
 
-export function registerSvgIconComp(app: any) {
+export default function registerSvgIconComp(app: any): void {
   app.component('SvgIcon', SvgIcon);
 }
