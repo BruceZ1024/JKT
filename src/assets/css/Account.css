@@ -56,3 +56,11 @@
     left: var(--van-padding-md);
     border-bottom: 0px;
 }
+
+.account-safe-area-bottom {
+    padding-bottom: 50px;
+}
+
+.account-label-container {
+    min-height: 120px;
+}

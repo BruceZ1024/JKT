@@ -24,19 +24,28 @@
         </van-cell>
         <van-radio-group v-model="checked">
             <van-cell-group>
-                <van-cell title="Silver - 15% extra power" label="JKT~ $100) | + 5% from 2nd level invitees)" clickable @click="checked = 'Silver'">
+                <van-cell title="Sliver - 15% extra power" label="JKT~ $100) | + 5% from 2nd level invitees)" clickable @click="checked = 'Silver'">
+                    <template #icon>
+                        <svg-icon icon-class='sliver' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
+                    </template>
                     <template #right-icon>
                         <van-radio checked-color="#ee0a24" name="Silver" />
                     </template>
                 </van-cell>
                 <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
                 <van-cell title="Gold - 20% extra power" label="JKT~ $500) | + 10% from 2nd level invitees)" clickable @click="checked = 'Gold'">
+                    <template #icon>
+                        <svg-icon icon-class='gold' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
+                    </template>
                     <template #right-icon>
                         <van-radio checked-color="#ee0a24" name="Gold" />
                     </template>
                 </van-cell>
                 <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
                 <van-cell title="Platinum - 30% extra power" label="JKT~ $500) | + 15% from 2nd level invitees)" clickable @click="checked = 'Platinum'">
+                    <template #icon>
+                        <svg-icon icon-class='platinum' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
+                    </template>
                     <template #right-icon>
                         <van-radio checked-color="#ee0a24" name="Platinum" />
                     </template>
@@ -47,7 +56,7 @@
                 </van-cell>
             </van-cell-group>
         </van-radio-group>
-
+        <div class="account-safe-area-bottom"></div>
     </van-popup>
     <van-cell title="Price in JKT">
         <template #right-icon>
@@ -69,19 +78,16 @@
         </template>
     </van-cell>
     <van-cell-group>
-        <p class="success-label">
-            You have successfully upgardes your account.
-            <br />
-            Now you can power up your earnings.</p>
-        <p class="success-label">
-            &nbsp;
-            <br />
-            &nbsp;</p>
-
+        <div class="account-label-container">
+            <p class="success-label">
+                You have successfully upgardes your account.</p>
+            <p class="success-label">
+                Now you can power up your earnings.</p>
+        </div>
         <van-cell>
             <van-button type="danger" block @click="goTo('/account')">Go to my account</van-button>
         </van-cell>
-        <div class="van-safe-area-bottom"></div>
+        <div class="account-safe-area-bottom"></div>
     </van-cell-group>
 
 </van-popup>

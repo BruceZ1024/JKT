@@ -56,10 +56,10 @@
                     Wallet Balance: 3423,34 JKT</p>
 
             </div>
-            <div class="van-safe-area-bottom"></div>
             <van-cell>
                 <van-button type="danger" block>Deposit</van-button>
             </van-cell>
+            <div class="account-safe-area-bottom"></div>
         </van-cell-group>
     </van-popup>
     <!-- Withdraw pop up -->
@@ -86,11 +86,10 @@
                 <p class="success-label">
                     Transaction Fees: 8 % (7% will be transferred to the black hole address for destruction)</p>
             </div>
-
-            <div class="van-safe-area-bottom"></div>
             <van-cell>
                 <van-button type="danger" block>Withdraw</van-button>
             </van-cell>
+            <div class="account-safe-area-bottom"></div>
         </van-cell-group>
     </van-popup>
 
@@ -170,9 +169,6 @@ export default {
     min-height: 300px;
 }
 
-.account-label-container {
-    min-height: 120px;
-}
 
 .upgrade-label {
     margin-left: 16px;
