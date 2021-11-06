@@ -64,3 +64,7 @@
 .account-label-container {
     min-height: 120px;
 }
+
+.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after {
+    border-width: 0;
+}
