@@ -6,6 +6,9 @@
     --van-cell-label-margin-top: 0px;
     --van-text-color: #FFFFFF;
     --van-popup-background-color: var(--van-cell-group-background-color);
+    --van-divider-border-color: var(--van-cell-text-color);
+    --van-tabs-nav-background-color: var(--van-cell-group-background-color);
+    --van-tabs-bottom-bar-width: 50%;
 }
 
 .btn-plain-red-white-dark{
@@ -35,9 +38,21 @@
 
 .van-cell-group-margin {
     margin-bottom: 10px;
+    margin-top: 10px;
 
 }
 
 .van-cell-title {
     margin-left: 3px;
+}
+
+.van-cell::after {
+    position: absolute;
+    box-sizing: border-box;
+    content: ' ';
+    pointer-events: none;
+    right: var(--van-padding-md);
+    bottom: 0;
+    left: var(--van-padding-md);
+    border-bottom: 0px;
 }

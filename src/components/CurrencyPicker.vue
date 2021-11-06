@@ -8,8 +8,7 @@
     </template>
 </van-cell>
 <van-popup v-model:show="showPicker" round position="bottom"  closeable>
-    <!-- <van-picker allow-html :columns="columns" :default-index="1" @cancel="showPicker = false" @confirm="onConfirm"></van-picker> -->
-    <van-cell title="Select Currency" class="van-cell-no-border">
+   <van-cell title="Select Currency" class="van-cell-no-border">
     </van-cell>
     <van-radio-group v-model="checked">
         <van-cell-group>
@@ -18,16 +17,19 @@
                     <van-radio checked-color="#ee0a24" name="USD" />
                 </template>
             </van-cell>
+            <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
             <van-cell title="CNY" clickable @click="checked = 'CNY'">
                 <template #right-icon>
                     <van-radio checked-color="#ee0a24" name="CNY" />
                 </template>
             </van-cell>
+            <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
             <van-cell title="KRW" clickable @click="checked = 'KRW'">
                 <template #right-icon>
                     <van-radio checked-color="#ee0a24" name="KRW" />
                 </template>
             </van-cell>
+            <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
             <van-cell title="JPY" clickable @click="checked = 'JPY'">
                 <template #right-icon>
                     <van-radio checked-color="#ee0a24" name="JPY" />
@@ -50,26 +52,14 @@ import {
 export default {
     name: " CurrencyPicker",
     setup() {
-        const columns = ['USD', 'CNY', 'KRW', ' JPY'];
-        const result = ref('');
         const showPicker = ref(false);
 
-        const onConfirm = (value) => {
-            result.value = value;
-            showPicker.value = false;
-        };
         const checked = ref('USD');
+        console.log(checked)
         return {
             checked,
             showPicker,
-            onConfirm,
         };
-        // return {
-        //     result,
-        //     columns,
-        //     onConfirm,
-        //     showPicker,
-        // };
     },
 }
 </script>

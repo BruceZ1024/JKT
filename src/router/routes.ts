@@ -106,13 +106,31 @@ const routes: Array<RouteRecordRaw> = [
           component: () => import('@/views/account/Account.vue'),
         },
         {
-          path: '/setting',
+          path: '/account/setting',
           name: 'AccountSetting',
           meta: {
             title: 'Settings',
             keepAlive: false,
           },
           component: () => import('@/views/account/AccountSetting.vue'),
+        },
+        {
+          path: '/account/upgrade',
+          name: 'AccountUpgrade',
+          meta: {
+            title: 'VIP Upgrade',
+            keepAlive: false,
+          },
+          component: () => import('@/views/account/AccountUpgrade.vue'),
+        },
+        {
+          path: '/account/transaction',
+          name: 'AccountTransaction',
+          meta: {
+            title: 'Transactions',
+            keepAlive: false,
+          },
+          component: () => import('@/views/account/AccountTransaction.vue'),
         },
       ],
     },

@@ -9,7 +9,6 @@
     </template>
 </van-cell>
 <van-popup v-model:show="showPicker" round position="bottom"  closeable>
-    <!-- <van-picker allow-html :columns="columns" :default-index="1" @cancel="showPicker = false" @confirm="onConfirm"></van-picker> -->
     <van-cell title="Select Language" class="van-cell-no-border">
     </van-cell>
     <van-radio-group v-model="checked">
@@ -19,16 +18,19 @@
                     <van-radio checked-color="#ee0a24" name="English" />
                 </template>
             </van-cell>
+            <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
             <van-cell title="Chinese" clickable @click="checked = 'Chinese'">
                 <template #right-icon>
                     <van-radio checked-color="#ee0a24" name="Chinese" />
                 </template>
             </van-cell>
+            <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
             <van-cell title="Korean" clickable @click="checked = 'Korean'">
                 <template #right-icon>
                     <van-radio checked-color="#ee0a24" name="Korean" />
                 </template>
             </van-cell>
+            <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
             <van-cell title="Japanese" clickable @click="checked = 'Japanese'">
                 <template #right-icon>
                     <van-radio checked-color="#ee0a24" name="Japanese" />
@@ -51,26 +53,13 @@ import {
 export default {
     name: " LanguagePicker",
     setup() {
-        const columns = ['English', 'Chinese', 'Korean', ' Japanese'];
-        const result = ref('');
         const showPicker = ref(false);
 
-        const onConfirm = (value) => {
-            result.value = value;
-            showPicker.value = false;
-        };
         const checked = ref('English');
         return {
             checked,
             showPicker,
-            onConfirm,
         };
-        // return {
-        //     result,
-        //     columns,
-        //     onConfirm,
-        //     showPicker,
-        // };
     },
 }
 </script>
