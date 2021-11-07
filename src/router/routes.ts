@@ -131,6 +131,15 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import('@/views/account/AccountTransaction.vue'),
       },
+      {
+        path: '/account/invite',
+        name: 'AccountInvite',
+        meta: {
+          title: 'Invite Frends',
+          keepAlive: false,
+        },
+        component: () => import('@/views/account/AccountInvite.vue'),
+      },
     ],
   },
 ];
