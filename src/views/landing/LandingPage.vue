@@ -99,7 +99,7 @@
                         </div>
                     </div>
                     <div class='row header-mobile web-hidden'>
-                        <button class='header-mobile-btn' onclick="window.location.href='https://pancakeswap.finance/swap?outputCurrency=0xc864019047b864b6ab609a968ae2725dfaee808a'">
+                        <button class='header-mobile-btn' onclick="window.location.href='https://biconomy.com/Launchpad'">
                             Buy JKT
                         </button>
                         <button class='header-mobile-btn' onclick="window.location.href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf'">
@@ -135,7 +135,7 @@
                 <svg-icon icon-class='icon1' style='width: 64px; height: 64px;'></svg-icon>
                 <h3 style='
             font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
-                    Connect You
+                    Connect Your
                     Wallet</h3>
                 <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You will
                     first need to connect
@@ -159,7 +159,7 @@
                 <svg-icon icon-class='icon3' style='width: 64px; height: 64px;'></svg-icon>
                 <h3 style='
             font-size: 20px;font-weight: bold;color: white;line-height: 24px;letter-spacing: 0.2px'>
-                    Stake In LP
+                    Stake In Defi
                     Pools</h3>
                 <p style='font-size: 14px;font-weight: normal;color: #979797;line-height: 24px'>You can
                     add liquidity on the
@@ -295,7 +295,7 @@
                             <div class='inner-box'>
                                 <svg-icon icon-class='sliver' style='width: 32px;height: 32px'></svg-icon>
                                 <h2 class='price-no sliver'>
-                                    Sliver
+                                    Silver
                                 </h2>
                                 <div class='inner-text'>
                                     $100
@@ -432,7 +432,7 @@
                             with leading GameFi
                             and blockchain based and tokenized projects to grow our metaverse ecosystem. In the
                             continuation of
-                            developing this Metaverse ecosystem, Squid will formally launch a large, inclusive
+                            developing this Metaverse ecosystem, JokerManor will formally launch a large, inclusive
                             and integrated
                             meta-universe game in 2022 Q3.</p>
                     </div>

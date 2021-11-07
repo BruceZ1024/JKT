@@ -9,7 +9,7 @@
     <van-row class="home-notice">
       <van-col span="24">
         <svg-icon icon-class='notice' class="notice-icon"></svg-icon>
-        <span class="notice-text">Play Mech Master on JKT and earn SQD in LP pool</span>
+        <span class="notice-text">Play Mech Master on JokerManor and earn JKT in DEFI</span>
       </van-col>
     </van-row>
 

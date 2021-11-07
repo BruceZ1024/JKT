@@ -59,7 +59,6 @@
       const showPicker = ref(false);
 
       const checked = ref('USD');
-      console.log(checked);
       return {
         checked,
         showPicker,

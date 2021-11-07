@@ -1,5 +1,5 @@
 <template>
-<van-cell center title="$ 34221" label="ID: 342324">
+<van-cell label="ID: 342324">
     <template #title>
         $ 34221
         <svg-icon :icon-class="showAmount ? 'show' : 'hidden'" @click="toggleShow()" style='width:16px; height:16px;' class="right-icon-account"></svg-icon>
@@ -148,7 +148,8 @@
 
 <script>
 import {
-    reactive,
+  defineComponent,
+    onMounted,
     ref,
 } from 'vue';
 import SvgIcon from '@/components/SvgIcon.vue';
@@ -158,13 +159,16 @@ import {
 import {
     copyToClipboard
 } from '@/utils/clipboard';
+import Web3Provider from '../../utils/Web3Provider';
 
-export default {
+export default defineComponent({
     components: {
         SvgIcon,
     },
     setup() {
         const router = useRouter();
+        const userInfo = ref();
+        userInfo.value = {};
 
         const showDeposit = ref(false);
         const showWithdraw = ref(false);
@@ -180,7 +184,16 @@ export default {
         const toggleShow = () => {
             showAmount.value = !showAmount.value;
         };
+
+        onMounted(async () =>{
+          userInfo.value = await Web3Provider.getInstance().getUserInfo();
+
+        });
+
+
+
         return {
+          userInfo,
             goTo,
             showDeposit,
             showWithdraw,
@@ -191,7 +204,7 @@ export default {
 
         };
     },
-};
+});
 </script>
 
 <style src='../../assets/css/Account.css'></style>
