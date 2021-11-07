@@ -1,7 +1,7 @@
 <template>
   <com-header :title='state.title'></com-header>
   <router-view/>
-  <com-tab-bar :defaultFocus='state.title'></com-tab-bar>
+  <com-tab-bar :default-path='state.fullPath'></com-tab-bar>
 </template>
 
 <script>
@@ -24,17 +24,20 @@ export default defineComponent({
     const route = useRoute();
     const state = reactive({
       title: '',
+      fullPath: '',
     });
     const { meta } = route;
-    console.log(meta);
     state.title = meta.title;
+    state.fullPath = route.fullPath;
 
     onBeforeRouteLeave(async (to, from) => {
       state.title = to.meta.title;
+      state.fullPath = to.fullPath;
     });
 
     onBeforeRouteUpdate(async (to, from) => {
       state.title = to.meta.title;
+      state.fullPath = to.fullPath;
     })
 
     return { state };

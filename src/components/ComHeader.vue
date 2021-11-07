@@ -2,7 +2,7 @@
   <van-nav-bar :border='false'>
     <template #left>
       <svg-icon icon-class='left-arrow'
-                style="width: 24px; height: 25px; margin-right: 9px;"></svg-icon>
+                style="width: 24px; height: 25px; margin-right: 9px;" @click='handleGoBack'></svg-icon>
       <span style='font-size: 17px; font-weight: 600;'>{{ title }}</span>
     </template>
     <template #right>
@@ -16,12 +16,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'comHeader',
   props: { title: String },
   setup() {
-    return {};
+    const router = useRouter();
+
+    function handleGoBack () {
+      router.go(-1);
+    }
+    return {handleGoBack};
   },
 });
 </script>
