@@ -1,8 +1,7 @@
 <template>
   <van-cell center is-link @click="showPicker = true" value="English">Language
     <template #icon>
-      <svg-icon icon-class='language' style='width:34px; height:34px;'
-                class="right-icon-account"></svg-icon>
+      <svg-icon icon-class='language' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
     </template>
     <template #right-icon>
       <span class="right-icon-account">English</span>
@@ -37,6 +36,8 @@
             <van-radio checked-color="#ee0a24" name="Japanese"/>
           </template>
         </van-cell>
+        <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
+        <div class="account-safe-area-bottom"></div>
       </van-cell-group>
     </van-radio-group>
 
@@ -44,30 +45,36 @@
 </template>
 
 <script>
-import { ref, defineComponent } from 'vue';
+  import {
+    defineComponent,
+    renderSlot,
+  } from 'vue';
+  import {
+    ref,
+  } from 'vue';
 
-export default defineComponent({
-  name: ' LanguagePicker',
-  setup() {
-    const showPicker = ref(false);
+  export default {
+    name: ' LanguagePicker',
+    setup() {
+      const showPicker = ref(false);
 
-    const checked = ref('English');
-    return {
-      checked,
-      showPicker,
-    };
-  },
-});
+      const checked = ref('English');
+      return {
+        checked,
+        showPicker,
+      };
+    },
+  };
 </script>
 
 <style scoped>
-.van-radio__icon {
-  color: black;
-}
+  .van-radio__icon {
+    color: black;
+  }
 
-.van-cell-no-border::after {
-  border: 0;
+  .van-cell-no-border::after {
+    border: 0;
 
-}
+  }
 
 </style>
