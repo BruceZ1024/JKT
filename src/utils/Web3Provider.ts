@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+import { ethers } from 'ethers';
 import { EventHandler } from './EventManager';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { JKT_TOKEN_ADDRESS, MINER_TOKEN_ADDRESS } from '@/const/address/tokenAddress';
@@ -222,17 +223,46 @@ export default class Web3Provider {
     };
   }
 
-  public async getUpdateVipPrice(updateLevel: number) {
+  /**
+   * know the price of update vip
+   * @param updateLevel
+   */
+  public async updateVipPrice(updateLevel: number) {
     await this.prepareConnectWallet();
     const price = await this.minerContract.methods.getVipPrice(this.currentAccount, updateLevel).call();
     console.info(`price: ${price}`);
     return price;
   }
 
-  public async updateVipLevel(newLevel: number) {
+  /**
+   * update vip level
+   * @param newLevel
+   */
+  public async updateVip(newLevel: number) {
     await this.prepareConnectWallet();
     const res = await this.minerContract.methods.buyVip(newLevel).send({ from: this.currentAccount });
     console.log(res);
+  }
+
+  /**
+   * get information of stake pool
+   * @param lpToken
+   */
+  public async getStakePoolInfo(lpToken) {
+    const res = await this.minerContract.methods.getLpInfo(this.currentAccount, lpToken).call();
+    console.info(`getLpInfo ${JSON.stringify(res)}`);
+  }
+
+
+  /**
+   * transfer
+   * @param lpToken
+   * @param amount
+   * @param percent
+   */
+  public async transferLpTokenToJKT(lpToken, amount, percent) {
+    const res = await this.minerContract.methods.getLpPayJKT(lpToken, amount, percent).send({ from: this.currentAccount });
+    console.info(`getLpPayJKT ${JSON.stringify(res)}`);
   }
 
   /**
@@ -255,12 +285,42 @@ export default class Web3Provider {
     return decimals;
   }
 
+  /**
+   * get JKT totalSupply
+   */
   public async getJKTTotal() {
     await this.prepareConnectWallet();
     const total = await this.jktContract.methods.totalSupply().call();
     console.info(`total: ${total}`);
     return total;
   }
+
+  /**
+   * check allowance
+   */
+  public async checkAllowance() {
+    try {
+      await this.prepareConnectWallet();
+      const allowance: string = await this.jktContract.methods.allowance(this.currentAccount, MINER_TOKEN_ADDRESS).call();
+      return allowance;
+    } catch (error) {
+      console.info(error.errorCode);
+      return '0';
+    }
+  }
+
+  /**
+   * get approve permission
+   */
+  public async getApprove() {
+    try {
+      await this.prepareConnectWallet();
+      return await this.jktContract.methods.approve(MINER_TOKEN_ADDRESS, ethers.constants.MaxUint256).send({ from: this.currentAccount });
+    } catch (error) {
+      return false;
+    }
+  }
+
 
   /**
    * get current account address
