@@ -14,12 +14,16 @@
     </template>
 
 </van-cell>
-<van-cell title="" :label="'Address: ' + userAddress">
+<van-cell title="" >
+    <template #label>
+       <div class="van-ellipsis">Address: {{userAddress}}</div>
+    </template>
     <template #right-icon>
         <span @click="copyToClipboard($event, userAddress)">
             <svg-icon icon-class='copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
         </span>
     </template>
+    
 </van-cell>
 <!-- <van-cell-group inset class="van-cell-group-margin">
 
