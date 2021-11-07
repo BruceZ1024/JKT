@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import { EventHandler } from './EventManager';
 import detectEthereumProvider from '@metamask/detect-provider';
-import { JKT_TOKEN_ADDRESS, MINER_TOKEN_ADDRESS, TEST_MINER_TOKEN_ADDRESS } from '@/const/address/tokenAddress';
+import { JKT_TOKEN_ADDRESS, MINER_TOKEN_ADDRESS } from '@/const/address/tokenAddress';
 
 const JKT_ABI = require('../const/abi/jkt_abi.json');
 const MINER_ABI = require('../const/abi/miner_abi.json');
@@ -120,7 +120,7 @@ export default class Web3Provider {
     web3.setProvider(this.provider);
 
     this.jktContract = new web3.eth.Contract(JKT_ABI, JKT_TOKEN_ADDRESS);
-    this.minerContract = new web3.eth.Contract(MINER_ABI, TEST_MINER_TOKEN_ADDRESS);
+    this.minerContract = new web3.eth.Contract(MINER_ABI, MINER_TOKEN_ADDRESS);
 
     console.log(this.jktContract, this.minerContract);
   }

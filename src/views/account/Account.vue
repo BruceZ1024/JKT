@@ -14,9 +14,9 @@
     </template>
 
 </van-cell>
-<van-cell title="" label="Address: dfasdouewoiruoqiwer798">
+<van-cell title="" :label="'Address: ' + userAddress">
     <template #right-icon>
-        <span @click="copyToClipboard($event, 'Address: dfasdouewoiruoqiwer798')">
+        <span @click="copyToClipboard($event, userAddress)">
             <svg-icon icon-class='copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
         </span>
     </template>
@@ -148,7 +148,7 @@
 
 <script>
 import {
-  defineComponent,
+    defineComponent,
     onMounted,
     ref,
 } from 'vue';
@@ -169,6 +169,8 @@ export default defineComponent({
         const router = useRouter();
         const userInfo = ref();
         userInfo.value = {};
+        const userAddress = ref();
+        userAddress.value = '';
 
         const showDeposit = ref(false);
         const showWithdraw = ref(false);
@@ -185,15 +187,15 @@ export default defineComponent({
             showAmount.value = !showAmount.value;
         };
 
-        onMounted(async () =>{
-          userInfo.value = await Web3Provider.getInstance().getUserInfo();
+        onMounted(async () => {
+            userInfo.value = await Web3Provider.getInstance().getUserInfo();
+            userAddress.value = await Web3Provider.getInstance().getAccountAddress();
 
         });
 
-
-
         return {
-          userInfo,
+            userInfo,
+            userAddress,
             goTo,
             showDeposit,
             showWithdraw,
