@@ -7,7 +7,7 @@
 </van-cell>
 <van-cell title="" label="Address: dfasdouewoiruoqiwer798">
     <template #right-icon>
-        <svg-icon icon-class='copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
+        <i><svg-icon icon-class='copy' style='width:13px; height:13px;' class="right-icon-account" @click="copyToClipboard($event, 'Address: dfasdouewoiruoqiwer798')"></svg-icon></i>
     </template>
 </van-cell>
 <van-tabs v-model:active="activeName">
@@ -21,13 +21,14 @@
                     <template #right-icon>
                         <div><span>JKT</span>
                             <br />
-                            <svg-icon icon-class='small-copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
+                            <i><svg-icon icon-class='small-copy' style='width:13px; height:13px;' class="right-icon-account" @click="copyToClipboard($event, item.account)"></svg-icon></i>
                         </div>
                     </template>
 
                 </van-cell>
                 <p class="transaction-date-label">{{item.dateTime}}</p>
             </van-cell-group>
+            <div class="account-safe-area-bottom"></div>
         </van-list>
     </van-tab>
     <van-tab title="Deposit" name="Deposit">
@@ -40,13 +41,14 @@
                     <template #right-icon>
                         <div><span>JKT</span>
                             <br />
-                            <svg-icon icon-class='small-copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
+                            <i><svg-icon icon-class='small-copy' style='width:13px; height:13px;' class="right-icon-account" @click="copyToClipboard($event, item.account)"></svg-icon></i>
                         </div>
                     </template>
 
                 </van-cell>
                 <p class="transaction-date-label">{{item.dateTime}}</p>
             </van-cell-group>
+            <div class="account-safe-area-bottom"></div>
         </van-list>
     </van-tab>
 </van-tabs>
@@ -61,6 +63,7 @@ import SvgIcon from '@/components/SvgIcon.vue';
 import {
     useRouter,
 } from 'vue-router';
+import {copyToClipboard} from '@/utils/clipboard'
 export default {
     components: {
         SvgIcon,
@@ -112,6 +115,7 @@ export default {
             withdrawFinished,
             depositLoading,
             depositFinished,
+            copyToClipboard,
         };
     },
 };

@@ -14,7 +14,7 @@
 </van-cell>
 <van-cell title="" label="Address: dfasdouewoiruoqiwer798">
     <template #right-icon>
-        <svg-icon icon-class='copy' style='width:13px; height:13px;' class="right-icon-account"></svg-icon>
+        <span @click="copyToClipboard($event, 'Address: dfasdouewoiruoqiwer798')"><svg-icon icon-class='copy' style='width:13px; height:13px;'  class="right-icon-account"></svg-icon></span>
     </template>
 </van-cell>
 <!-- <van-cell-group inset class="van-cell-group-margin">
@@ -143,7 +143,7 @@ import SvgIcon from '@/components/SvgIcon.vue';
 import {
     useRouter,
 } from 'vue-router';
-
+import {copyToClipboard} from '@/utils/clipboard'
 export default {
     components: {
         SvgIcon,
@@ -155,6 +155,7 @@ export default {
         const showWithdraw = ref(false);
         const showAmount = ref(true);
         const amountDeposit = ref('');
+        console.log(copyToClipboard)
         const goTo = (r, query) => {
             router.push({
                 path: r,
@@ -171,7 +172,8 @@ export default {
             showWithdraw,
             amountDeposit,
             showAmount,
-            toggleShow
+            toggleShow,
+            copyToClipboard
 
         };
     },

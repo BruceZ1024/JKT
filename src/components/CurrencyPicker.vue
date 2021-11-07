@@ -35,6 +35,8 @@
                     <van-radio checked-color="#ee0a24" name="JPY" />
                 </template>
             </van-cell>
+            <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
+            <div class="account-safe-area-bottom"></div>
         </van-cell-group>
     </van-radio-group>
 
