@@ -1,7 +1,7 @@
 <template>
 <van-cell label="ID: 342324">
     <template #title>
-        $ 34221
+        {{showAmount ? JKTBalance : '******'}}
         <svg-icon :icon-class="showAmount ? 'show' : 'hidden'" @click="toggleShow()" style='width:16px; height:16px;' class="right-icon-account"></svg-icon>
     </template>
     <template #icon>
@@ -125,12 +125,12 @@
         </template>
     </van-cell>
     <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
-    <van-cell center title="BSC Contract">
+    <van-cell center title="Community">
         <template #icon>
             <svg-icon icon-class='bsc-contract' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
         </template>
         <template #right-icon>
-            <van-button class="btn-small-account-min-width" type="danger" size="small">Copy</van-button>
+            <van-button class="btn-small-account-min-width" type="danger" size="small" @click="window.open('https://t.me/JokerManor_Metaverse')">Join Us</van-button>
         </template>
     </van-cell>
     <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
@@ -157,6 +157,7 @@ import {
     ref,
 } from 'vue';
 import SvgIcon from '@/components/SvgIcon.vue';
+import {formatCurrency} from '@/utils/baseUtils';
 import {
     useRouter,
 } from 'vue-router';
@@ -176,6 +177,10 @@ export default defineComponent({
         const userAddress = ref();
         userAddress.value = '';
 
+        const JKTBalance = ref();
+        JKTBalance.value = 0;
+        let actualBalance = 0
+
         const showDeposit = ref(false);
         const showWithdraw = ref(false);
         const showAmount = ref(true);
@@ -194,6 +199,7 @@ export default defineComponent({
         onMounted(async () => {
             userInfo.value = await Web3Provider.getInstance().getUserInfo();
             userAddress.value = await Web3Provider.getInstance().getAccountAddress();
+            JKTBalance.value = formatCurrency(await Web3Provider.getInstance().getJKTBalance(), '$');
 
         });
 
@@ -207,6 +213,9 @@ export default defineComponent({
             showAmount,
             toggleShow,
             copyToClipboard,
+            window,
+            JKTBalance,
+
 
         };
     },
