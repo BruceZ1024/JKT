@@ -162,6 +162,16 @@ export default class Web3Provider {
   }
 
   /**
+   * bind parent account
+   * @param parentAccount
+   */
+  public async bindParentAccount(parentAccount: string) {
+    await this.prepareConnectWallet();
+    const res = await this.minerContract.methods.bindParent(parentAccount).send({ from: this.currentAccount });
+    console.log(res);
+  }
+
+  /**
    * get user account information
    * eUserLevel = 1; // 用户vip等级
    * eSelfHash = 2; // 用户自己算力
@@ -181,45 +191,104 @@ export default class Web3Provider {
   }
 
   /**
+   * get lp information
+   * eTotalHashRate = 1; // 总算力
+   * eTotalLpHashRate = 2; // 总质押的算力
+   * eStartBlock = 3;
+   * eLpBurn = 4; // 质押burn的JKT
+   * eVipBurn = 5; // 买VIP burn的JKT
+   * eLastUpdateBlock = 6;
+   * eOneShareGet = 7;
+   * eOneShareScale = 8;
+   * eTotalMint = 9; // 总发放的收益
+   * eThresholdMutiple = 10;
+   */
+  public async getLpInformation() {
+    await this.prepareConnectWallet();
+    const res = await this.minerContract.methods.getLpInfo().call();
+    console.log(res);
+    const [eTotalHashRate, eTotalLpHashRate, eStartBlock, eLpBurn, eVipBurn, eLastUpdateBlock, eOneShareGet, eOneShareScale, eTotalMint, eThresholdMutiple] = res;
+    return {
+      eTotalHashRate,
+      eTotalLpHashRate,
+      eStartBlock,
+      eLpBurn,
+      eVipBurn,
+      eLastUpdateBlock,
+      eOneShareGet,
+      eOneShareScale,
+      eTotalMint,
+      eThresholdMutiple,
+    };
+  }
+
+  public async getUpdateVipPrice(updateLevel: number) {
+    await this.prepareConnectWallet();
+    const price = await this.minerContract.methods.getVipPrice(this.currentAccount, updateLevel).call();
+    console.info(`price: ${price}`);
+    return price;
+  }
+
+  public async updateVipLevel(newLevel: number) {
+    await this.prepareConnectWallet();
+    const res = await this.minerContract.methods.buyVip(newLevel).send({ from: this.currentAccount });
+    console.log(res);
+  }
+
+  /**
    * get JKT balance
    */
   public async getJKTBalance() {
+    await this.prepareConnectWallet();
     const bal = await this.jktContract.methods.balanceOf(this.currentAccount).call();
     console.info(`balance: ${bal}`);
+    return bal;
   }
 
   /**
    * get JKT decimals
    */
   public async getJKTDecimals() {
+    await this.prepareConnectWallet();
     const decimals = await this.jktContract.methods.decimals().call();
     console.info(`decimals: ${decimals}`);
+    return decimals;
   }
 
   public async getJKTTotal() {
+    await this.prepareConnectWallet();
     const total = await this.jktContract.methods.totalSupply().call();
     console.info(`total: ${total}`);
+    return total;
+  }
+
+  /**
+   * get current account address
+   */
+  public async getAccountAddress() {
+    this.currentAccount && await this.prepareConnectWallet();
+    return this.currentAccount;
   }
 }
 
 /**
-JKT 地址 0x7f73f70a32394807C9cC06dAA33e6D25084B66Ea
-领BNB空投进行测试
-https://testnet.binance.org/faucet-smart
+ JKT 地址 0x7f73f70a32394807C9cC06dAA33e6D25084B66Ea
+ 领BNB空投进行测试
+ https://testnet.binance.org/faucet-smart
 
-  tp metamask
-github
+ tp metamask
+ github
 
-绑定上级
-user 自己的地址
-parent 上级地址
-function bindParent(address user, address parent)
+ 绑定上级
+ user 自己的地址
+ parent 上级地址
+ function bindParent(address user, address parent)
 
-获取上级地址
-function getParent(address user) external view returns (address);
+ 获取上级地址
+ function getParent(address user) external view returns (address);
 
-获取用户数据
-function getUserInfoEx() public view returns (uint256[] memory) {
+ 获取用户数据
+ function getUserInfoEx() public view returns (uint256[] memory) {
   返回
   uint constant eUserLevel = 1; // 用户vip等级
   uint constant eSelfHash = 2; // 用户自己算力
@@ -282,4 +351,4 @@ function getUserInfoEx() public view returns (uint256[] memory) {
 
         提取本金
         function takeBack(address lpToken, uint256 pct)
-**/
+ **/
