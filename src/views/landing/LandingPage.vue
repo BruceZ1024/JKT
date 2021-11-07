@@ -44,8 +44,8 @@
                 <li class='mobile-hidden'>
                     <a class='page-scroll whitepaper' href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf'>Whitepaper</a>
                 </li>
-                <li class='mobile-hidden'>
-                    <a id='launchapp' class='page-scroll launchapp' href='#' onmouseover='onHover()' onmouseout='offHover()'>Launch
+                <li>
+                    <a id='launchapp' class='page-scroll launchapp' @click='onClick'>Launch
                         App</a>
                 </li>
             </ul>
@@ -586,11 +586,12 @@
 
 <script lang="ts">
 import {
-    reactive,
-    defineComponent
+  reactive,
+  defineComponent, onMounted,
 } from 'vue';
 import SvgIcon from '@/components/SvgIcon.vue';
 import * as echarts from 'echarts'
+import { useRouter } from 'vue-router';
 export default defineComponent({
     name: 'landingPage',
     components: {
@@ -620,231 +621,239 @@ export default defineComponent({
             }
         }
 
+        function drawPie() {
+        // 基于准备好的dom，初始化echarts实例
+        const chartDom: HTMLElement = document.getElementById('jktchart') as HTMLElement;
+        var myChart = echarts.init(chartDom);
+        var option;
+        const width = window.innerWidth;
+
+        if (width < 768) {
+          option = {
+            title: {
+              text: ['{a|TOTAL TOKEN ISSUANCE}', '{b|1,000,000,000 JKT}'].join('\n'),
+              left: 'center',
+              top: 'middle',
+              textStyle: {
+                rich: {
+                  a: {
+                    color: '#CD2A16',
+                    lineHeight: 15,
+                    height: 20,
+                    fontSize: 4,
+                    padding: [10, 10],
+                    fontFamily: 'Open Sans',
+                    fontWeight: 'bold',
+                  },
+                  b: {
+                    color: '#FFFFFF',
+                    fontSize: 9,
+                    fontWeight: 'bold',
+                    padding: 10,
+                    fontFamily: 'Open Sans',
+                  },
+                },
+              },
+            },
+            tooltip: {
+              trigger: 'item',
+            },
+            series: [{
+              name: 'JKT',
+              type: 'pie',
+              radius: ['55%', '70%'],
+              data: [{
+                value: 50,
+                name: 'DeFi'
+              },
+                {
+                  value: 40,
+                  name: 'GameFi'
+                },
+                {
+                  value: 3,
+                  name: 'Marketing Promotion'
+                },
+                {
+                  value: 4,
+                  name: 'Early Investor'
+                },
+                {
+                  value: 2,
+                  name: 'Technical Team'
+                },
+                {
+                  value: 1,
+                  name: 'Pre-sale before launch'
+                },
+              ],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+                },
+              },
+              labelLine: {
+                length: 30,
+                length2: 20,
+              },
+              clockwise: true,
+              startAngle: 270,
+              label: {
+                formatter: '{name|{b}: {c}%}',
+                rich: {
+                  name: {
+                    fontSize: 6,
+                    color: 'white',
+                    fontWeight: 'normal',
+                  },
+                },
+              },
+              color: [
+                '#CD2A16',
+                '#5759627F',
+                '#575962',
+                '#9D9D9D',
+                '#D8D8D8',
+                '#FFFFFF',
+                '#fc8452',
+                '#9a60b4',
+                '#ea7ccc',
+              ],
+            }, ],
+          };
+        } else {
+          option = {
+            title: {
+              text: [
+                '{a|TOTAL TOKEN ISSUANCE}',
+                '{b|1,000,000,000 JKT}',
+                '{c|50% DeFi mining | 40% in-game mining\n' +
+                '|10% Technical team, investors & makreting fees}',
+              ].join('\n'),
+              left: 'center',
+              top: 'middle',
+              textStyle: {
+                rich: {
+                  a: {
+                    color: '#CD2A16',
+                    lineHeight: 15,
+                    height: 20,
+                    padding: [10, 10],
+                    fontFamily: 'Open Sans',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  },
+                  b: {
+                    color: '#FFFFFF',
+                    fontSize: 32,
+                    fontWeight: 'bold',
+                    padding: 10,
+                    fontFamily: 'Open Sans',
+                  },
+                  c: {
+                    color: '#979797',
+                    fontSize: 14,
+                    padding: 10,
+                    fontFamily: 'Open Sans',
+                    fontWeight: 'normal',
+                  },
+                },
+              },
+            },
+            tooltip: {
+              trigger: 'item',
+            },
+            series: [{
+              name: 'JKT',
+              type: 'pie',
+              radius: ['55%', '70%'],
+              data: [{
+                value: 50,
+                name: 'DeFi'
+              },
+                {
+                  value: 40,
+                  name: 'GameFi'
+                },
+                {
+                  value: 3,
+                  name: 'Marketing Promotion'
+                },
+                {
+                  value: 4,
+                  name: 'Early Investor'
+                },
+                {
+                  value: 2,
+                  name: 'Technical Team'
+                },
+                {
+                  value: 1,
+                  name: 'Pre-sale before launch'
+                },
+              ],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+                },
+              },
+              labelLine: {
+                length: 70,
+                length2: 50,
+              },
+              clockwise: true,
+              startAngle: 270,
+              label: {
+                formatter: '{name|{b}: {c}%}',
+                rich: {
+                  name: {
+                    fontSize: 18,
+                    color: 'white',
+                    fontWeight: 'normal',
+                  },
+                },
+              },
+              color: [
+                '#CD2A16',
+                '#5759627F',
+                '#575962',
+                '#9D9D9D',
+                '#D8D8D8',
+                '#FFFFFF',
+                '#fc8452',
+                '#9a60b4',
+                '#ea7ccc',
+              ],
+            }, ],
+          };
+        }
+
+        option && myChart.setOption(option);
+      }
+
+        const router = useRouter();
+        function onClick() {
+          router.push({
+            path: '/splashScreen',
+          });
+        }
+
+        onMounted(() => {
+          drawPie();
+        })
+
         return {
             imageUrls,
             returnHome,
             returnAbout,
             returnTokenMetrics,
+            onClick,
         };
     },
-    mounted() {
-        this.drawPie();
-    },
-    methods: {
-        drawPie() {
-            // 基于准备好的dom，初始化echarts实例
-            const chartDom: HTMLElement = document.getElementById('jktchart') as HTMLElement;
-            var myChart = echarts.init(chartDom);
-            var option;
-            const width = window.innerWidth;
-
-            if (width < 768) {
-                option = {
-                    title: {
-                        text: ['{a|TOTAL TOKEN ISSUANCE}', '{b|1,000,000,000 JKT}'].join('\n'),
-                        left: 'center',
-                        top: 'middle',
-                        textStyle: {
-                            rich: {
-                                a: {
-                                    color: '#CD2A16',
-                                    lineHeight: 15,
-                                    height: 20,
-                                    fontSize: 4,
-                                    padding: [10, 10],
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: 'bold',
-                                },
-                                b: {
-                                    color: '#FFFFFF',
-                                    fontSize: 9,
-                                    fontWeight: 'bold',
-                                    padding: 10,
-                                    fontFamily: 'Open Sans',
-                                },
-                            },
-                        },
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                    },
-                    series: [{
-                        name: 'JKT',
-                        type: 'pie',
-                        radius: ['55%', '70%'],
-                        data: [{
-                                value: 50,
-                                name: 'DeFi'
-                            },
-                            {
-                                value: 40,
-                                name: 'GameFi'
-                            },
-                            {
-                                value: 3,
-                                name: 'Marketing Promotion'
-                            },
-                            {
-                                value: 4,
-                                name: 'Early Investor'
-                            },
-                            {
-                                value: 2,
-                                name: 'Technical Team'
-                            },
-                            {
-                                value: 1,
-                                name: 'Pre-sale before launch'
-                            },
-                        ],
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)',
-                            },
-                        },
-                        labelLine: {
-                            length: 30,
-                            length2: 20,
-                        },
-                        clockwise: true,
-                        startAngle: 270,
-                        label: {
-                            formatter: '{name|{b}: {c}%}',
-                            rich: {
-                                name: {
-                                    fontSize: 6,
-                                    color: 'white',
-                                    fontWeight: 'normal',
-                                },
-                            },
-                        },
-                        color: [
-                            '#CD2A16',
-                            '#5759627F',
-                            '#575962',
-                            '#9D9D9D',
-                            '#D8D8D8',
-                            '#FFFFFF',
-                            '#fc8452',
-                            '#9a60b4',
-                            '#ea7ccc',
-                        ],
-                    }, ],
-                };
-            } else {
-                option = {
-                    title: {
-                        text: [
-                            '{a|TOTAL TOKEN ISSUANCE}',
-                            '{b|1,000,000,000 JKT}',
-                            '{c|50% DeFi mining | 40% in-game mining\n' +
-                            '|10% Technical team, investors & makreting fees}',
-                        ].join('\n'),
-                        left: 'center',
-                        top: 'middle',
-                        textStyle: {
-                            rich: {
-                                a: {
-                                    color: '#CD2A16',
-                                    lineHeight: 15,
-                                    height: 20,
-                                    padding: [10, 10],
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 14,
-                                    fontWeight: 'bold',
-                                },
-                                b: {
-                                    color: '#FFFFFF',
-                                    fontSize: 32,
-                                    fontWeight: 'bold',
-                                    padding: 10,
-                                    fontFamily: 'Open Sans',
-                                },
-                                c: {
-                                    color: '#979797',
-                                    fontSize: 14,
-                                    padding: 10,
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: 'normal',
-                                },
-                            },
-                        },
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                    },
-                    series: [{
-                        name: 'JKT',
-                        type: 'pie',
-                        radius: ['55%', '70%'],
-                        data: [{
-                                value: 50,
-                                name: 'DeFi'
-                            },
-                            {
-                                value: 40,
-                                name: 'GameFi'
-                            },
-                            {
-                                value: 3,
-                                name: 'Marketing Promotion'
-                            },
-                            {
-                                value: 4,
-                                name: 'Early Investor'
-                            },
-                            {
-                                value: 2,
-                                name: 'Technical Team'
-                            },
-                            {
-                                value: 1,
-                                name: 'Pre-sale before launch'
-                            },
-                        ],
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)',
-                            },
-                        },
-                        labelLine: {
-                            length: 70,
-                            length2: 50,
-                        },
-                        clockwise: true,
-                        startAngle: 270,
-                        label: {
-                            formatter: '{name|{b}: {c}%}',
-                            rich: {
-                                name: {
-                                    fontSize: 18,
-                                    color: 'white',
-                                    fontWeight: 'normal',
-                                },
-                            },
-                        },
-                        color: [
-                            '#CD2A16',
-                            '#5759627F',
-                            '#575962',
-                            '#9D9D9D',
-                            '#D8D8D8',
-                            '#FFFFFF',
-                            '#fc8452',
-                            '#9a60b4',
-                            '#ea7ccc',
-                        ],
-                    }, ],
-                };
-            }
-
-            option && myChart.setOption(option);
-        }
-    }
 });
 </script>
 
