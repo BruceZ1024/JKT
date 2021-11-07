@@ -10,12 +10,12 @@
   "dependencies": {
     "@metamask/detect-provider": "^1.2.0",
     "axios": "^0.24.0",
+    "clipboard": "^2.0.8",
     "core-js": "^3.6.5",
     "vant": "^3.2.7",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
-    "web3": "^1.6.0",
-    "clipboard": "^2.0.8"
+    "web3": "^1.6.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
