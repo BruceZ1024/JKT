@@ -196,6 +196,7 @@ export default defineComponent({
 });
 </script>
 
+<style src='../../assets/css/Account.css'></style>
 <style scoped>
 .van-popup-fixed-height {
   min-height: 300px;
