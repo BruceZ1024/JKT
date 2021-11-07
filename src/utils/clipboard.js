@@ -1,7 +1,6 @@
 import Clipboard from 'clipboard';
 import { Toast } from 'vant';
 export function copyToClipboard(e, text) {
-  console.log(e.target)
   let clipboard;
   if (e && e.target.localName == "svg"){
     clipboard = new Clipboard(e.target.parentNode, { text: () => text })

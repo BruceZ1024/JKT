@@ -46,7 +46,7 @@
         </van-cell>
         <van-cell-group class="van-popup-fixed-height">
             <van-cell-group inset class="account-cell-group-dark ">
-                <van-field class="account-cell-dark" v-model="amountDeposit" center clearable label="" placeholder="Enter Amount">
+                <van-field class="account-cell-dark" v-model="amountDeposit" type="number" center clearable label="" placeholder="Enter Amount">
                     <template #button>
                         <van-button size="mini" color="#191A1E">
                             <div>
@@ -75,7 +75,7 @@
         </van-cell>
         <van-cell-group class="van-popup-fixed-height">
             <van-cell-group inset class="account-cell-group-dark ">
-                <van-field class="account-cell-dark" v-model="amountDeposit" center clearable label="" placeholder="Enter Amount">
+                <van-field class="account-cell-dark" v-model="amountDeposit" type="number" center clearable label="" placeholder="Enter Amount">
                     <template #button>
                         <van-button size="mini" color="#191A1E">
                             <div>
@@ -132,6 +132,7 @@
         </template>
     </van-cell>
 </van-cell-group>
+<div class="account-safe-area-bottom"></div>
 </template>
 
 <script>
@@ -155,7 +156,6 @@ export default {
         const showWithdraw = ref(false);
         const showAmount = ref(true);
         const amountDeposit = ref('');
-        console.log(copyToClipboard)
         const goTo = (r, query) => {
             router.push({
                 path: r,
