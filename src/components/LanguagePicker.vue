@@ -19,7 +19,7 @@
           </template>
         </van-cell>
         <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
-        <van-cell title="Chinese" clickable @click="checked = 'Chinese'">
+        <!-- <van-cell title="Chinese" clickable @click="checked = 'Chinese'">
           <template #right-icon>
             <van-radio checked-color="#ee0a24" name="Chinese"/>
           </template>
@@ -36,7 +36,7 @@
             <van-radio checked-color="#ee0a24" name="Japanese"/>
           </template>
         </van-cell>
-        <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
+        <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider> -->
         <div class="account-safe-area-bottom"></div>
       </van-cell-group>
     </van-radio-group>
