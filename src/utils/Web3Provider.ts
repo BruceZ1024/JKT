@@ -201,3 +201,85 @@ export default class Web3Provider {
     console.info(`total: ${total}`);
   }
 }
+
+/**
+JKT 地址 0x7f73f70a32394807C9cC06dAA33e6D25084B66Ea
+领BNB空投进行测试
+https://testnet.binance.org/faucet-smart
+
+  tp metamask
+github
+
+绑定上级
+user 自己的地址
+parent 上级地址
+function bindParent(address user, address parent)
+
+获取上级地址
+function getParent(address user) external view returns (address);
+
+获取用户数据
+function getUserInfoEx() public view returns (uint256[] memory) {
+  返回
+  uint constant eUserLevel = 1; // 用户vip等级
+  uint constant eSelfHash = 2; // 用户自己算力
+  uint constant eTeamHash = 3; // 用户团队算力
+  uint constant ePendingCoin = 4; // 用户待领取收益
+  uint constant eTakedCoin = 5;
+  uint constant eBurnJKT = 6;
+
+  获取挖矿的总数据
+  function getLpInfo() public  view returns (uint256[] memory)
+  返回
+  uint constant eTotalHashRate = 1; // 总算力
+  uint constant eTotalLpHashRate = 2; // 总质押的算力
+  uint constant eStartBlock = 3;
+  uint constant eLpBurn = 4; // 质押burn的JKT
+  uint constant eVipBurn = 5; // 买VIP burn的JKT
+  uint constant eLastUpdateBlock = 6;
+  uint constant eOneShareGet = 7;
+  uint constant eOneShareScale = 8;
+  uint constant eTotalMint = 9; // 总发放的收益
+  uint constant eThresholdMutiple = 10;
+
+  获取vip价格
+  user 用户地址
+  newLevel 新的vip级别(有可能从别的vip级别升级过来,这个是差价)
+  返回 vip价格
+  function getVipPrice(address user, uint256 newLevel) public view returns (uint256) {
+
+    买vip
+    function buyVip(uint256 newLevel) public
+
+    质押时获取应该质押多少JKT
+    lpToken 质押的另外的币的地址
+    amount 币数量
+    percent 质押比例
+    function getLpPayJKT(address lpToken, uint256 amount, uint256 percent) public view returns (uint256) {
+      返回 JKT数量
+
+      获取质押池信息
+      user 用户
+      lpToken 质押币
+      function getLpInfo(address user, address lpToken) public view returns (uint256[4] memory)
+      返回
+      0 质押币数量
+      1 JKT数量
+      2 算力
+      3 手续费
+
+      获取质押池不同算力权重
+      function getHashRateByPct(address lpToken, uint256 pct) public view returns(uint256) {
+
+        获取质押收益
+        function withdrawLpReward() public
+
+        质押
+        lpToken 另一个币的地址
+        amount 数量
+        percent 比例
+        function deposit(address lpToken, uint256 amount, uint256 percent)
+
+        提取本金
+        function takeBack(address lpToken, uint256 pct)
+**/
