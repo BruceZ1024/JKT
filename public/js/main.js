@@ -196,11 +196,3 @@ function copyContract() {
   var popup = document.getElementById('myPopup');
   popup.classList.toggle('show');
 }
-
-function onHover() {
-  document.getElementById('launchapp').innerText = 'Coming Soon';
-}
-
-function offHover() {
-  document.getElementById('launchapp').innerText = 'Launch App';
-}
