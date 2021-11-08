@@ -64,7 +64,8 @@
                         @click='handleRedeem(index)'>
               Redeem
             </van-button>
-            <van-button class='farm-btn-stake' type='danger' :loading='false' @click=''>
+            <van-button class='farm-btn-stake' type='danger' :loading='false'
+                        @click='handleStake(index)'>
               Stake
             </van-button>
           </van-row>
@@ -72,21 +73,28 @@
       </van-row>
     </van-list>
   </div>
-  <authorize-popup :auth-show='state.authPopShow' :bit-checked='state.bitChecked' @auth-pop-close='handleAutoClose' :jkt-checked='state.jktChecked'></authorize-popup>
+  <authorize-popup :auth-show='state.authPopShow' :bit-checked='state.bitChecked'
+                   @auth-pop-close='handleAutoClose'
+                   :jkt-checked='state.jktChecked'></authorize-popup>
+  <redeem-popup :redeem-show='state.redeemShow' :farm-data='farmLiData'
+                @redeem-pop-close='handleRedeemClose'></redeem-popup>
 </template>
 
 <script lang='ts'>
 
 import { defineComponent, reactive, ref } from 'vue';
 import AuthorizePopup from '@/components/AuthorizePopup.vue';
+import RedeemPopup from '@/components/RedeemPopup.vue';
+
 
 export default defineComponent({
   name: 'deFi',
-  components: { AuthorizePopup },
+  components: { AuthorizePopup, RedeemPopup },
   setup() {
     const state = reactive({
       listLoad: false,
       finished: true,
+      redeemShow: false,
       authPopShow: false,
       bitChecked: false,
       jktChecked: false,
@@ -103,20 +111,39 @@ export default defineComponent({
       },
     ]);
 
+    const farmLiData = ref();
+
     function onLoad() {
       console.log('onload');
     }
 
     function handleRedeem(index: number) {
+      state.redeemShow = true;
+      farmLiData.value = list.value[index];
+    }
+
+    function handleStake(index: number) {
       state.authPopShow = true;
     }
 
     function handleAutoClose() {
-      console.log(111);
       state.authPopShow = false;
     }
 
-    return { state, list, onLoad, handleRedeem, handleAutoClose };
+    function handleRedeemClose() {
+      state.redeemShow = false;
+    }
+
+    return {
+      state,
+      list,
+      farmLiData,
+      onLoad,
+      handleRedeem,
+      handleAutoClose,
+      handleStake,
+      handleRedeemClose,
+    };
   },
 });
 </script>
