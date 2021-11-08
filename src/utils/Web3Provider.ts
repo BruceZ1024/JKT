@@ -2,7 +2,13 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import { EventHandler } from './EventManager';
 import detectEthereumProvider from '@metamask/detect-provider';
-import { JKT_TOKEN_ADDRESS, MINER_TOKEN_ADDRESS } from '@/const/address/tokenAddress';
+import {
+  JKT_TOKEN_ADDRESS,
+  MINER_TOKEN_ADDRESS,
+  TEST_JKT_TOKEN_ADDRESS,
+  TEST_USDT_TOKEN_ADDRESS,
+  TEST_MINER_TOKEN_ADDRESS,
+} from '@/const/address/tokenAddress';
 
 const JKT_ABI = require('../const/abi/jkt_abi.json');
 const MINER_ABI = require('../const/abi/miner_abi.json');
@@ -15,9 +21,15 @@ export default class Web3Provider {
   private jktContract: any;
   private minerContract: any;
   private eventManager: any;
+  private readonly jktTokenAddress: string;
+  private readonly minerTokenAddress: string;
+  private readonly usdtTokenAddress: string;
 
   public constructor() {
     this.eventManager = EventHandler;
+    this.jktTokenAddress = TEST_JKT_TOKEN_ADDRESS;
+    this.minerTokenAddress = TEST_MINER_TOKEN_ADDRESS;
+    this.usdtTokenAddress = TEST_USDT_TOKEN_ADDRESS;
   }
 
   public static getInstance(): Web3Provider {
@@ -121,8 +133,8 @@ export default class Web3Provider {
     const web3 = new Web3();
     web3.setProvider(this.provider);
 
-    this.jktContract = new web3.eth.Contract(JKT_ABI, JKT_TOKEN_ADDRESS);
-    this.minerContract = new web3.eth.Contract(MINER_ABI, MINER_TOKEN_ADDRESS);
+    this.jktContract = new web3.eth.Contract(JKT_ABI, this.jktTokenAddress);
+    this.minerContract = new web3.eth.Contract(MINER_ABI, this.minerTokenAddress);
 
     console.log(this.jktContract, this.minerContract);
   }
@@ -343,7 +355,7 @@ export default class Web3Provider {
   public async checkAllowance() {
     try {
       await this.prepareConnectWallet();
-      const allowance: string = await this.jktContract.methods.allowance(this.currentAccount, MINER_TOKEN_ADDRESS).call();
+      const allowance: string = await this.jktContract.methods.allowance(this.currentAccount, this.minerTokenAddress).call();
       return allowance;
     } catch (error) {
       console.info(error.errorCode);
@@ -357,7 +369,7 @@ export default class Web3Provider {
   public async getApprove() {
     try {
       await this.prepareConnectWallet();
-      return await this.jktContract.methods.approve(MINER_TOKEN_ADDRESS, ethers.constants.MaxUint256).send({ from: this.currentAccount });
+      return await this.jktContract.methods.approve(this.minerTokenAddress, ethers.constants.MaxUint256).send({ from: this.currentAccount });
     } catch (error) {
       return false;
     }

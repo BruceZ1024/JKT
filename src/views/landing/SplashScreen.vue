@@ -17,32 +17,33 @@
     </div>
   </div>
   <!-- Active Your Address pop up -->
-<van-popup class="van-popup-fixed-height" v-model:show="showAddress" round position="bottom" closeable>
+  <van-popup class="van-popup-fixed-height" v-model:show="showAddress" round position="bottom" closeable>
     <van-cell title="Active Your Address" class="van-cell-no-border">
     </van-cell>
     <van-cell-group class="van-popup-fixed-height">
 
-        <div class="account-label-container">
-            <van-cell-group inset class="account-cell-group-dark ">
-                <van-field class="account-cell-dark" v-model="invitation" center clearable label="" placeholder="Insert invitation address">
-                </van-field>
-            </van-cell-group>
-        </div>
-        <van-cell>
-            <van-button type="danger" block @click="active">Activate</van-button>
-        </van-cell>
-        <div class="account-safe-area-bottom"></div>
+      <div class="account-label-container">
+        <van-cell-group inset class="account-cell-group-dark ">
+          <van-field class="account-cell-dark" v-model="invitation" center clearable label=""
+                     placeholder="Insert invitation address">
+          </van-field>
+        </van-cell-group>
+      </div>
+      <van-cell>
+        <van-button type="danger" block @click="active">Activate</van-button>
+      </van-cell>
+      <div class="account-safe-area-bottom"></div>
     </van-cell-group>
-</van-popup>
+  </van-popup>
 </template>
 
 <script>
-  import '@/assets/css/Account.css'
+  import '@/assets/css/Account.css';
   import { defineComponent, ref } from 'vue';
   import SvgIcon from '@/components/SvgIcon.vue';
   import Web3Provider from '@/utils/Web3Provider';
   import { useRouter } from 'vue-router';
-import { Toast } from 'vant';
+  import { Toast } from 'vant';
 
   export default defineComponent(
     {
@@ -65,41 +66,41 @@ import { Toast } from 'vant';
           } else {
             showAddress.value = true;
             let search = router.currentRoute.value.query;
-            if (search && search.inviter){
+            if (search && search.inviter) {
               invitation.value = search.inviter;
             }
           }
         }
 
         async function active() {
-          const parentAccount = invitation.value && invitation.value.length == 42 ? invitation.value: undefined;
-          if (parentAccount){
+          const parentAccount = invitation.value && invitation.value.length === 42 ? invitation.value : undefined;
+          if (parentAccount) {
             const res = await Web3Provider.getInstance().bindParentAccount(parentAccount);
-            if (res){
+            if (res) {
               showAddress.value = true;
               const parent = await Web3Provider.getInstance().getParentInfo();
               // 0x0000000000000000000000000000000000000000 is no parent
               if (parent && parent !== '0x0000000000000000000000000000000000000000') {
-                Toast.success('Account Activation Success');
+                Toast.success('Account activation success!');
                 router.push({
                   path: '/home',
                 });
               } else {
-                Toast.fail('Faild to active your account!');
+                Toast.fail('Failed to active your account!');
               }
             } else {
-              Toast.fail('Faild to active your account!');
+              Toast.fail('Failed to active your account!');
             }
           }
         }
 
-        return { 
+        return {
           urls,
           checkParent,
           showAddress,
           invitation,
-          active
-          };
+          active,
+        };
       },
     },
   );
@@ -170,32 +171,32 @@ import { Toast } from 'vant';
     margin-right: 16px;
     font-size: 12pt;
     color: #575962;
-}
+  }
 
-.success-label {
+  .success-label {
     margin-left: 16px;
     margin-right: 16px;
     font-size: 10pt;
     color: #575962;
-}
+  }
 
-.invitation-label {
+  .invitation-label {
     color: #FFFFFF;
     font-size: 12pt;
     margin-left: 16px;
     margin-right: 16px;
-}
+  }
 
-.btn-account-invite-copy {
+  .btn-account-invite-copy {
     margin-left: 16px;
     margin-bottom: 40px;
-}
+  }
 
-.account-cell-group-dark {
+  .account-cell-group-dark {
     background-color: #191A1E;
-}
+  }
 
-.account-cell-group-dark .account-cell-dark {
+  .account-cell-group-dark .account-cell-dark {
     background-color: #191A1E;
-}
+  }
 </style>

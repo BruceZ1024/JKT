@@ -1,6 +1,7 @@
 export const JKT_TOKEN_ADDRESS = '0x7f73f70a32394807C9cC06dAA33e6D25084B66Ea';
 export const MINER_TOKEN_ADDRESS = '0x20e94C2090b68b679559C481153aEfD94358F497';
-//export const INVITE_SERVER_ADDRESS = 'https://jokerfi.com';
-export const INVITE_SERVER_ADDRESS = 'http://localhost:8080/#/landingPage';
-export const COMMUNITE_ADDRESS = 'https://t.me/JokerManor_Metaverse';
 
+// test chain
+export const TEST_JKT_TOKEN_ADDRESS = '0x8744d993162B543251879260B7029BfEBf6156Be';
+export const TEST_USDT_TOKEN_ADDRESS = '0x8994077E9Fc24d5140d04eC879362ba54Ee8289b';
+export const TEST_MINER_TOKEN_ADDRESS = '0xB95B69bB292aA1a1BEba8A3F99cd680F9D3f1BF8';
