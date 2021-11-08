@@ -135,7 +135,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/account/invite',
         name: 'AccountInvite',
         meta: {
-          title: 'Invite Frends',
+          title: 'Invite Friends',
           keepAlive: false,
         },
         component: () => import('@/views/account/AccountInvite.vue'),
