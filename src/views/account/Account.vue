@@ -29,9 +29,13 @@
 
   </van-cell-group> -->
 <van-cell-group inset class="van-cell-group-margin">
-    <van-cell center title="VIP Status">
+    <van-cell center >
+        <template #title>
+            <!-- <span>VIP Status:&nbsp;{{vipLevel[userInfo.eUserLevel]['level']}}</span> -->
+            <span>VIP Status:&nbsp;{{userInfo.eUserLevel ? vipLevel[userInfo.eUserLevel]['level'] : vipLevel['0']['level']}}</span>
+        </template>
         <template #icon>
-            <svg-icon icon-class='gold' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
+            <svg-icon :icon-class="userInfo.eUserLevel ? vipLevel[userInfo.eUserLevel]['icon'] : vipLevel['0']['icon']" style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
         </template>
         <template #right-icon>
             <van-button type="danger" class="btn-small-account-min-width" @click="goTo('/account/upgrade')" size="small">
@@ -166,6 +170,7 @@ import {
 } from '@/utils/clipboard';
 import Web3Provider from '../../utils/Web3Provider';
 import { COMMUNITE_ADDRESS } from '@/const/address/tokenAddress';
+import { vipLevel } from '@/const/vipLevel';
 
 export default defineComponent({
     components: {
@@ -193,6 +198,7 @@ export default defineComponent({
                 query: query || {},
             });
         };
+        console.log(vipLevel)
 
         const toggleShow = () => {
             showAmount.value = !showAmount.value;
@@ -218,9 +224,7 @@ export default defineComponent({
             window,
             JKTBalance,
             communityAdress,
-            
-
-
+            vipLevel
         };
     },
 });
