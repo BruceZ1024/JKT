@@ -106,69 +106,69 @@ export default defineComponent({
     font-size: 16px;
     font-weight: 400;
   }
-  .earning-subtitle {
-    margin-left: 37px;
-    font-size: 13px;
+.earning-subtitle {
+  margin-left: 37px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.earning-claimed {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 30px;
+}
+.game-list {
+  margin-top: 12px;
+  .game-li {
+    margin-bottom: 6px;
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .game-pic {
+    flex: 127;
+  }
+  .game-info {
+    flex: 204;
+    padding-left: 12px;
+  }
+  .game-name {
+    display:block;
+    font-size: 15px;
+    line-height: 18px;
     font-weight: 600;
   }
-  .earning-claimed {
-    display: inline-block;
-    font-size: 12px;
+  .game-power {
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 16px;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+  }
+  .game-btn {
+    width: 71px;
+    height: 24px;
+    background-color: $brand-red;
+    color: $white;
+    font-size:12px;
+    line-height: 24px;
     font-weight: 600;
-    color: #fff;
-    margin-top: 30px;
+    border-radius: 4px;
   }
-  .game-list {
-    margin-top: 12px;
-    .game-li {
-      margin-bottom: 6px;
-      padding: 0 16px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .game-pic {
-      flex: 127;
-    }
-    .game-info {
-      flex: 204;
-      padding-left: 12px;
-    }
-    .game-name {
-      display:block;
-      font-size: 15px;
-      line-height: 18px;
-      font-weight: 600;
-    }
-    .game-power {
-      margin-top: 8px;
-      font-size: 15px;
-      line-height: 16px;
-      font-weight: 400;
-      display: flex;
-      justify-content: space-between;
-    }
-    .game-btn {
-      width: 71px;
-      height: 24px;
-      background-color: $brand-red;
-      color: $white;
-      font-size:12px;
-      line-height: 24px;
-      font-weight: 600;
-      border-radius: 4px;
-    }
-    .game-tags {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      .tag {
-        font-size: 13px;
-        line-height: 20px;
-        color: #575962;
-        padding: 4px 6px;
-        text-align: center;
-        background-color: #0E0F11;
-      }
+  .game-tags {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    .tag {
+      font-size: 13px;
+      line-height: 20px;
+      color: #575962;
+      padding: 4px 6px;
+      text-align: center;
+      background-color: #0E0F11;
     }
   }
+}
 </style>
