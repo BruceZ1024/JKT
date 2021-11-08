@@ -72,47 +72,17 @@
       </van-row>
     </van-list>
   </div>
-  <van-popup v-model:show='state.authPopShow' closeable position='bottom' round class='farm-pop'
-             style='background-color: #202125;'>
-    <van-cell title='Authorize' class='van-cell-no-border pop-title'>
-    </van-cell>
-    <div class='pop-intro'>
-      You need to authorize the contracts to access the following assets.
-    </div>
-    <div class='pop-switch'>
-      <van-cell center title='BIT'>
-        <template #right-icon>
-          <van-switch v-model='state.bitChecked' size='22' active-color='#CD2A16' />
-        </template>
-      </van-cell>
-      <van-cell center title='JKT'>
-        <template #right-icon>
-          <van-switch v-model='state.jktChecked' size='22' active-color='#CD2A16'/>
-        </template>
-      </van-cell>
-      <van-cell center title=''>
-        <template #right-icon>
-          <span>GET TOKEN</span>
-        </template>
-      </van-cell>
-    </div>
-    <div class='pop-btns'>
-      <van-button class='button cancel-btn' type='default' :loading='false' @click='onAuthCancel'>
-        Cancel
-      </van-button>
-      <van-button class='button done-btn' type='danger' :loading='false' @click='onAuthDone'>
-        Done
-      </van-button>
-    </div>
-  </van-popup>
+  <authorize-popup :auth-show='state.authPopShow' :bit-checked='state.bitChecked' @auth-pop-close='handleAutoClose' :jkt-checked='state.jktChecked'></authorize-popup>
 </template>
 
 <script lang='ts'>
 
 import { defineComponent, reactive, ref } from 'vue';
+import AuthorizePopup from '@/components/AuthorizePopup.vue';
 
 export default defineComponent({
   name: 'deFi',
+  components: { AuthorizePopup },
   setup() {
     const state = reactive({
       listLoad: false,
@@ -141,7 +111,12 @@ export default defineComponent({
       state.authPopShow = true;
     }
 
-    return { state, list, onLoad, handleRedeem };
+    function handleAutoClose() {
+      console.log(111);
+      state.authPopShow = false;
+    }
+
+    return { state, list, onLoad, handleRedeem, handleAutoClose };
   },
 });
 </script>
@@ -265,53 +240,6 @@ export default defineComponent({
     line-height: 2;
     height: 24px;
     border-radius: 4px;
-  }
-}
-
-.farm-pop {
-  .pop-title {
-    font-size: 22px;
-    line-height: 2;
-    font-weight: 700;
-    color: #fff;
-    background-color: transparent;
-    &:after {
-      border-bottom: none;
-    }
-  }
-  .pop-intro {
-    font-size: 15px;
-    line-height: 21px;
-    font-weight: 300;
-    padding: 16px;
-  }
-  .pop-switch {
-    background-color: transparent;
-    .van-cell {
-      background-color: transparent;
-      color: $brand-red;
-      &:after {
-        border-bottom: none;
-      }
-    }
-  }
-  .pop-btns {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    .button {
-      width: 48%;
-      height: 44px;
-      line-height: 44px;
-      font-size: 15px;
-      font-weight: 700;
-      color: #fff;
-      border-radius: 4px;
-    }
-    .cancel-btn {
-      background-color: #979797;
-      border-color: #979797;
-    }
   }
 }
 </style>
