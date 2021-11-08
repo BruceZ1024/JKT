@@ -368,7 +368,7 @@ export default class Web3Provider {
    * get current account address
    */
   public async getAccountAddress() {
-    this.currentAccount && await this.prepareConnectWallet();
+    !this.currentAccount && await this.prepareConnectWallet();
     return this.currentAccount;
   }
 }
