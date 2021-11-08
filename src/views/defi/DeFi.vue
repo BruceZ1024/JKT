@@ -1,6 +1,6 @@
 <template>
   <van-cell-group inset>
-    <van-cell value='' label='' @click='' class='earning'>
+    <van-cell class='earning'>
       <template #title>
           <span class='cell-icon'>
           <svg-icon style='width:24px; height: 24px' icon-class='clarity_coin-bag-solid'></svg-icon>
@@ -38,28 +38,30 @@
               finished-text='没有更多了'
               @load='onLoad'
     >
-      <van-row type='flex' justify='space-between' class='farm-li' v-for='(item, index) in list' :key='item.farmName'>
+      <van-row type='flex' justify='space-between' class='farm-li' v-for='(item, index) in list'
+               :key='item.farmName'>
         <van-col span='4'>
           <van-image :src='item.farmPicUrl' class='farm-image'></van-image>
         </van-col>
         <van-col span='19' class='farm-info'>
           <van-row type='flex' justify='space-between' class='farm-info-title'>
-            <van-col>{{item.farmName}}</van-col>
-            <van-col>{{item.farmApy}}</van-col>
+            <van-col>{{ item.farmName }}</van-col>
+            <van-col>{{ item.farmApy }}</van-col>
           </van-row>
           <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-            <van-col>JKT Staked: {{item.jktStaked}}</van-col>
+            <van-col>JKT Staked: {{ item.jktStaked }}</van-col>
             <van-col>Rewards in JKT</van-col>
           </van-row>
           <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-            <van-col>BIT Staked: {{item.bitStaked}}</van-col>
+            <van-col>BIT Staked: {{ item.bitStaked }}</van-col>
           </van-row>
           <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
             <van-col>Power: 100%</van-col>
           </van-row>
-          <van-row type='flex' justify='space-between' >
+          <van-row type='flex' justify='space-between'>
             <span class='farm-info-power'>GET 300% POWER</span>
-            <van-button class='farm-btn-redeem' plain type='primary' :loading='false' @click=''>
+            <van-button class='farm-btn-redeem' plain type='primary' :loading='false'
+                        @click='handleRedeem(index)'>
               Redeem
             </van-button>
             <van-button class='farm-btn-stake' type='danger' :loading='false' @click=''>
@@ -70,6 +72,39 @@
       </van-row>
     </van-list>
   </div>
+  <van-popup v-model:show='state.authPopShow' closeable position='bottom' round class='farm-pop'
+             style='background-color: #202125;'>
+    <van-cell title='Authorize' class='van-cell-no-border pop-title'>
+    </van-cell>
+    <div class='pop-intro'>
+      You need to authorize the contracts to access the following assets.
+    </div>
+    <div class='pop-switch'>
+      <van-cell center title='BIT'>
+        <template #right-icon>
+          <van-switch v-model='state.bitChecked' size='22' active-color='#CD2A16' />
+        </template>
+      </van-cell>
+      <van-cell center title='JKT'>
+        <template #right-icon>
+          <van-switch v-model='state.jktChecked' size='22' active-color='#CD2A16'/>
+        </template>
+      </van-cell>
+      <van-cell center title=''>
+        <template #right-icon>
+          <span>GET TOKEN</span>
+        </template>
+      </van-cell>
+    </div>
+    <div class='pop-btns'>
+      <van-button class='button cancel-btn' type='default' :loading='false' @click='onAuthCancel'>
+        Cancel
+      </van-button>
+      <van-button class='button done-btn' type='danger' :loading='false' @click='onAuthDone'>
+        Done
+      </van-button>
+    </div>
+  </van-popup>
 </template>
 
 <script lang='ts'>
@@ -82,6 +117,9 @@ export default defineComponent({
     const state = reactive({
       listLoad: false,
       finished: true,
+      authPopShow: false,
+      bitChecked: false,
+      jktChecked: false,
     });
 
     const list = ref([
@@ -92,14 +130,18 @@ export default defineComponent({
         jktStaked: '100',
         bitStaked: '100',
 
-      }
-    ])
+      },
+    ]);
 
     function onLoad() {
       console.log('onload');
     }
 
-    return { state, list, onLoad };
+    function handleRedeem(index: number) {
+      state.authPopShow = true;
+    }
+
+    return { state, list, onLoad, handleRedeem };
   },
 });
 </script>
@@ -179,29 +221,35 @@ export default defineComponent({
     font-size: 17px;
     line-height: 2;
   }
+
   .farm-info {
     padding: 5px 0;
   }
+
   .farm-image {
     width: 100%;
     height: auto;
   }
+
   .farm-info-title {
     font-size: 16px;
     color: #fff;
     font-weight: 400;
   }
+
   .farm-info-subtitle {
     font-size: 12px;
     line-height: 2;
     font-weight: 400;
     color: #979797;
   }
+
   .farm-info-power {
     font-size: 12px;
     line-height: 2;
     font-weight: 600;
   }
+
   .farm-btn-redeem {
     font-size: 12px;
     line-height: 2;
@@ -211,6 +259,7 @@ export default defineComponent({
     border-color: $brand-red;
     background-color: transparent;
   }
+
   .farm-btn-stake {
     font-size: 12px;
     line-height: 2;
@@ -219,4 +268,50 @@ export default defineComponent({
   }
 }
 
+.farm-pop {
+  .pop-title {
+    font-size: 22px;
+    line-height: 2;
+    font-weight: 700;
+    color: #fff;
+    background-color: transparent;
+    &:after {
+      border-bottom: none;
+    }
+  }
+  .pop-intro {
+    font-size: 15px;
+    line-height: 21px;
+    font-weight: 300;
+    padding: 16px;
+  }
+  .pop-switch {
+    background-color: transparent;
+    .van-cell {
+      background-color: transparent;
+      color: $brand-red;
+      &:after {
+        border-bottom: none;
+      }
+    }
+  }
+  .pop-btns {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    .button {
+      width: 48%;
+      height: 44px;
+      line-height: 44px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      border-radius: 4px;
+    }
+    .cancel-btn {
+      background-color: #979797;
+      border-color: #979797;
+    }
+  }
+}
 </style>
