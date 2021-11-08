@@ -47,9 +47,8 @@
 </template>
 
 <script>
-import { reactive, watchEffect } from 'vue';
+import { reactive, watchEffect, defineComponent } from 'vue';
 
-const { defineComponent } = require('vue');
 export default defineComponent({
   name: 'redeemPopup',
   props: { redeemShow: Boolean, farmData: Object },

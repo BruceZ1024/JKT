@@ -40,7 +40,7 @@ import { defineComponent, reactive, watchEffect } from 'vue';
 export default defineComponent({
   name: 'authorizePopup',
   props: {authShow: Boolean, bitChecked: Boolean, jktChecked: Boolean},
-  emits: ['authPopClose'],
+  emits: ['authPopClose', 'authDone'],
   setup(props, context) {
     const state = reactive({
       authPopShow: false,
@@ -53,11 +53,11 @@ export default defineComponent({
     }
 
     function onAuthCancel() {
-      console.log('onAuthCancel');
+      context.emit('authPopClose');
     }
 
     function onAuthDone() {
-      console.log('onAuthDone');
+      context.emit('authDone');
     }
 
     watchEffect(() => {

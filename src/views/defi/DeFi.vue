@@ -74,10 +74,11 @@
     </van-list>
   </div>
   <authorize-popup :auth-show='state.authPopShow' :bit-checked='state.bitChecked'
-                   @auth-pop-close='handleAutoClose'
+                   @auth-pop-close='handleAuthClose' @auth-done='handleAuthDone'
                    :jkt-checked='state.jktChecked'></authorize-popup>
   <redeem-popup :redeem-show='state.redeemShow' :farm-data='farmLiData'
                 @redeem-pop-close='handleRedeemClose'></redeem-popup>
+  <stake-popup :stake-pop-show='state.stakePopShow' @stake-pop-close='handleStakeClose'></stake-popup>
 </template>
 
 <script lang='ts'>
@@ -85,17 +86,18 @@
 import { defineComponent, reactive, ref } from 'vue';
 import AuthorizePopup from '@/components/AuthorizePopup.vue';
 import RedeemPopup from '@/components/RedeemPopup.vue';
-
+import StakePopup from '@/components/StakePopup.vue';
 
 export default defineComponent({
   name: 'deFi',
-  components: { AuthorizePopup, RedeemPopup },
+  components: { AuthorizePopup, RedeemPopup, StakePopup },
   setup() {
     const state = reactive({
       listLoad: false,
       finished: true,
       redeemShow: false,
       authPopShow: false,
+      stakePopShow: false,
       bitChecked: false,
       jktChecked: false,
     });
@@ -126,12 +128,21 @@ export default defineComponent({
       state.authPopShow = true;
     }
 
-    function handleAutoClose() {
+    function handleAuthClose() {
       state.authPopShow = false;
     }
 
     function handleRedeemClose() {
       state.redeemShow = false;
+    }
+
+    function handleStakeClose() {
+      state.stakePopShow = false;
+    }
+
+    function handleAuthDone() {
+      state.authPopShow = false;
+      state.stakePopShow = true;
     }
 
     return {
@@ -140,9 +151,11 @@ export default defineComponent({
       farmLiData,
       onLoad,
       handleRedeem,
-      handleAutoClose,
+      handleAuthClose,
       handleStake,
       handleRedeemClose,
+      handleStakeClose,
+      handleAuthDone,
     };
   },
 });
