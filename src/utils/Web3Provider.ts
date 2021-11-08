@@ -33,15 +33,15 @@ export default class Web3Provider {
   private async prepareConnectWallet() {
     if (!this.prepared) {
       const web3Provider = Web3Provider.getInstance();
-      const walletState = await web3Provider.checkWallet();
-      if (walletState) {
+      const hasWallet = await web3Provider.checkWallet();
+      if (hasWallet) {
         web3Provider.registerGlobalListener();
+        // ask user to connect wallet
         await web3Provider.requestAccount();
 
         const currentChainId = await web3Provider.getChainId();
         const isBscChain = web3Provider.checkChainId(currentChainId);
         if (isBscChain) {
-          console.log('Current on BSC chain');
           web3Provider.initContracts();
           this.prepared = true;
         } else {
@@ -92,6 +92,7 @@ export default class Web3Provider {
       }
     } catch (error) {
       console.error(error);
+      return false;
     }
   }
 
@@ -133,7 +134,7 @@ export default class Web3Provider {
     const chainId = await this.provider.request({
       method: 'eth_chainId',
     });
-    console.info(`chainId: ${chainId}`);
+    console.info(`current chainId: ${chainId}`);
     return chainId;
   }
 
@@ -141,7 +142,7 @@ export default class Web3Provider {
    * check whether current chain is BSC chain
    * @param chainId
    */
-  private checkChainId(chainId: any) {
+  private checkChainId(chainId: string) {
     // 0x61 is testNet
     // 0x38 is BSC, will change to 0x38 in the future
     if (chainId !== '0x61') {
@@ -156,10 +157,14 @@ export default class Web3Provider {
    * check whether has parent
    */
   public async getParentInfo() {
-    await this.prepareConnectWallet();
-    const parentAddr = await this.minerContract.methods.getParent(this.currentAccount).call();
-    console.log(parentAddr);
-    return parentAddr;
+    try {
+      await this.prepareConnectWallet();
+      const parentAddr = await this.minerContract.methods.getParent(this.currentAccount).call();
+      console.info(`getParent: ${parentAddr}`);
+      return parentAddr;
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
@@ -167,9 +172,14 @@ export default class Web3Provider {
    * @param parentAccount
    */
   public async bindParentAccount(parentAccount: string) {
-    await this.prepareConnectWallet();
-    const res = await this.minerContract.methods.bindParent(parentAccount).send({ from: this.currentAccount });
-    console.log(res);
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.minerContract.methods.bindParent(parentAccount).send({ from: this.currentAccount });
+      console.info(`bindParentAccount: ${JSON.stringify(res)}`);
+      return res;
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
@@ -182,13 +192,17 @@ export default class Web3Provider {
    * eBurnJKT = 6;
    */
   public async getUserInfo() {
-    await this.prepareConnectWallet();
-    const res = await this.minerContract.methods.getUserInfoEx(this.currentAccount).call();
-    console.log(res);
-    const [, eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT] = res;
-    return {
-      eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT,
-    };
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.minerContract.methods.getUserInfoEx(this.currentAccount).call();
+      console.info(`getUserInfoEx: ${JSON.stringify(res)}`);
+      const [, eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT] = res;
+      return {
+        eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT,
+      };
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
@@ -207,7 +221,7 @@ export default class Web3Provider {
   public async getLpInformation() {
     await this.prepareConnectWallet();
     const res = await this.minerContract.methods.getLpInfo().call();
-    console.log(res);
+    console.info(`getLpInfo: ${JSON.stringify(res)}`);
     const [eTotalHashRate, eTotalLpHashRate, eStartBlock, eLpBurn, eVipBurn, eLastUpdateBlock, eOneShareGet, eOneShareScale, eTotalMint, eThresholdMutiple] = res;
     return {
       eTotalHashRate,
@@ -228,10 +242,14 @@ export default class Web3Provider {
    * @param updateLevel
    */
   public async updateVipPrice(updateLevel: number) {
-    await this.prepareConnectWallet();
-    const price = await this.minerContract.methods.getVipPrice(this.currentAccount, updateLevel).call();
-    console.info(`price: ${price}`);
-    return price;
+    try {
+      await this.prepareConnectWallet();
+      const price = await this.minerContract.methods.getVipPrice(this.currentAccount, updateLevel).call();
+      console.info(`price: ${price}`);
+      return price;
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
@@ -239,9 +257,13 @@ export default class Web3Provider {
    * @param newLevel
    */
   public async updateVip(newLevel: number) {
-    await this.prepareConnectWallet();
-    const res = await this.minerContract.methods.buyVip(newLevel).send({ from: this.currentAccount });
-    console.log(res);
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.minerContract.methods.buyVip(newLevel).send({ from: this.currentAccount });
+      console.info(`buyVip: ${JSON.stringify(res)}`);
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
@@ -249,8 +271,12 @@ export default class Web3Provider {
    * @param lpToken
    */
   public async getStakePoolInfo(lpToken) {
-    const res = await this.minerContract.methods.getLpInfo(this.currentAccount, lpToken).call();
-    console.info(`getLpInfo ${JSON.stringify(res)}`);
+    try {
+      const res = await this.minerContract.methods.getLpInfo(this.currentAccount, lpToken).call();
+      console.info(`getStakePoolInfo: ${JSON.stringify(res)}`);
+    } catch (e) {
+      return false;
+    }
   }
 
 
@@ -261,38 +287,54 @@ export default class Web3Provider {
    * @param percent
    */
   public async transferLpTokenToJKT(lpToken, amount, percent) {
-    const res = await this.minerContract.methods.getLpPayJKT(lpToken, amount, percent).send({ from: this.currentAccount });
-    console.info(`getLpPayJKT ${JSON.stringify(res)}`);
+    try {
+      const res = await this.minerContract.methods.getLpPayJKT(lpToken, amount, percent).send({ from: this.currentAccount });
+      console.info(`getLpPayJKT: ${JSON.stringify(res)}`);
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
    * get JKT balance
    */
   public async getJKTBalance() {
-    await this.prepareConnectWallet();
-    const bal = await this.jktContract.methods.balanceOf(this.currentAccount).call();
-    console.info(`balance: ${bal}`);
-    return bal;
+    try {
+      await this.prepareConnectWallet();
+      const bal = await this.jktContract.methods.balanceOf(this.currentAccount).call();
+      console.info(`balance: ${bal}`);
+      return bal;
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
    * get JKT decimals
    */
   public async getJKTDecimals() {
-    await this.prepareConnectWallet();
-    const decimals = await this.jktContract.methods.decimals().call();
-    console.info(`decimals: ${decimals}`);
-    return decimals;
+    try {
+      await this.prepareConnectWallet();
+      const decimals = await this.jktContract.methods.decimals().call();
+      console.info(`decimals: ${decimals}`);
+      return decimals;
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
    * get JKT totalSupply
    */
   public async getJKTTotal() {
-    await this.prepareConnectWallet();
-    const total = await this.jktContract.methods.totalSupply().call();
-    console.info(`total: ${total}`);
-    return total;
+    try {
+      await this.prepareConnectWallet();
+      const total = await this.jktContract.methods.totalSupply().call();
+      console.info(`total: ${total}`);
+      return total;
+    } catch (e) {
+      return false;
+    }
   }
 
   /**
@@ -305,7 +347,7 @@ export default class Web3Provider {
       return allowance;
     } catch (error) {
       console.info(error.errorCode);
-      return '0';
+      return false;
     }
   }
 
