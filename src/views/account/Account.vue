@@ -130,7 +130,7 @@
             <svg-icon icon-class='bsc-contract' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
         </template>
         <template #right-icon>
-            <van-button class="btn-small-account-min-width" type="danger" size="small" @click="window.open('https://t.me/JokerManor_Metaverse')">Join Us</van-button>
+            <van-button class="btn-small-account-min-width" type="danger" size="small" @click="window.open(communityAdress)">Join Us</van-button>
         </template>
     </van-cell>
     <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
@@ -165,6 +165,7 @@ import {
     copyToClipboard
 } from '@/utils/clipboard';
 import Web3Provider from '../../utils/Web3Provider';
+import { COMMUNITE_ADDRESS } from '@/const/address/tokenAddress';
 
 export default defineComponent({
     components: {
@@ -179,7 +180,8 @@ export default defineComponent({
 
         const JKTBalance = ref();
         JKTBalance.value = 0;
-        let actualBalance = 0
+
+        const communityAdress = ref(COMMUNITE_ADDRESS);
 
         const showDeposit = ref(false);
         const showWithdraw = ref(false);
@@ -215,6 +217,8 @@ export default defineComponent({
             copyToClipboard,
             window,
             JKTBalance,
+            communityAdress,
+            
 
 
         };

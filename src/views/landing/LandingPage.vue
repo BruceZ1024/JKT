@@ -842,8 +842,10 @@
       const router = useRouter();
 
       function onClick() {
+        let search = router.currentRoute.value.query;
         router.push({
           path: '/splashScreen',
+          query: search
         });
       }
 

@@ -4,9 +4,9 @@
         <p class="invitation-label">
             Invitation Link</p>
         <div class="success-label van-multi-ellipsis--l2">
-            https://app.hotspot.cc?hbhnvjsdvddsvdjjdjjjdndnnnhgvcfvfgvdxd
+            {{invitationLink}}
         </div>
-        <van-button type="danger" class="btn-small-account-min-width btn-account-invite-copy" size="small" @click="showInvite = true">Copy</van-button>
+        <van-button type="danger" class="btn-small-account-min-width btn-account-invite-copy" size="small" @click="copyToClipboard($event, invitationLink)">Copy</van-button>
     </div>
 </van-cell-group>
 <!-- Active Your Invite pop up -->
@@ -32,54 +32,43 @@
         <p class="invitation-label">
             Activation Address</p>
         <p class="success-label">
-            asdfasdfewqfdsafadsfwe</p>
-        <van-button type="danger" class="btn-small-account-min-width btn-account-invite-copy" size="small" @click="showAddress = true">Copy</van-button>
+            {{userAddress}}</p>
+        <van-button type="danger" class="btn-small-account-min-width btn-account-invite-copy" size="small" @click="copyToClipboard($event, userAddress)">Copy</van-button>
     </div>
 
 </van-cell-group>
-<!-- Active Your Address pop up -->
-<van-popup class="van-popup-fixed-height" v-model:show="showAddress" round position="bottom" closeable>
-    <van-cell title="Active Your Address" class="van-cell-no-border">
-    </van-cell>
-    <van-cell-group class="van-popup-fixed-height">
 
-        <div class="account-label-container">
-            <van-cell-group inset class="account-cell-group-dark ">
-                <van-field class="account-cell-dark" v-model="inviteAddress" center clearable label="" placeholder="Insert invitation address">
-                </van-field>
-            </van-cell-group>
-        </div>
-        <van-cell>
-            <van-button type="danger" block>Activate</van-button>
-        </van-cell>
-        <div class="account-safe-area-bottom"></div>
-    </van-cell-group>
-</van-popup>
 </template>
 
 <script>
+import '@/assets/css/Account.css'
 import {
     reactive,
     onMounted,
-    toRefs,
+    ref,
 } from 'vue';
 import SvgIcon from '@/components/SvgIcon.vue';
 import {
     useRouter,
 } from 'vue-router';
 import {
-    ref
-} from 'vue';
+    copyToClipboard
+} from '@/utils/clipboard';
+import Web3Provider from '../../utils/Web3Provider';
+import { INVITE_SERVER_ADDRESS } from '@/const/address/tokenAddress';
 
 export default {
     components: {
         SvgIcon,
     },
     setup() {
-        const amountDeposit = ref('');
         const showInvite = ref(false);
-        const showAddress = ref(false);
-        const inviteAddress = ref('');
+        const invitation = ref('');
+        const userAddress = ref();
+        userAddress.value = '';
+        const invitationLink = ref();
+        invitationLink.value = '';
+
         const router = useRouter();
         const goTo = (r, query) => {
             router.push({
@@ -87,11 +76,18 @@ export default {
                 query: query || {},
             });
         };
+        onMounted(async () => {
+            userAddress.value = await Web3Provider.getInstance().getAccountAddress();
+            console.log(userAddress.value)
+            invitationLink.value = INVITE_SERVER_ADDRESS +'?inviter=' + userAddress.value;
+        });
         return {
             goTo,
-            inviteAddress,
+            copyToClipboard,
+            invitation,
             showInvite,
-            showAddress,
+            userAddress,
+            invitationLink,
         };
     },
 };
