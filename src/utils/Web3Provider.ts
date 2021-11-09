@@ -216,7 +216,7 @@ export default class Web3Provider {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.getUserInfoEx(this.currentAccount).call();
       console.info(`getUserInfoEx: ${JSON.stringify(res)}`);
-      const [, eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT] = res;
+      const [eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT] = res;
       return {
         eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT,
       };
@@ -292,8 +292,9 @@ export default class Web3Provider {
       await this.prepareConnectWallet();
       const exchange = await this.minerContract.methods.getExchangeCountOfOneUsdt(this.jktTokenAddress).call();
       console.info(`getExchangeCountOfOneUsdt: ${exchange}`);
+      return exchange;
     } catch (e) {
-      return '';
+      return undefined;
     }
   }
 
