@@ -3,11 +3,9 @@ import { ethers } from 'ethers';
 import { EventHandler } from './EventManager';
 import detectEthereumProvider from '@metamask/detect-provider';
 import {
-  JKT_TOKEN_ADDRESS,
-  MINER_TOKEN_ADDRESS,
   TEST_JKT_TOKEN_ADDRESS,
-  TEST_USDT_TOKEN_ADDRESS,
   TEST_MINER_TOKEN_ADDRESS,
+  TEST_USDT_TOKEN_ADDRESS,
 } from '@/const/address/tokenAddress';
 
 const JKT_ABI = require('../const/abi/jkt_abi.json');
@@ -166,6 +164,16 @@ export default class Web3Provider {
   }
 
   /**
+   * create new contract based on lpToken address
+   * @param lpToken
+   */
+  public createLpTokenContract(lpToken: string) {
+    const web3 = new Web3();
+    web3.setProvider(this.provider);
+    return new web3.eth.Contract(JKT_ABI, lpToken);
+  }
+
+  /**
    * check whether has parent
    */
   public async getParentInfo() {
@@ -250,14 +258,14 @@ export default class Web3Provider {
   }
 
   /**
-   * know the price of update vip
+   * calculate the price of update vip
    * @param updateLevel
    */
-  public async updateVipPrice(updateLevel: number) {
+  public async calculateVipPrice(updateLevel: number) {
     try {
       await this.prepareConnectWallet();
       const price = await this.minerContract.methods.getVipPrice(this.currentAccount, updateLevel).call();
-      console.info(`price: ${price}`);
+      console.info(`getVipPrice: ${price}`);
       return price;
     } catch (e) {
       return false;
@@ -267,6 +275,7 @@ export default class Web3Provider {
   /**
    * update vip level
    * @param newLevel
+   * newLevel must be greater than current level
    */
   public async updateVip(newLevel: number) {
     try {
@@ -278,34 +287,16 @@ export default class Web3Provider {
     }
   }
 
-  /**
-   * get information of stake pool
-   * @param lpToken
-   */
-  public async getStakePoolInfo(lpToken) {
+  public async getExchangeOfUsdtToJkt() {
     try {
-      const res = await this.minerContract.methods.getLpInfo(this.currentAccount, lpToken).call();
-      console.info(`getStakePoolInfo: ${JSON.stringify(res)}`);
+      await this.prepareConnectWallet();
+      const exchange = await this.minerContract.methods.getExchangeCountOfOneUsdt(this.jktTokenAddress).call();
+      console.info(`getExchangeCountOfOneUsdt: ${exchange}`);
     } catch (e) {
-      return false;
+      return '';
     }
   }
 
-
-  /**
-   * transfer
-   * @param lpToken
-   * @param amount
-   * @param percent
-   */
-  public async transferLpTokenToJKT(lpToken, amount, percent) {
-    try {
-      const res = await this.minerContract.methods.getLpPayJKT(lpToken, amount, percent).send({ from: this.currentAccount });
-      console.info(`getLpPayJKT: ${JSON.stringify(res)}`);
-    } catch (e) {
-      return false;
-    }
-  }
 
   /**
    * get JKT balance
@@ -350,27 +341,152 @@ export default class Web3Provider {
   }
 
   /**
-   * check allowance
+   * get the symbol of lpToken
+   * @param contract
    */
-  public async checkAllowance() {
+  public async getSymbol(contract) {
     try {
       await this.prepareConnectWallet();
-      const allowance: string = await this.jktContract.methods.allowance(this.currentAccount, this.minerTokenAddress).call();
+      const symbol: string = await contract.methods.symbol().call();
+      console.info(`symbol: ${symbol}`);
+      return symbol;
+    } catch (error) {
+      return '';
+    }
+  }
+
+  /**
+   * check allowance
+   */
+  public async checkAllowance(contract) {
+    try {
+      await this.prepareConnectWallet();
+      const allowance: string = await contract.methods.allowance(this.currentAccount, this.minerTokenAddress).call();
+      console.info(`allowance: ${allowance}`);
       return allowance;
     } catch (error) {
-      console.info(error.errorCode);
-      return false;
+      return '0';
     }
   }
 
   /**
    * get approve permission
    */
-  public async getApprove() {
+  public async getApprove(contract) {
     try {
       await this.prepareConnectWallet();
-      return await this.jktContract.methods.approve(this.minerTokenAddress, ethers.constants.MaxUint256).send({ from: this.currentAccount });
+      const res = await contract.methods.approve(this.minerTokenAddress, ethers.constants.MaxUint256).send({ from: this.currentAccount });
+      console.info(`approve: ${JSON.stringify(res)}`);
+      return res;
     } catch (error) {
+      return false;
+    }
+  }
+
+  /**
+   * DeFi earning, to be claimed
+   */
+  public async withdrawFarmReward() {
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.minerContract.methods.withdrawLpReward().send({ from: this.currentAccount });
+      console.info(`withdrawLpReward: ${JSON.stringify(res)}`);
+      return res;
+    } catch (e) {
+      return false;
+    }
+  }
+
+
+  /**
+   * get farm lptoken list
+   */
+  public async getFarmList() {
+    try {
+      await this.prepareConnectWallet();
+      const lpTokenList = await this.minerContract.methods.getPools().call();
+      console.info(`getPools: ${lpTokenList}`);
+      return lpTokenList;
+    } catch (e) {
+      return [];
+    }
+  }
+
+
+  /**
+   * get information of stake pool
+   * @param lpToken
+   */
+  public async getStakePoolInfo(lpToken) {
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.minerContract.methods.getLpInfo(this.currentAccount, lpToken).call();
+      console.info(`getStakePoolInfo: ${JSON.stringify(res)}`);
+      const [lpTokenStaked, jktStaked, power, serviceCharge] = res;
+      return { lpTokenStaked, jktStaked, power, serviceCharge };
+    } catch (e) {
+      return {};
+    }
+  }
+
+  /**
+   * redeem money
+   * @param lpToken
+   * @param percent
+   */
+  public async redeem(lpToken: string, percent: number) {
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.minerContract.methods.takeBack(lpToken, percent).send({ from: this.currentAccount });
+      console.info(`takeBack: ${JSON.stringify(res)}`);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * transfer other lpToken to JKT amount
+   * @param lpToken
+   * @param amount
+   * @param percent
+   */
+  public async transferLpTokenToJKT(lpToken, amount, percent) {
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.minerContract.methods.getLpPayJKT(lpToken, amount, percent).call();
+      console.info(`getLpPayJKT: ${JSON.stringify(res)}`);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * get APY for different percent
+   * @param percent
+   */
+  public async getApyForStake(percent: number) {
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.minerContract.methods.getApy(percent).call();
+      console.info(`getApy: ${JSON.stringify(res)}`);
+    } catch (e) {
+      return '0';
+    }
+  }
+
+  /**
+   * stake money
+   * @param lpToken
+   * @param amount
+   * @param percent
+   */
+  public async stake(lpToken: string, amount: number, percent: number) {
+    try {
+      await this.prepareConnectWallet();
+      console.log(lpToken, amount, percent);
+      const res = await this.minerContract.methods.deposit(lpToken, amount, percent).send({ from: this.currentAccount });
+      console.info(`deposit: ${JSON.stringify(res)}`);
+    } catch (e) {
       return false;
     }
   }
@@ -383,86 +499,12 @@ export default class Web3Provider {
     !this.currentAccount && await this.prepareConnectWallet();
     return this.currentAccount;
   }
+
+  /**
+   * get JKT token contract
+   */
+  public async getJKTContract() {
+    !this.jktContract && await this.prepareConnectWallet();
+    return this.jktContract;
+  }
 }
-
-/**
- JKT 地址 0x7f73f70a32394807C9cC06dAA33e6D25084B66Ea
- 领BNB空投进行测试
- https://testnet.binance.org/faucet-smart
-
- tp metamask
- github
-
- 绑定上级
- user 自己的地址
- parent 上级地址
- function bindParent(address user, address parent)
-
- 获取上级地址
- function getParent(address user) external view returns (address);
-
- 获取用户数据
- function getUserInfoEx() public view returns (uint256[] memory) {
-  返回
-  uint constant eUserLevel = 1; // 用户vip等级
-  uint constant eSelfHash = 2; // 用户自己算力
-  uint constant eTeamHash = 3; // 用户团队算力
-  uint constant ePendingCoin = 4; // 用户待领取收益
-  uint constant eTakedCoin = 5;
-  uint constant eBurnJKT = 6;
-
-  获取挖矿的总数据
-  function getLpInfo() public  view returns (uint256[] memory)
-  返回
-  uint constant eTotalHashRate = 1; // 总算力
-  uint constant eTotalLpHashRate = 2; // 总质押的算力
-  uint constant eStartBlock = 3;
-  uint constant eLpBurn = 4; // 质押burn的JKT
-  uint constant eVipBurn = 5; // 买VIP burn的JKT
-  uint constant eLastUpdateBlock = 6;
-  uint constant eOneShareGet = 7;
-  uint constant eOneShareScale = 8;
-  uint constant eTotalMint = 9; // 总发放的收益
-  uint constant eThresholdMutiple = 10;
-
-  获取vip价格
-  user 用户地址
-  newLevel 新的vip级别(有可能从别的vip级别升级过来,这个是差价)
-  返回 vip价格
-  function getVipPrice(address user, uint256 newLevel) public view returns (uint256) {
-
-    买vip
-    function buyVip(uint256 newLevel) public
-
-    质押时获取应该质押多少JKT
-    lpToken 质押的另外的币的地址
-    amount 币数量
-    percent 质押比例
-    function getLpPayJKT(address lpToken, uint256 amount, uint256 percent) public view returns (uint256) {
-      返回 JKT数量
-
-      获取质押池信息
-      user 用户
-      lpToken 质押币
-      function getLpInfo(address user, address lpToken) public view returns (uint256[4] memory)
-      返回
-      0 质押币数量
-      1 JKT数量
-      2 算力
-      3 手续费
-
-      获取质押池不同算力权重
-      function getHashRateByPct(address lpToken, uint256 pct) public view returns(uint256) {
-
-        获取质押收益
-        function withdrawLpReward() public
-
-        质押
-        lpToken 另一个币的地址
-        amount 数量
-        percent 比例
-        function deposit(address lpToken, uint256 amount, uint256 percent)
-
-        提取本金
-        function takeBack(address lpToken, uint256 pct)
- **/

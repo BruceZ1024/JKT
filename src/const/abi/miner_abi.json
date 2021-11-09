@@ -8,11 +8,6 @@
 			},
 			{
 				"internalType": "address",
-				"name": "tradeContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
 				"name": "vToken",
 				"type": "address"
 			},
@@ -86,11 +81,6 @@
 			{
 				"internalType": "address",
 				"name": "lpToken",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "tradeContract",
 				"type": "address"
 			},
 			{
@@ -369,6 +359,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getPools",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -571,11 +574,6 @@
 				"internalType": "address",
 				"name": "jktPart1",
 				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "bit",
-				"type": "address"
 			}
 		],
 		"name": "init",
@@ -597,6 +595,19 @@
 			}
 		],
 		"name": "setAddr",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "bit",
+				"type": "address"
+			}
+		],
+		"name": "setBITAddress",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -651,6 +662,19 @@
 			}
 		],
 		"name": "setPctRate",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "pools",
+				"type": "address[]"
+			}
+		],
+		"name": "setPools",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
