@@ -1,5 +1,6 @@
 <template>
-  <van-popup v-model:show='state.authPopShow' closeable @close='handleClose' position='bottom' round class='farm-pop'
+  <van-popup v-model:show='state.authPopShow' closeable @close='handleClose' position='bottom' round
+             class='farm-pop'
              style='background-color: #202125;'>
     <van-cell title='Authorize' class='van-cell-no-border pop-title'>
     </van-cell>
@@ -7,14 +8,10 @@
       You need to authorize the contracts to access the following assets.
     </div>
     <div class='pop-switch'>
-      <van-cell center title='BIT'>
+      <van-cell center :title='item.farmName' v-for='(item, index) in authList' :key='item.farmName'>
         <template #right-icon>
-          <van-switch v-model='state.bitChecked' size='22' active-color='#CD2A16' />
-        </template>
-      </van-cell>
-      <van-cell center title='JKT'>
-        <template #right-icon>
-          <van-switch v-model='state.jktChecked' size='22' active-color='#CD2A16'/>
+          <van-switch v-model='authList[index].allowance' :disabled='authList[index].allowance !== "0"'
+                      size='22' active-color='#CD2A16' @change='getApprove(index, authList[index].token)'/>
         </template>
       </van-cell>
       <van-cell center title=''>
@@ -35,18 +32,20 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive, watchEffect } from 'vue';
+import { defineComponent, reactive, ref, watchEffect } from 'vue';
+import Web3Provider from '@/utils/Web3Provider';
 
 export default defineComponent({
   name: 'authorizePopup',
-  props: {authShow: Boolean, bitChecked: Boolean, jktChecked: Boolean},
+  props: { authShow: Boolean, iconData: Array },
   emits: ['authPopClose', 'authDone'],
   setup(props, context) {
     const state = reactive({
       authPopShow: false,
-      bitChecked: false,
-      jktChecked: false,
     });
+
+    const authList = ref();
+    authList.value = [];
 
     function handleClose() {
       context.emit('authPopClose');
@@ -60,14 +59,22 @@ export default defineComponent({
       context.emit('authDone');
     }
 
+    async function getApprove(index: number, token: string) {
+      const res = await Web3Provider.getInstance().getApprove(token);
+      if (!res) {
+        authList.value[index].allowance = '0';
+      }
+    }
+
+
+
     watchEffect(() => {
       state.authPopShow = props.authShow || false;
-      state.bitChecked = props.bitChecked || false;
-      state.jktChecked = props.jktChecked || false;
+      authList.value = props.iconData || [];
     });
 
-    return {state, handleClose, onAuthCancel, onAuthDone};
-  }
+    return { state, authList, handleClose, onAuthCancel, onAuthDone, getApprove};
+  },
 });
 </script>
 
@@ -78,42 +85,50 @@ export default defineComponent({
   font-weight: 700;
   color: #fff;
   background-color: transparent;
-&:after {
-   border-bottom: none;
- }
+
+  &:after {
+    border-bottom: none;
+  }
 }
+
 .pop-intro {
   font-size: 15px;
   line-height: 21px;
   font-weight: 300;
   padding: 16px;
 }
+
 .pop-switch {
   background-color: transparent;
-.van-cell {
-  background-color: transparent;
-  color: $brand-red;
-&:after {
-   border-bottom: none;
- }
+
+  .van-cell {
+    background-color: transparent;
+    color: $brand-red;
+
+    &:after {
+      border-bottom: none;
+    }
+  }
 }
-}
+
 .pop-btns {
   display: flex;
   justify-content: space-between;
   padding: 16px;
-.button {
-  width: 48%;
-  height: 44px;
-  line-height: 44px;
-  font-size: 15px;
-  font-weight: 700;
-  color: #fff;
-  border-radius: 4px;
-}
-.cancel-btn {
-  background-color: #979797;
-  border-color: #979797;
-}
+
+  .button {
+    width: 48%;
+    height: 44px;
+    line-height: 44px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  .cancel-btn {
+    background-color: #979797;
+    border-color: #979797;
+  }
 }
 </style>

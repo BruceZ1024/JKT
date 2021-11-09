@@ -6,11 +6,11 @@
     </van-cell>
     <van-row type='flex' justify='space-between' class='redeem-info'>
       <van-col span='4'>
-        <van-image :src='farmData.farmPicUrl' class='farm-image'></van-image>
+        <svg-icon :icon-class='`icon-${farmData.farmName}`' class='farm-image'></svg-icon>
       </van-col>
       <van-col span='19' class='farm-info'>
         <van-row type='flex' justify='space-between' class='farm-info-title'>
-          <van-col>{{ farmData.farmName }}</van-col>
+          <van-col>JKT - {{ farmData.farmName }}</van-col>
           <van-col>APY {{ farmData.farmApy }}</van-col>
         </van-row>
         <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
@@ -18,22 +18,27 @@
           <van-col>Rewards in JKT</van-col>
         </van-row>
         <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-          <van-col>BIT Staking: {{ farmData.bitStaked }}</van-col>
+          <van-col>{{ farmData.farmName }} Staking: {{ farmData.bitStaked }}</van-col>
         </van-row>
         <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-          <van-col>Total Power: 100%</van-col>
+          <van-col>Total Power: {{ farmData.power }}%</van-col>
         </van-row>
       </van-col>
     </van-row>
     <div class='pop-subtitle'>Redemption Ratio</div>
     <div class='pop-tags'>
-      <van-tag class='pop-tag' type='50' :mark='false' :plain='false'> 20%</van-tag>
-      <van-tag class='pop-tag' type='50' :mark='false' :plain='false'> 50%</van-tag>
-      <van-tag class='pop-tag' type='50' :mark='false' :plain='false'> Max</van-tag>
-      <van-tag class='pop-tag pop-tag-custom' type='50' :mark='false' :plain='false'> Custom %</van-tag>
+      <van-tag v-for='(tag, index) in tagsList' :key='tag.name'
+               :class='{"pop-tag": true, "pop-tag-active": tag.active}' type='50' :mark='false'
+               :plain='false' @click='handleRatioSelect(index)'>{{ tag.name }}%
+      </van-tag>
+      <van-tag class='pop-tag-custom' type='50' :mark='false' :plain='false'>
+        <input type='number' v-model='state.ratio' placeholder='Custom' step='.01' @change='inputChange'>
+      </van-tag>
     </div>
     <div class='pop-intro'>
-      Direct JKT redemption charges 5% if you pledged within 7 days, and it will trun to 1% after 7 days.
+      Direct JKT redemption charges {{ farmData.serviceCharge }}% if you pledged within 7 days, and
+      it
+      will trun to 1% after 7 days.
     </div>
     <div class='pop-btns'>
       <van-button class='button cancel-btn' type='default' :loading='false' @click='onAuthCancel'>
@@ -47,35 +52,93 @@
 </template>
 
 <script>
-import { reactive, watchEffect, defineComponent } from 'vue';
+import { reactive, watchEffect, defineComponent, ref } from 'vue';
+import SvgIcon from '@/components/SvgIcon';
+import { Toast } from 'vant';
+import Web3 from 'web3';
+import Web3Provider from '@/utils/Web3Provider';
 
 export default defineComponent({
   name: 'redeemPopup',
+  components: { SvgIcon },
   props: { redeemShow: Boolean, farmData: Object },
   emits: ['redeemPopClose'],
   setup(props, context) {
     const state = reactive({
       redeemShow: false,
+      ratio: '',
     });
+
+    const tagsList = ref();
+    tagsList.value = [{
+      name: 20, ratio: 20, active: false,
+    }, {
+      name: 50, ratio: 50, active: false,
+    }, {
+      name: 'MAX', ratio: 100, active: false,
+    }];
 
     function handleClose() {
       context.emit('redeemPopClose');
     }
 
     function onAuthCancel() {
-      console.log('onAuthCancel');
+      context.emit('redeemPopClose');
     }
 
-    function onAuthDone() {
+    async function onAuthDone() {
       console.log('onAuthDone');
+      const ratioItem = tagsList.value.find((item) => item.active === true);
+      if(!ratioItem && !state.ratio) {
+        Toast('please choose ratio');
+        return;
+      } else if(state.ratio > 100){
+        Toast('Ratio should less than 100');
+        return;
+      }
+      const ratio = ratioItem? ratioItem.ratio : state.ratio;
+      if(props.farmData?.token) {
+        const res = await Web3Provider.getInstance().redeem(props.farmData.token, ratio);
+        console.log(res);
+        if (res) {
+          Toast('Success');
+          context.emit('redeemPopClose');
+        } else {
+          Toast('Failed');
+        }
+      }
+    }
+
+    function handleRatioSelect(index) {
+      tagsList.value = [{
+        name: 20, ratio: 20, active: false,
+      }, {
+        name: 50, ratio: 50, active: false,
+      }, {
+        name: 'MAX', ratio: 100, active: false,
+      }]
+      tagsList.value[index].active = true;
+      state.ratio = '';
+    }
+
+    function inputChange() {
+      tagsList.value = [{
+        name: 20, ratio: 20, active: false,
+      }, {
+        name: 50, ratio: 50, active: false,
+      }, {
+        name: 'MAX', ratio: 100, active: false,
+      }]
+      state.ratio = state.ratio.toFixed(2);
     }
 
     watchEffect(() => {
       state.redeemShow = props.redeemShow || false;
     });
-    return { state, handleClose, onAuthCancel, onAuthDone };
+    return { state, tagsList, handleClose, onAuthCancel, onAuthDone, handleRatioSelect, inputChange };
   },
-});
+})
+;
 </script>
 
 <style scoped lang='scss'>
@@ -125,21 +188,38 @@ export default defineComponent({
   font-size: 17px;
   line-height: 2;
 }
+
 .pop-tags {
   padding: 0 16px;
   display: flex;
   justify-content: space-between;
-  .pop-tag{
+
+  .pop-tag {
     padding: 2px 15px;
     font-size: 13px;
     line-height: 16px;
     font-weight: 300;
     background-color: #0E0F11;
   }
+  .pop-tag-active {
+    color:#fff;
+    background: $brand-red;
+  }
+
   .pop-tag-custom {
     color: #575962;
+    width: 50px;
+    height: 20px;
+    input {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      border:none;
+      color: #fff;
+    }
   }
 }
+
 .pop-intro {
   font-size: 13px;
   line-height: 21px;
@@ -148,10 +228,12 @@ export default defineComponent({
   color: #979797;
   text-align: right;
 }
+
 .pop-btns {
   display: flex;
   justify-content: space-between;
   padding: 16px;
+
   .button {
     width: 48%;
     height: 44px;
@@ -161,6 +243,7 @@ export default defineComponent({
     color: #fff;
     border-radius: 4px;
   }
+
   .cancel-btn {
     background-color: #979797;
     border-color: #979797;
