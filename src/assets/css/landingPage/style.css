@@ -332,14 +332,16 @@ nav .socialfooter {
     border-radius: 0 !important;
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
     padding: 10px 4px;
+    background-color: #191A1E;
 }
 
 .dropdown-menu > li > a {
     padding: 10px 20px;
+    color: #fff;
 }
 
 .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
-    background-color: #579d36;
+    background-color: #CD2A16;
     color: #fff;
     text-decoration: none;
 }
@@ -391,6 +393,8 @@ nav .socialfooter {
     margin-left: 10px;
     margin-right: 10px;
     font-family: 'Open Sans', sans-serif;
+    line-height: 25px;
+    padding: 13px;
 }
 
 .launchapp {
@@ -1138,7 +1142,7 @@ span.botted {
         font-weight: 700;
     }
 
-    .header-mobile-btn:nth-child(2) {
+    .dropup .header-mobile-btn {
         margin-left: 16px;
         color: #fff;
         background-color: #CD2A16;
