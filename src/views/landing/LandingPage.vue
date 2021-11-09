@@ -19,31 +19,54 @@
           <svg-icon icon-class='logo' style='width:94px; height:94px;'></svg-icon>
         </a>
         <a class='navbar-brand navbar-brand-text' href='#'>
-          <svg-icon icon-class='jokermanor' style='width:122px; height:40px;margin-top: 30px'></svg-icon>
+          <svg-icon icon-class='jokermanor'
+                    style='width:122px; height:40px;margin-top: 30px'></svg-icon>
         </a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1' style='max-height: none;'>
+      <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'
+           style='max-height: none;'>
         <ul class='nav navbar-nav navbar-right'>
           <li>
-            <a class='page-scroll' style="cursor: pointer" @click="returnHome()">Home</a>
+            <a class='page-scroll' style='cursor: pointer' @click='returnHome()'>Home</a>
           </li>
           <li class='mobile-hidden'>
-            <a class='page-scroll' style="cursor: pointer" @click="returnAbout()">About</a>
+            <a class='page-scroll' style='cursor: pointer' @click='returnAbout()'>About</a>
           </li>
-          <li class="web-hidden">
-            <a class='page-scroll' style="cursor: pointer" @click="returnTokenMetrics()">
+          <li class='web-hidden'>
+            <a class='page-scroll' style='cursor: pointer' @click='returnTokenMetrics()'>
               TokenMetrics
             </a>
           </li>
-          <li>
-            <a class="page-scroll" href='#'>Contract Audit</a>
-          </li>
+<!--          <li>-->
+<!--            <a class='page-scroll' href='#'>Contract Audit</a>-->
+<!--          </li>-->
           <li>
             <a class='page-scroll' href='mailto:business@jokerfi.com'>Contact Us</a>
           </li>
           <li class='mobile-hidden'>
-            <a class='page-scroll whitepaper' href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf'>Whitepaper</a>
+            <a href='https://twitter.com/joker_manor' class='contact1'>
+              <svg-icon icon-class='contact1' style='width: 43px;height: 42px;margin-top: -10px'></svg-icon>
+            </a>
+          </li>
+          <li class='mobile-hidden'>
+            <a href='https://t.me/joinchat/OrA6XUXBpeYzZmRl' class='contact3'>
+              <svg-icon icon-class='contact3' style='width: 43px;height: 42px;margin-top: -10px'></svg-icon>
+            </a>
+          </li>
+          <li class='mobile-hidden'>
+            <div class='dropdown'>
+              <button class='page-scroll whitepaper' id='dropdownMenu1' data-toggle='dropdown'
+                      aria-haspopup='true' aria-expanded='true'>Whitepaper
+              </button>
+              <ul class='dropdown-menu' aria-labelledby='dropdownMenu1'>
+                <li><a
+                  href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf' style="font-family: 'Open Sans', sans-serif">English</a>
+                </li>
+                <li><a href='https://jokerfi.com/whitepaper/JokerManor-Whitepaper-KR.pdf'>Korean</a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li>
             <a id='launchapp' class='page-scroll launchapp' @click='onClick'>Launch
@@ -94,20 +117,31 @@
                   <div class='col-xs-2 col-sm-2 col-md-2'>
                     <div class='popup' onclick='copyContract()'>
                       <svg-icon icon-class='big-copy' style='width: 20px; height: 20px'></svg-icon>
-                      <span class='popuptext' id='myPopup' style="font-family: 'Open Sans', sans-serif">Copied</span>
+                      <span class='popuptext' id='myPopup'
+                            style="font-family: 'Open Sans', sans-serif">Copied</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class='row header-mobile web-hidden'>
-              <button class='header-mobile-btn' onclick="window.location.href='https://biconomy.com/Launchpad'">
+              <button class='header-mobile-btn'
+                      onclick="window.location.href='https://biconomy.com/Launchpad'">
                 Buy JKT
               </button>
-              <button class='header-mobile-btn'
-                      onclick="window.location.href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf'">
-                Whitepaper
-              </button>
+              <div class='dropup' style='display: inline-block;'>
+                <button class='header-mobile-btn' id='dropdownMenu2' data-toggle='dropdown'
+                        aria-haspopup='true' aria-expanded='true'>Whitepaper
+                </button>
+                <ul class='dropdown-menu' aria-labelledby='dropdownMenu2'>
+                  <li><a
+                    href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf'>English</a>
+                  </li>
+                  <li><a
+                    href='https://jokerfi.com/whitepaper/JokerManor-Whitepaper-KR.pdf'>Korean</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -214,11 +248,13 @@
                     </div>
                     <ul class='price-stats text-left'>
                       <li>
-                        <svg-icon icon-class='icon5' style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
+                        <svg-icon icon-class='icon5'
+                                  style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
                         15% extra computing power from your invitees’ pledged power.
                       </li>
                       <li>
-                        <svg-icon icon-class='icon5' style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
+                        <svg-icon icon-class='icon5'
+                                  style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
                         5% extra computing power from your secondary invitees’ invitees’ pledged
                         power.
                       </li>
@@ -242,11 +278,13 @@
                     </div>
                     <ul class='price-stats text-left'>
                       <li>
-                        <svg-icon icon-class='icon5' style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
+                        <svg-icon icon-class='icon5'
+                                  style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
                         20% extra computing power from your invitees’ pledged power.
                       </li>
                       <li>
-                        <svg-icon icon-class='icon5' style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
+                        <svg-icon icon-class='icon5'
+                                  style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
                         15% extra computing power from your secondary invitees’ invitees’ pledged
                         power.
                       </li>
@@ -260,7 +298,8 @@
                       <h1 class='price-title'>$1000<span> ~JKT</span></h1>
                       <div>
                         <h2 class='price-no platinum'>
-                          <svg-icon icon-class='platinum' style='width: 32px;height: 32px'></svg-icon>
+                          <svg-icon icon-class='platinum'
+                                    style='width: 32px;height: 32px'></svg-icon>
                           Platinum
                         </h2>
                       </div>
@@ -270,11 +309,13 @@
                     </div>
                     <ul class='price-stats text-left'>
                       <li>
-                        <svg-icon icon-class='icon5' style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
+                        <svg-icon icon-class='icon5'
+                                  style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
                         30% extra computing power from your invitees’ pledged power.
                       </li>
                       <li>
-                        <svg-icon icon-class='icon5' style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
+                        <svg-icon icon-class='icon5'
+                                  style='width: 24px;height: 24px;margin-left: -30px'></svg-icon>
                         20% extra computing power from your secondary invitee’s invitees’ pledged
                         power.
                       </li>
@@ -373,7 +414,8 @@
                     <span class='botted'>
                         <svg-icon icon-class='dot' style='width: 24px;height: 24px'></svg-icon>
                     </span>
-            <div class='changer-right wow bounceInRight' data-wow-delay='0.1s' style='margin-top: -20px;'>
+            <div class='changer-right wow bounceInRight' data-wow-delay='0.1s'
+                 style='margin-top: -20px;'>
               <h3>2021 Q1</h3>
               <h5>Project Preparation & Team Establishment</h5>
               <p class='mobile-hidden'>The team was formed by a small group of five core,
@@ -435,7 +477,8 @@
                 with leading GameFi
                 and blockchain based and tokenized projects to grow our metaverse ecosystem. In the
                 continuation of
-                developing this Metaverse ecosystem, JokerManor will formally launch a large, inclusive
+                developing this Metaverse ecosystem, JokerManor will formally launch a large,
+                inclusive
                 and integrated
                 meta-universe game in 2022 Q3.</p>
             </div>
@@ -455,7 +498,7 @@
       <div class='row'>
         <div class='col-xs-12 col-sm-2 col-md-2 col-sm-offset-1 col-md-offset-1'>
           <a href='#'>
-            <svg-icon icon-class='position1' style='width: 171px; height: 171px;'/>
+            <svg-icon icon-class='position1' style='width: 171px; height: 171px;' />
           </a>
           <h5 class='position'>Chief Technology Officer & Co-Founder</h5>
           <p class='name'>Lorenzo</p>
@@ -463,7 +506,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position2' style='width: 171px; height: 171px;'/>
+            <svg-icon icon-class='position2' style='width: 171px; height: 171px;' />
           </a>
           <h5 class='position'>Strategic Development & Partnerships</h5>
           <p class='name'>John</p>
@@ -473,7 +516,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position3' style='width: 171px; height: 171px;'/>
+            <svg-icon icon-class='position3' style='width: 171px; height: 171px;' />
           </a>
           <h5 class='position'>Chief Executive Officer & Founder</h5>
           <p class='name'>Barry</p>
@@ -481,7 +524,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position4' style='width: 171px; height: 171px;'/>
+            <svg-icon icon-class='position4' style='width: 171px; height: 171px;' />
           </a>
           <h5 class='position'>Chief Marketing Officer</h5>
           <p class='name'>Doris</p>
@@ -490,7 +533,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position5' style='width: 171px; height: 171px;'/>
+            <svg-icon icon-class='position5' style='width: 171px; height: 171px;' />
           </a>
           <h5 class='position'>Chief Operations Officer</h5>
           <p class='name'>Eric</p>
@@ -514,32 +557,32 @@
       <div class='row partner-imgs'>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner1' style='width: 96px; height: 32px'/>
+            <svg-icon icon-class='partner1' style='width: 96px; height: 32px' />
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner2' style='width: 96px; height: 32px'/>
+            <svg-icon icon-class='partner2' style='width: 96px; height: 32px' />
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner3' style='width: 96px; height: 32px'/>
+            <svg-icon icon-class='partner3' style='width: 96px; height: 32px' />
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner4' style='width: 96px; height: 32px'/>
+            <svg-icon icon-class='partner4' style='width: 96px; height: 32px' />
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner5' style='width: 96px; height: 32px'/>
+            <svg-icon icon-class='partner5' style='width: 96px; height: 32px' />
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2 mobile-hidden'>
           <a class='btn-partner' href='mailto:business@jokerfi.com'>Become a partner
-            <svg-icon icon-class='right-arrow' style='width: 13px; height: 13px'/>
+            <svg-icon icon-class='right-arrow' style='width: 13px; height: 13px' />
           </a>
         </div>
       </div>
@@ -587,284 +630,284 @@
   </a>
 </template>
 
-<script lang="ts">
-  import {
-    reactive,
-    defineComponent, onMounted,
-  } from 'vue';
-  import SvgIcon from '@/components/SvgIcon.vue';
-  import * as echarts from 'echarts';
-  import { useRouter } from 'vue-router';
+<script lang='ts'>
+import {
+  reactive,
+  defineComponent, onMounted,
+} from 'vue';
+import SvgIcon from '@/components/SvgIcon.vue';
+import * as echarts from 'echarts';
+import { useRouter } from 'vue-router';
 
-  export default defineComponent({
-    name: 'landingPage',
-    components: {
-      SvgIcon,
-    },
-    setup() {
-      const imageUrls = reactive({});
+export default defineComponent({
+  name: 'landingPage',
+  components: {
+    SvgIcon,
+  },
+  setup() {
+    const imageUrls = reactive({});
 
-      function returnHome() {
-        const home = document.querySelector('#home');
-        if (home) {
-          home.scrollIntoView(true);
-        }
+    function returnHome() {
+      const home = document.querySelector('#home');
+      if (home) {
+        home.scrollIntoView(true);
       }
+    }
 
-      function returnAbout() {
-        const about = document.querySelector('#about');
-        if (about) {
-          about.scrollIntoView(true);
-        }
+    function returnAbout() {
+      const about = document.querySelector('#about');
+      if (about) {
+        about.scrollIntoView(true);
       }
+    }
 
-      function returnTokenMetrics() {
-        const about = document.querySelector('#tokenMetrics');
-        if (about) {
-          about.scrollIntoView(true);
-        }
+    function returnTokenMetrics() {
+      const about = document.querySelector('#tokenMetrics');
+      if (about) {
+        about.scrollIntoView(true);
       }
+    }
 
-      function drawPie() {
-        // create echarts instance based on DOM node
-        const chartDom: HTMLElement = document.getElementById('jktchart') as HTMLElement;
-        var myChart = echarts.init(chartDom);
-        var option;
-        const width = window.innerWidth;
+    function drawPie() {
+      // create echarts instance based on DOM node
+      const chartDom: HTMLElement = document.getElementById('jktchart') as HTMLElement;
+      var myChart = echarts.init(chartDom);
+      var option;
+      const width = window.innerWidth;
 
-        if (width < 768) {
-          option = {
-            title: {
-              text: ['{a|TOTAL TOKEN ISSUANCE}', '{b|1,000,000,000 JKT}'].join('\n'),
-              left: 'center',
-              top: 'middle',
-              textStyle: {
-                rich: {
-                  a: {
-                    color: '#CD2A16',
-                    lineHeight: 15,
-                    height: 20,
-                    fontSize: 4,
-                    padding: [10, 10],
-                    fontFamily: 'Open Sans',
-                    fontWeight: 'bold',
-                  },
-                  b: {
-                    color: '#FFFFFF',
-                    fontSize: 9,
-                    fontWeight: 'bold',
-                    padding: 10,
-                    fontFamily: 'Open Sans',
-                  },
+      if (width < 768) {
+        option = {
+          title: {
+            text: ['{a|TOTAL TOKEN ISSUANCE}', '{b|1,000,000,000 JKT}'].join('\n'),
+            left: 'center',
+            top: 'middle',
+            textStyle: {
+              rich: {
+                a: {
+                  color: '#CD2A16',
+                  lineHeight: 15,
+                  height: 20,
+                  fontSize: 4,
+                  padding: [10, 10],
+                  fontFamily: 'Open Sans',
+                  fontWeight: 'bold',
+                },
+                b: {
+                  color: '#FFFFFF',
+                  fontSize: 9,
+                  fontWeight: 'bold',
+                  padding: 10,
+                  fontFamily: 'Open Sans',
                 },
               },
             },
-            tooltip: {
-              trigger: 'item',
+          },
+          tooltip: {
+            trigger: 'item',
+          },
+          series: [{
+            name: 'JKT',
+            type: 'pie',
+            radius: ['55%', '70%'],
+            data: [{
+              value: 50,
+              name: 'DeFi',
             },
-            series: [{
-              name: 'JKT',
-              type: 'pie',
-              radius: ['55%', '70%'],
-              data: [{
-                value: 50,
-                name: 'DeFi',
+              {
+                value: 40,
+                name: 'GameFi',
               },
-                {
-                  value: 40,
-                  name: 'GameFi',
-                },
-                {
-                  value: 3,
-                  name: 'Marketing Promotion',
-                },
-                {
-                  value: 4,
-                  name: 'Early Investor',
-                },
-                {
-                  value: 2,
-                  name: 'Technical Team',
-                },
-                {
-                  value: 1,
-                  name: 'Pre-sale before launch',
-                },
-              ],
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)',
-                },
+              {
+                value: 3,
+                name: 'Marketing Promotion',
               },
-              labelLine: {
-                length: 30,
-                length2: 20,
+              {
+                value: 4,
+                name: 'Early Investor',
               },
-              clockwise: true,
-              startAngle: 270,
-              label: {
-                formatter: '{name|{b}: {c}%}',
-                rich: {
-                  name: {
-                    fontSize: 6,
-                    color: 'white',
-                    fontWeight: 'normal',
-                  },
-                },
+              {
+                value: 2,
+                name: 'Technical Team',
               },
-              color: [
-                '#CD2A16',
-                '#5759627F',
-                '#575962',
-                '#9D9D9D',
-                '#D8D8D8',
-                '#FFFFFF',
-                '#fc8452',
-                '#9a60b4',
-                '#ea7ccc',
-              ],
-            }],
-          };
-        } else {
-          option = {
-            title: {
-              text: [
-                '{a|TOTAL TOKEN ISSUANCE}',
-                '{b|1,000,000,000 JKT}',
-                '{c|50% DeFi mining | 40% in-game mining\n' +
-                '|10% Technical team, investors & makreting fees}',
-              ].join('\n'),
-              left: 'center',
-              top: 'middle',
-              textStyle: {
-                rich: {
-                  a: {
-                    color: '#CD2A16',
-                    lineHeight: 15,
-                    height: 20,
-                    padding: [10, 10],
-                    fontFamily: 'Open Sans',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  },
-                  b: {
-                    color: '#FFFFFF',
-                    fontSize: 32,
-                    fontWeight: 'bold',
-                    padding: 10,
-                    fontFamily: 'Open Sans',
-                  },
-                  c: {
-                    color: '#979797',
-                    fontSize: 14,
-                    padding: 10,
-                    fontFamily: 'Open Sans',
-                    fontWeight: 'normal',
-                  },
+              {
+                value: 1,
+                name: 'Pre-sale before launch',
+              },
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+              },
+            },
+            labelLine: {
+              length: 30,
+              length2: 20,
+            },
+            clockwise: true,
+            startAngle: 270,
+            label: {
+              formatter: '{name|{b}: {c}%}',
+              rich: {
+                name: {
+                  fontSize: 6,
+                  color: 'white',
+                  fontWeight: 'normal',
                 },
               },
             },
-            tooltip: {
-              trigger: 'item',
+            color: [
+              '#CD2A16',
+              '#5759627F',
+              '#575962',
+              '#9D9D9D',
+              '#D8D8D8',
+              '#FFFFFF',
+              '#fc8452',
+              '#9a60b4',
+              '#ea7ccc',
+            ],
+          }],
+        };
+      } else {
+        option = {
+          title: {
+            text: [
+              '{a|TOTAL TOKEN ISSUANCE}',
+              '{b|1,000,000,000 JKT}',
+              '{c|50% DeFi mining | 40% in-game mining\n' +
+              '|10% Technical team, investors & makreting fees}',
+            ].join('\n'),
+            left: 'center',
+            top: 'middle',
+            textStyle: {
+              rich: {
+                a: {
+                  color: '#CD2A16',
+                  lineHeight: 15,
+                  height: 20,
+                  padding: [10, 10],
+                  fontFamily: 'Open Sans',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                },
+                b: {
+                  color: '#FFFFFF',
+                  fontSize: 32,
+                  fontWeight: 'bold',
+                  padding: 10,
+                  fontFamily: 'Open Sans',
+                },
+                c: {
+                  color: '#979797',
+                  fontSize: 14,
+                  padding: 10,
+                  fontFamily: 'Open Sans',
+                  fontWeight: 'normal',
+                },
+              },
             },
-            series: [{
-              name: 'JKT',
-              type: 'pie',
-              radius: ['55%', '70%'],
-              data: [{
-                value: 50,
-                name: 'DeFi',
+          },
+          tooltip: {
+            trigger: 'item',
+          },
+          series: [{
+            name: 'JKT',
+            type: 'pie',
+            radius: ['55%', '70%'],
+            data: [{
+              value: 50,
+              name: 'DeFi',
+            },
+              {
+                value: 40,
+                name: 'GameFi',
               },
-                {
-                  value: 40,
-                  name: 'GameFi',
-                },
-                {
-                  value: 3,
-                  name: 'Marketing Promotion',
-                },
-                {
-                  value: 4,
-                  name: 'Early Investor',
-                },
-                {
-                  value: 2,
-                  name: 'Technical Team',
-                },
-                {
-                  value: 1,
-                  name: 'Pre-sale before launch',
-                },
-              ],
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+              {
+                value: 3,
+                name: 'Marketing Promotion',
+              },
+              {
+                value: 4,
+                name: 'Early Investor',
+              },
+              {
+                value: 2,
+                name: 'Technical Team',
+              },
+              {
+                value: 1,
+                name: 'Pre-sale before launch',
+              },
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+              },
+            },
+            labelLine: {
+              length: 70,
+              length2: 50,
+            },
+            clockwise: true,
+            startAngle: 270,
+            label: {
+              formatter: '{name|{b}: {c}%}',
+              rich: {
+                name: {
+                  fontSize: 18,
+                  color: 'white',
+                  fontWeight: 'normal',
                 },
               },
-              labelLine: {
-                length: 70,
-                length2: 50,
-              },
-              clockwise: true,
-              startAngle: 270,
-              label: {
-                formatter: '{name|{b}: {c}%}',
-                rich: {
-                  name: {
-                    fontSize: 18,
-                    color: 'white',
-                    fontWeight: 'normal',
-                  },
-                },
-              },
-              color: [
-                '#CD2A16',
-                '#5759627F',
-                '#575962',
-                '#9D9D9D',
-                '#D8D8D8',
-                '#FFFFFF',
-                '#fc8452',
-                '#9a60b4',
-                '#ea7ccc',
-              ],
-            }],
-          };
-        }
-
-        option && myChart.setOption(option);
+            },
+            color: [
+              '#CD2A16',
+              '#5759627F',
+              '#575962',
+              '#9D9D9D',
+              '#D8D8D8',
+              '#FFFFFF',
+              '#fc8452',
+              '#9a60b4',
+              '#ea7ccc',
+            ],
+          }],
+        };
       }
 
-      const router = useRouter();
+      option && myChart.setOption(option);
+    }
 
-      function onClick() {
-        let search = router.currentRoute.value.query;
-        router.push({
-          path: '/splashScreen',
-          query: search
-        });
-      }
+    const router = useRouter();
 
-      onMounted(() => {
-        drawPie();
+    function onClick() {
+      let search = router.currentRoute.value.query;
+      router.push({
+        path: '/splashScreen',
+        query: search,
       });
+    }
 
-      return {
-        imageUrls,
-        returnHome,
-        returnAbout,
-        returnTokenMetrics,
-        onClick,
-      };
-    },
-  });
+    onMounted(() => {
+      drawPie();
+    });
+
+    return {
+      imageUrls,
+      returnHome,
+      returnAbout,
+      returnTokenMetrics,
+      onClick,
+    };
+  },
+});
 </script>
 
-<style scoped src="../../assets/css/landingPage/animate.css"></style>
-<style scoped src="../../assets/css/landingPage/bootstrap.min.css"></style>
-<style scoped src="../../assets/css/landingPage/style.css"></style>
-<style scoped src="../../assets/css/landingPage/baguetteBox.css"></style>
+<style scoped src='../../assets/css/landingPage/animate.css'></style>
+<style scoped src='../../assets/css/landingPage/bootstrap.min.css'></style>
+<style scoped src='../../assets/css/landingPage/style.css'></style>
+<style scoped src='../../assets/css/landingPage/baguetteBox.css'></style>

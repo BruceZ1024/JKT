@@ -393,6 +393,20 @@ export default class Web3Provider {
   }
 
   /**
+   * get DeFi earning
+   */
+  public async getDefiEarning() {
+    try {
+      await this.prepareConnectWallet();
+      const reward = await this.minerContract.methods.getPendingReward(this.currentAccount).call();
+      console.info(`getPendingReward: ${reward}`);
+      return reward;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
    * DeFi earning, to be claimed
    */
   public async withdrawFarmReward() {
