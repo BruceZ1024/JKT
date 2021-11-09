@@ -280,8 +280,16 @@ export default class Web3Provider {
   public async updateVip(newLevel: number) {
     try {
       await this.prepareConnectWallet();
+      const result = await this.checkAllowance(this.jktContract);
+      console.log(result)
+      if(result === '0'){
+        if(!await this.getApprove(this.jktContract)){
+          return false;
+        }
+      }
       const res = await this.minerContract.methods.buyVip(newLevel).send({ from: this.currentAccount });
       console.info(`buyVip: ${JSON.stringify(res)}`);
+      return res;
     } catch (e) {
       return false;
     }
