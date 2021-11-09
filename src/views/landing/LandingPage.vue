@@ -38,11 +38,21 @@
               TokenMetrics
             </a>
           </li>
-          <li>
-            <a class='page-scroll' href='#'>Contract Audit</a>
-          </li>
+<!--          <li>-->
+<!--            <a class='page-scroll' href='#'>Contract Audit</a>-->
+<!--          </li>-->
           <li>
             <a class='page-scroll' href='mailto:business@jokerfi.com'>Contact Us</a>
+          </li>
+          <li class='mobile-hidden'>
+            <a href='https://twitter.com/joker_manor' class='contact1'>
+              <svg-icon icon-class='contact1' style='width: 43px;height: 42px;margin-top: -10px'></svg-icon>
+            </a>
+          </li>
+          <li class='mobile-hidden'>
+            <a href='https://t.me/joinchat/OrA6XUXBpeYzZmRl' class='contact3'>
+              <svg-icon icon-class='contact3' style='width: 43px;height: 42px;margin-top: -10px'></svg-icon>
+            </a>
           </li>
           <li class='mobile-hidden'>
             <div class='dropdown'>
@@ -51,7 +61,7 @@
               </button>
               <ul class='dropdown-menu' aria-labelledby='dropdownMenu1'>
                 <li><a
-                  href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf'>English</a>
+                  href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf' style="font-family: 'Open Sans', sans-serif">English</a>
                 </li>
                 <li><a href='https://jokerfi.com/whitepaper/JokerManor-Whitepaper-KR.pdf'>Korean</a>
                 </li>
