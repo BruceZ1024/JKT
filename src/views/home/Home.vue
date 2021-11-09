@@ -62,7 +62,7 @@
         <button class="grey-button">
           <span class="text-type-1">Burn</span>
           <br/>
-          <span class="text-type-3">{{totlaBurn}}</span>
+          <span class="text-type-3">{{totalBurn}}</span>
         </button>
       </van-col>
     </van-row>
@@ -106,23 +106,23 @@
       ];
       const minerTokenAddress = ref(MINER_TOKEN_ADDRESS);
       const totalJKT = ref(formatCurrency(1000000000));
-      const totlaBurn = ref();
+      const totalBurn = ref();
       const totalJKTSupply = ref();
-      totlaBurn.value = 0;
+      totalBurn.value = 0;
       totalJKTSupply.value = 0;
       onMounted(async () => {
-        const [a, b] = await Promise.all([await Web3Provider.getInstance().getJKTTotal(), Web3Provider.getInstance().getJKTDecimals()]);
+        const [a, b] = await Promise.all([Web3Provider.getInstance().getJKTTotal(), Web3Provider.getInstance().getJKTDecimals()]);
         totalJKTSupply.value = formatCurrency(a / Math.pow(10, b));
-        var lpInfo = await Web3Provider.getInstance().getLpInformation();
+        const lpInfo = await Web3Provider.getInstance().getLpInformation();
         if (lpInfo) {
-          totlaBurn.value = formatCurrency((parseFloat(lpInfo.eLpBurn) + parseFloat(lpInfo.eVipBurn))/Math.pow(10, b));
+          totalBurn.value = formatCurrency((parseFloat(lpInfo.eLpBurn) + parseFloat(lpInfo.eVipBurn))/Math.pow(10, b));
         }
       });
       return {
         images,
         minerTokenAddress,
         totalJKT,
-        totlaBurn,
+        totalBurn,
         totalJKTSupply,
         window,
         copyToClipboard,

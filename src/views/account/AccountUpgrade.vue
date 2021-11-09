@@ -19,7 +19,7 @@
   <van-cell-group inset class='van-cell-group-margin'>
     <van-cell center is-link @click='showPicker = true'>Sellect Level
       <template #right-icon>
-        <van-icon name='arrow-down' />
+        <van-icon name='arrow-down'/>
       </template>
     </van-cell>
     <van-popup v-model:show='showPicker' round position='bottom' closeable>
@@ -35,7 +35,7 @@
                         class='right-icon-account'></svg-icon>
             </template>
             <template #right-icon>
-              <van-radio :disabled="userInfo.eUserLevel >= '1'" checked-color='#ee0a24' name='1' />
+              <van-radio :disabled="userInfo.eUserLevel >= '1'" checked-color='#ee0a24' name='1'/>
             </template>
           </van-cell>
           <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
@@ -47,7 +47,7 @@
                         class='right-icon-account'></svg-icon>
             </template>
             <template #right-icon>
-              <van-radio :disabled="userInfo.eUserLevel >= '2'" checked-color='#ee0a24' name='2' />
+              <van-radio :disabled="userInfo.eUserLevel >= '2'" checked-color='#ee0a24' name='2'/>
             </template>
           </van-cell>
           <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
@@ -59,7 +59,7 @@
                         class='right-icon-account'></svg-icon>
             </template>
             <template #right-icon>
-              <van-radio :disabled="userInfo.eUserLevel >= '3'" checked-color='#ee0a24' name='3' />
+              <van-radio :disabled="userInfo.eUserLevel >= '3'" checked-color='#ee0a24' name='3'/>
             </template>
           </van-cell>
           <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
@@ -88,128 +88,128 @@
     <van-button type='danger' block @click='onPay'>Pay</van-button>
   </div>
   <result-popup :show='showPicker' title='Congratulations'
-                 icon-class='dropdown-green'
-                 intro='You have successfully upgraded your account. Now you can power up your earnings.'
-                 target-url='account' target-name='My Account'
-                 :button-visible='true' @closeSuccessPopup='showPicker = false'></result-popup>
+                icon-class='dropdown-green'
+                intro='You have successfully upgraded your account. Now you can power up your earnings.'
+                target-url='account' target-name='My Account'
+                :button-visible='true' @closeSuccessPopup='showPicker = false'></result-popup>
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  onMounted,
-} from 'vue';
-import {
-  useRouter,
-} from 'vue-router';
-import SvgIcon from '@/components/SvgIcon.vue';
-import Web3Provider from '../../utils/Web3Provider';
-import { formatCurrency } from '@/utils/baseUtils';
-import { vipLevel } from '@/const/vipLevel';
-import ResultPopup from '@/components/ResultPopup.vue';
-import {Toast} from 'vant';
+  import {
+    defineComponent,
+    ref,
+    onMounted,
+  } from 'vue';
+  import {
+    useRouter,
+  } from 'vue-router';
+  import SvgIcon from '@/components/SvgIcon.vue';
+  import Web3Provider from '../../utils/Web3Provider';
+  import { formatCurrency } from '@/utils/baseUtils';
+  import { vipLevel } from '@/const/vipLevel';
+  import ResultPopup from '@/components/ResultPopup.vue';
+  import { Toast } from 'vant';
 
-export default defineComponent({
-  name: 'accountUpgrade',
-  components: {
-    SvgIcon, ResultPopup,
-  },
-  emits: ['postRefreshUserInfo'],
-  setup(props, ctx) {
-    const showPicker = ref(false);
-    const showSuccess = ref(true);
-    const userInfo = ref();
-    userInfo.value = {};
-    const checked = ref('0');
-    const router = useRouter();
-    const JKTBalance = ref();
-    JKTBalance.value = 0;
+  export default defineComponent({
+    name: 'accountUpgrade',
+    components: {
+      SvgIcon, ResultPopup,
+    },
+    emits: ['postRefreshUserInfo'],
+    setup(props, ctx) {
+      const showPicker = ref(false);
+      const showSuccess = ref(true);
+      const userInfo = ref();
+      userInfo.value = {};
+      const checked = ref('0');
+      const router = useRouter();
+      const JKTBalance = ref();
+      JKTBalance.value = 0;
+      const vipPrice = ref();
+      vipPrice.value = '0.00';
+      const goTo = (r, query) => {
+        router.push({
+          path: r,
+          query: query || {},
+        });
+      };
+      const refreshUserInfo = async () => {
+        userInfo.value = await Web3Provider.getInstance().getUserInfo();
+        //userInfo.value.eUserLevel = '2';
+        //JKTBalance.value = formatCurrency(await Web3Provider.getInstance().getJKTBalance(), '');
+        const [a1, b1] = await Promise.all([Web3Provider.getInstance().getJKTBalance(), Web3Provider.getInstance().getJKTDecimals()]);
+        JKTBalance.value = formatCurrency(a1 / Math.pow(10, b1));
+      };
 
-    const vipPrice = ref();
-    vipPrice.value = '0.00';
-    const goTo = (r, query) => {
-      router.push({
-        path: r,
-        query: query || {},
-      });
-    };
-    const refreshUserInfo = async () => {
-      userInfo.value = await Web3Provider.getInstance().getUserInfo();
-      //userInfo.value.eUserLevel = '2';
-      //JKTBalance.value = formatCurrency(await Web3Provider.getInstance().getJKTBalance(), '');
-      const [a1, b1] = await Promise.all([Web3Provider.getInstance().getJKTBalance(), Web3Provider.getInstance().getJKTDecimals()]);
-      JKTBalance.value = formatCurrency(a1 / Math.pow(10, b1));
-    };
-    onMounted(async () => {
-      refreshUserInfo();
-    });
-
-    const onVIPLevelClick = async (level) => {
-      if (level > userInfo.value.eUserLevel) {
-        checked.value = level;
-      }
-
-    };
-
-    const onVIPSelect = async () => {
-      if (checked.value > '0' && checked.value > userInfo.value.eUserLevel) {
-        let selectedVipLevel = parseInt(checked.value);
-        const [a, b] = await Promise.all([Web3Provider.getInstance().calculateVipPrice(selectedVipLevel), Web3Provider.getInstance().getJKTDecimals()]);
-        vipPrice.value = formatCurrency(a / Math.pow(10, b));
-      } else {
-        vipPrice.value = '0.00';
-      }
-      showPicker.value = false;
-
-    };
-
-    const onPay = async () => {
-      let selectedVipLevel = parseInt(checked.value);
-      if (selectedVipLevel > 0 && checked.value > userInfo.value.eUserLevel && selectedVipLevel <= 3) {
-        const resutl = await Web3Provider.getInstance().updateVip(selectedVipLevel);
-        if (resutl) {
-          vipPrice.value = '0.00';
-          showSuccess.value = true;
-        } else {
-          Toast.fail('Upeate failed, please try again later');
-        }
+      onMounted(() => {
         refreshUserInfo();
-        ctx.emit('postRefreshUserInfo');
-      } else {
-        Toast.fail('Please select a valid VIP Level');
-      }
+      });
 
-    };
+      const onVIPLevelClick = async (level) => {
+        if (level > userInfo.value.eUserLevel) {
+          checked.value = level;
+        }
 
-    return {
-      goTo,
-      checked,
-      showPicker,
-      showSuccess,
-      userInfo,
-      vipPrice,
-      vipLevel,
-      JKTBalance,
-      onVIPSelect,
-      onPay,
-      onVIPLevelClick,
+      };
 
-    };
-  },
-});
+      const onVIPSelect = async () => {
+        if (checked.value > '0' && checked.value > userInfo.value.eUserLevel) {
+          let selectedVipLevel = parseInt(checked.value);
+          const [a, b] = await Promise.all([Web3Provider.getInstance().calculateVipPrice(selectedVipLevel), Web3Provider.getInstance().getJKTDecimals()]);
+          vipPrice.value = formatCurrency(a / Math.pow(10, b));
+        } else {
+          vipPrice.value = '0.00';
+        }
+        showPicker.value = false;
+
+      };
+
+      const onPay = async () => {
+        let selectedVipLevel = parseInt(checked.value);
+        if (selectedVipLevel > 0 && checked.value > userInfo.value.eUserLevel && selectedVipLevel <= 3) {
+          const result = await Web3Provider.getInstance().updateVip(selectedVipLevel);
+          if (result) {
+            vipPrice.value = '0.00';
+            showSuccess.value = true;
+          } else {
+            Toast.fail('Update VIP failed, please try again');
+          }
+          refreshUserInfo();
+          ctx.emit('postRefreshUserInfo');
+        } else {
+          Toast.fail('Please select a valid VIP Level');
+        }
+
+      };
+
+      return {
+        goTo,
+        checked,
+        showPicker,
+        showSuccess,
+        userInfo,
+        vipPrice,
+        vipLevel,
+        JKTBalance,
+        onVIPSelect,
+        onPay,
+        onVIPLevelClick,
+
+      };
+    },
+  });
 </script>
 
 <style scoped>
-.upgrade-label {
-  margin-left: 16px;
-  margin-right: 16px;
-  font-size: 12pt;
-  color: #575962;
-}
+  .upgrade-label {
+    margin-left: 16px;
+    margin-right: 16px;
+    font-size: 12pt;
+    color: #575962;
+  }
 
-.pay-button {
-  margin-left: 16px;
-  margin-right: 16px;
-}
+  .pay-button {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
 </style>

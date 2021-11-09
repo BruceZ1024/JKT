@@ -14,10 +14,10 @@
     </van-cell>
   </van-cell-group>
   <van-list class='game-list'
-    v-model="state.listLoad"
-    :finished="state.finished"
-    finished-text="没有更多了"
-    @load="onLoad"
+            v-model="state.listLoad"
+            :finished="state.finished"
+            finished-text="no more"
+            @load="onLoad"
   >
     <div class='game-li' v-for='(item, index) in list' :key='item.gameName'>
       <van-image :src='item.picUrl' width='127px' height='83px' class='game-pic'></van-image>
@@ -42,133 +42,148 @@
 
 <script lang='ts'>
 
-import { defineComponent, reactive, ref } from 'vue';
-import SvgIcon from '@/components/SvgIcon.vue';
+  import { defineComponent, reactive, ref } from 'vue';
+  import SvgIcon from '@/components/SvgIcon.vue';
 
-export default defineComponent({
-  name: 'gameFi',
-  components: { SvgIcon },
-  setup() {
-    const state = reactive({
-      listLoad: false,
-      finished: true,
-    })
+  export default defineComponent({
+    name: 'gameFi',
+    components: { SvgIcon },
+    setup() {
+      const state = reactive({
+        listLoad: false,
+        finished: true,
+      });
 
-    const list = ref();
-    list.value = [
-      {
-        picUrl: '',
-        gameName: 'name',
-        power: '100%',
-        gameUrl: 'www.baidu.com',
-        tags: [
-          'NFT', 'Metaverse', 'SSR Card',
-        ]
-      },
-      {
-        picUrl: '',
-        gameName: 'name',
-        power: '100%',
-        gameUrl: 'www.baidu.com',
-        tags: [
-          'NFT', 'Metaverse', 'SSR Card',
-        ]
-      },
-      {
-        picUrl: '',
-        gameName: 'name',
-        power: '100%',
-        gameUrl: 'www.baidu.com',
-        tags: [
-          'NFT', 'Metaverse', 'SSR Card',
-        ]
+      const list = ref();
+      list.value = [
+        {
+          picUrl: '',
+          gameName: 'name',
+          power: '100%',
+          gameUrl: 'www.baidu.com',
+          tags: [
+            'NFT', 'Metaverse', 'SSR Card',
+          ],
+        },
+        {
+          picUrl: '',
+          gameName: 'name',
+          power: '100%',
+          gameUrl: 'www.baidu.com',
+          tags: [
+            'NFT', 'Metaverse', 'SSR Card',
+          ],
+        },
+        {
+          picUrl: '',
+          gameName: 'name',
+          power: '100%',
+          gameUrl: 'www.baidu.com',
+          tags: [
+            'NFT', 'Metaverse', 'SSR Card',
+          ],
+        },
+      ];
+
+      function toPlay(index: number) {
+        window.location.href = list.value[index].gameUrl;
       }
-    ]
-    function toPlay (index: number) {
-      window.location.href = list.value[index].gameUrl;
-    }
-    return {state, list, toPlay};
-  },
-});
+
+      return { state, list, toPlay };
+    },
+  });
 </script>
 
 <style lang='scss'>
-.earning {
-  color: #fff;
-  background-color: $brand-red;
-}
-.earning .van-cell__title{
-  flex: 1.5;
-}
-.earning-title{
+  .earning {
+    color: #fff;
+    background-color: $brand-red;
+  }
+
+  .earning .van-cell__title {
+    flex: 1.5;
+  }
+
+  .earning-title {
     display: inline-block;
     margin-left: 13px;
     font-size: 16px;
     font-weight: 400;
   }
-.earning-subtitle {
-  margin-left: 37px;
-  font-size: 13px;
-  font-weight: 600;
-}
-.earning-claimed {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
-  margin-top: 30px;
-}
-.game-list {
-  margin-top: 12px;
-  .game-li {
-    margin-bottom: 6px;
-    padding: 0 16px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .game-pic {
-    flex: 127;
-  }
-  .game-info {
-    flex: 204;
-    padding-left: 12px;
-  }
-  .game-name {
-    display:block;
-    font-size: 15px;
-    line-height: 18px;
+
+  .earning-subtitle {
+    margin-left: 37px;
+    font-size: 13px;
     font-weight: 600;
   }
-  .game-power {
-    margin-top: 8px;
-    font-size: 15px;
-    line-height: 16px;
-    font-weight: 400;
-    display: flex;
-    justify-content: space-between;
-  }
-  .game-btn {
-    width: 71px;
-    height: 24px;
-    background-color: $brand-red;
-    color: $white;
-    font-size:12px;
-    line-height: 24px;
+
+  .earning-claimed {
+    display: inline-block;
+    font-size: 12px;
     font-weight: 600;
-    border-radius: 4px;
+    color: #fff;
+    margin-top: 30px;
   }
-  .game-tags {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    .tag {
-      font-size: 13px;
-      line-height: 20px;
-      color: #575962;
-      padding: 4px 6px;
-      text-align: center;
-      background-color: #0E0F11;
+
+  .game-list {
+    margin-top: 12px;
+
+    .game-li {
+      margin-bottom: 6px;
+      padding: 0 16px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .game-pic {
+      flex: 127;
+    }
+
+    .game-info {
+      flex: 204;
+      padding-left: 12px;
+    }
+
+    .game-name {
+      display: block;
+      font-size: 15px;
+      line-height: 18px;
+      font-weight: 600;
+    }
+
+    .game-power {
+      margin-top: 8px;
+      font-size: 15px;
+      line-height: 16px;
+      font-weight: 400;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .game-btn {
+      width: 71px;
+      height: 24px;
+      background-color: $brand-red;
+      color: $white;
+      font-size: 12px;
+      line-height: 24px;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+
+    .game-tags {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+
+      .tag {
+        font-size: 13px;
+        line-height: 20px;
+        color: #575962;
+        padding: 4px 6px;
+        text-align: center;
+        background-color: #0E0F11;
+      }
     }
   }
-}
 </style>

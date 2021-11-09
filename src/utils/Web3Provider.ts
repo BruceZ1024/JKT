@@ -22,6 +22,8 @@ export default class Web3Provider {
   private readonly jktTokenAddress: string;
   private readonly minerTokenAddress: string;
   private readonly usdtTokenAddress: string;
+  // BSC chainId is '0x38'
+  private readonly bscChainId: string = '0x61';
 
   public constructor() {
     this.eventManager = EventHandler;
@@ -155,7 +157,7 @@ export default class Web3Provider {
   private checkChainId(chainId: string) {
     // 0x61 is testNet
     // 0x38 is BSC, will change to 0x38 in the future
-    if (chainId !== '0x61') {
+    if (chainId !== this.bscChainId) {
       this.eventManager.emit('NotBscChain');
       return false;
     } else {
@@ -281,9 +283,8 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const result = await this.checkAllowance(this.jktContract);
-      console.log(result)
-      if(result === '0'){
-        if(!await this.getApprove(this.jktContract)){
+      if (result === '0') {
+        if (!await this.getApprove(this.jktContract)) {
           return false;
         }
       }
@@ -344,6 +345,34 @@ export default class Web3Provider {
       const total = await this.jktContract.methods.totalSupply().call();
       console.info(`total: ${total}`);
       return total;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * get balance of lpToken
+   */
+  public async getBalance(contract) {
+    try {
+      await this.prepareConnectWallet();
+      const bal = await contract.methods.balanceOf(this.currentAccount).call();
+      console.info(`balance: ${bal}`);
+      return bal;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * get the decimals of lpToken
+   */
+  public async getDecimals(contract) {
+    try {
+      await this.prepareConnectWallet();
+      const decimals = await contract.methods.decimals().call();
+      console.info(`decimals: ${decimals}`);
+      return decimals;
     } catch (e) {
       return false;
     }

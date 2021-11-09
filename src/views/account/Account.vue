@@ -215,11 +215,10 @@
       onMounted(async () => {
         userInfo.value = await Web3Provider.getInstance().getUserInfo();
         userAddress.value = await Web3Provider.getInstance().getAccountAddress();
-        const [a, b] = await Promise.all([await Web3Provider.getInstance().getJKTBalance(), Web3Provider.getInstance().getJKTDecimals()]);
+        const [a, b] = await Promise.all([Web3Provider.getInstance().getJKTBalance(), Web3Provider.getInstance().getJKTDecimals()]);
         JKTBalance.value = formatCurrency(a / Math.pow(10, b));
         const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
-        USDTBalance.value = formatCurrency(a/exchangeOfUsdtToJkt);
-
+        USDTBalance.value = formatCurrency(a / exchangeOfUsdtToJkt);
       });
 
       return {
