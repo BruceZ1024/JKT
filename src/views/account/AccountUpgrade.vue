@@ -122,7 +122,8 @@ export default defineComponent({
     components: {
         SvgIcon
     },
-    setup() {
+    emits: ['postRefreshUserInfo'],
+    setup(props, ctx) {
         const showPicker = ref(false);
         const showSuccess = ref(false);
         const userInfo = ref();
@@ -170,7 +171,7 @@ export default defineComponent({
 
         }
 
-        const onPay = async () => {
+        const  onPay = async function(){
             let selectedVipLevel = parseInt(checked.value);
             if (selectedVipLevel > 0 && checked.value > userInfo.value.eUserLevel && selectedVipLevel <= 3) {
                 const resutl = await Web3Provider.getInstance().updateVip(selectedVipLevel);
@@ -181,6 +182,7 @@ export default defineComponent({
                     Toast.fail('Upeate failed, please try again later');
                 }
                 refreshUserInfo();
+                ctx.emit('postRefreshUserInfo');
             } else {
                 Toast.fail('Please select a valid VIP Level');
             }
