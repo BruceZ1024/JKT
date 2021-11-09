@@ -115,7 +115,7 @@
         totalJKTSupply.value = formatCurrency(a / Math.pow(10, b));
         var lpInfo = await Web3Provider.getInstance().getLpInformation();
         if (lpInfo) {
-          totlaBurn.value = formatCurrency(parseFloat(lpInfo.eLpBurn) + parseFloat(lpInfo.eVipBurn));
+          totlaBurn.value = formatCurrency((parseFloat(lpInfo.eLpBurn) + parseFloat(lpInfo.eVipBurn))/Math.pow(10, b));
         }
       });
       return {
