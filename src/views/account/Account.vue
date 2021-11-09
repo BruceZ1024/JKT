@@ -1,5 +1,5 @@
 <template>
-  <van-cell label="ID: 342324">
+  <van-cell :label="'$ '+USDTBalance">
     <template #title>
       {{showAmount ? JKTBalance : '******'}}
       <svg-icon :icon-class="showAmount ? 'show' : 'hidden'" @click="toggleShow()" style='width:16px; height:16px;'
@@ -191,7 +191,9 @@
       userAddress.value = '';
 
       const JKTBalance = ref();
-      JKTBalance.value = 0;
+      JKTBalance.value = 0.00;
+      const USDTBalance = ref();
+      USDTBalance.value = 0.00;
 
       const communityAddress = ref(COMMUNITE_ADDRESS);
 
@@ -205,7 +207,6 @@
           query: query || {},
         });
       };
-      console.log(vipLevel);
 
       const toggleShow = () => {
         showAmount.value = !showAmount.value;
@@ -214,7 +215,10 @@
       onMounted(async () => {
         userInfo.value = await Web3Provider.getInstance().getUserInfo();
         userAddress.value = await Web3Provider.getInstance().getAccountAddress();
-        JKTBalance.value = formatCurrency(await Web3Provider.getInstance().getJKTBalance(), '$');
+        const [a, b] = await Promise.all([await Web3Provider.getInstance().getJKTBalance(), Web3Provider.getInstance().getJKTDecimals()]);
+        JKTBalance.value = formatCurrency(a / Math.pow(10, b));
+        const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
+        USDTBalance.value = formatCurrency(a/exchangeOfUsdtToJkt);
 
       });
 
@@ -232,6 +236,7 @@
         JKTBalance,
         communityAddress,
         vipLevel,
+        USDTBalance,
       };
     },
   });

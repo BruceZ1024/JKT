@@ -24,35 +24,35 @@
         </van-cell>
         <van-radio-group v-model="checked">
             <van-cell-group>
-                <van-cell title="Sliver - 15% extra power" label="JKT~ $100) | + 5% from 2nd level invitees)" clickable @click="checked = '1'">
+                <van-cell title="Sliver - 15% extra power" label="JKT~ $100) | + 5% from 2nd level invitees)" clickable @click="onVIPLevelClick('1')">
                     <template #icon>
                         <svg-icon icon-class='sliver' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
                     </template>
                     <template #right-icon>
-                        <van-radio checked-color="#ee0a24" name="1" />
+                        <van-radio :disabled="userInfo.eUserLevel >= '1'" checked-color="#ee0a24" name="1" />
                     </template>
                 </van-cell>
                 <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
-                <van-cell title="Gold - 20% extra power" label="JKT~ $500) | + 10% from 2nd level invitees)" clickable @click="checked = '2'">
+                <van-cell title="Gold - 20% extra power" label="JKT~ $500) | + 10% from 2nd level invitees)" clickable @click="onVIPLevelClick('2')">
                     <template #icon>
                         <svg-icon icon-class='gold' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
                     </template>
                     <template #right-icon>
-                        <van-radio checked-color="#ee0a24" name="2" />
+                        <van-radio :disabled="userInfo.eUserLevel >= '2'" checked-color="#ee0a24" name="2" />
                     </template>
                 </van-cell>
                 <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
-                <van-cell title="Platinum - 30% extra power" label="JKT~ $500) | + 15% from 2nd level invitees)" clickable @click="checked = '3'">
+                <van-cell title="Platinum - 30% extra power" label="JKT~ $500) | + 15% from 2nd level invitees)" clickable @click="onVIPLevelClick('3')">
                     <template #icon>
                         <svg-icon icon-class='platinum' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
                     </template>
                     <template #right-icon>
-                        <van-radio checked-color="#ee0a24" name="3" />
+                        <van-radio :disabled="userInfo.eUserLevel >= '3'" checked-color="#ee0a24" name="3" />
                     </template>
                 </van-cell>
                 <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
                 <van-cell>
-                    <van-button type="danger" block @click="showPicker = false">Select</van-button>
+                    <van-button type="danger" block @click="onVIPSelect">Select</van-button>
                 </van-cell>
             </van-cell-group>
         </van-radio-group>
@@ -71,7 +71,7 @@
 </van-cell-group>
 <span class="upgrade-label"> Wallet Balance: {{JKTBalance}} JKT</span>
 <div class="pay-button">
-    <van-button type="danger" block @click="showSuccess = true">Pay</van-button>
+    <van-button type="danger" block @click="onPay">Pay</van-button>
 </div>
 
 <van-popup v-model:show="showSuccess" round position="bottom" closeable>
@@ -113,6 +113,9 @@ import {
 import {
     vipLevel
 } from '@/const/vipLevel';
+import {
+    Toast
+} from 'vant';
 
 export default defineComponent({
     name: 'accountUpgrade',
@@ -124,7 +127,7 @@ export default defineComponent({
         const showSuccess = ref(false);
         const userInfo = ref();
         userInfo.value = {};
-        const checked = ref('1');
+        const checked = ref('0');
         const router = useRouter();
         const JKTBalance = ref();
         JKTBalance.value = 0;
@@ -137,13 +140,52 @@ export default defineComponent({
                 query: query || {},
             });
         };
-        onMounted(async () => {
+        const refreshUserInfo = async () => {
             userInfo.value = await Web3Provider.getInstance().getUserInfo();
-            const [a, b] = await Promise.all([await await Web3Provider.getInstance().updateVipPrice(1), Web3Provider.getInstance().getJKTDecimals()]);
-            vipPrice.value = formatCurrency(a / Math.pow(10, b));
-            JKTBalance.value = formatCurrency(await Web3Provider.getInstance().getJKTBalance(), '');
-
+            //userInfo.value.eUserLevel = '2';
+            //JKTBalance.value = formatCurrency(await Web3Provider.getInstance().getJKTBalance(), '');
+            const [a1, b1] = await Promise.all([Web3Provider.getInstance().getJKTBalance(), Web3Provider.getInstance().getJKTDecimals()]);
+            JKTBalance.value = formatCurrency(a1 / Math.pow(10, b1));
+        }
+        onMounted(async () => {
+            refreshUserInfo();
         });
+
+        const onVIPLevelClick = async (level) => {
+            if (level > userInfo.value.eUserLevel) {
+                checked.value = level;
+            } 
+
+        }
+
+        const onVIPSelect = async () => {
+            if (checked.value > '0' && checked.value > userInfo.value.eUserLevel) {
+                let selectedVipLevel = parseInt(checked.value);
+                const [a, b] = await Promise.all([Web3Provider.getInstance().calculateVipPrice(selectedVipLevel), Web3Provider.getInstance().getJKTDecimals()]);
+                vipPrice.value = formatCurrency(a / Math.pow(10, b));
+            } else {
+                vipPrice.value = '0.00';
+            }
+            showPicker.value = false;
+
+        }
+
+        const onPay = async () => {
+            let selectedVipLevel = parseInt(checked.value);
+            if (selectedVipLevel > 0 && checked.value > userInfo.value.eUserLevel && selectedVipLevel <= 3) {
+                const resutl = await Web3Provider.getInstance().updateVip(selectedVipLevel);
+                if (resutl) {
+                    vipPrice.value = '0.00';
+                    showSuccess.value = true;
+                } else {
+                    Toast.fail('Upeate failed, please try again later');
+                }
+                refreshUserInfo();
+            } else {
+                Toast.fail('Please select a valid VIP Level');
+            }
+
+        }
 
         return {
             goTo,
@@ -153,7 +195,11 @@ export default defineComponent({
             userInfo,
             vipPrice,
             vipLevel,
-            JKTBalance
+            JKTBalance,
+            onVIPSelect,
+            onPay,
+            onVIPLevelClick,
+
         };
     },
 });
