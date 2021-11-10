@@ -87,11 +87,11 @@
   <div class='pay-button'>
     <van-button type='danger' block @click='onPay'>Pay</van-button>
   </div>
-  <result-popup :show='showPicker' title='Congratulations'
+  <result-popup :show='showSuccess' title='Congratulations'
                 icon-class='dropdown-green'
                 intro='You have successfully upgraded your account. Now you can power up your earnings.'
                 target-url='account' target-name='My Account'
-                :button-visible='true' @closeSuccessPopup='showPicker = false'></result-popup>
+                :button-visible='true' @closeSuccessPopup='showSuccess = false'></result-popup>
 </template>
 
 <script>
@@ -118,7 +118,7 @@
     emits: ['postRefreshUserInfo'],
     setup(props, ctx) {
       const showPicker = ref(false);
-      const showSuccess = ref(true);
+      const showSuccess = ref(false);
       const userInfo = ref();
       userInfo.value = {};
       const checked = ref('0');
@@ -126,7 +126,7 @@
       const JKTBalance = ref();
       JKTBalance.value = 0;
       const vipPrice = ref();
-      vipPrice.value = '0.00';
+      vipPrice.value = '0.0000';
       const goTo = (r, query) => {
         router.push({
           path: r,

@@ -25,7 +25,9 @@
 
 <script>
 import { defineComponent, reactive, watchEffect } from 'vue';
-
+ import {
+    useRouter,
+  } from 'vue-router';
 export default defineComponent({
   name: 'successPopup',
   props: {
@@ -39,9 +41,17 @@ export default defineComponent({
   },
   emits: ['closeSuccessPopup'],
   setup(props, context) {
+    const router = useRouter();
     const state = reactive({
       showSuccess: false,
     });
+
+    const goTo = (r, query) => {
+        router.push({
+          path: r,
+          query: query || {},
+        });
+      };
 
     function handleClose() {
       context.emit('closeSuccessPopup');
@@ -50,7 +60,7 @@ export default defineComponent({
     watchEffect(() => {
       state.showSuccess = props.show || false;
     });
-    return { state, handleClose };
+    return { state, handleClose, goTo };
   },
 });
 </script>
