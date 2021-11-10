@@ -46,7 +46,7 @@
         <van-col span='19' class='farm-info'>
           <van-row type='flex' justify='space-between' class='farm-info-title'>
             <van-col>JKT - {{ item.farmName }}</van-col>
-            <van-col>{{ item.farmApy }}</van-col>
+            <van-col>APY {{ item.farmApy }}%</van-col>
           </van-row>
           <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
             <van-col>JKT Staked: {{ item.jktStaked }}</van-col>
@@ -59,7 +59,7 @@
             <van-col>Power: {{ item.power }}%</van-col>
           </van-row>
           <van-row type='flex' justify='space-between'>
-            <span class='farm-info-power'>GET 300% POWER</span>
+            <span class='farm-info-power'>GET {{ item.getPower }}% POWER</span>
             <van-button class='farm-btn-redeem' plain type='primary' :loading='false'
                         @click='handleRedeem(index)'
                         :disabled='item.jktStaked === `0` || item.bitStaked === `0`'>
@@ -196,10 +196,11 @@
             allowance,
             token: contract,
             farmName: contractName,
-            farmApy: '593.35%',
+            farmApy: contractInfo.apy,
             jktStaked: contractInfo.jktStaked,
             bitStaked: contractInfo.lpTokenStaked,
             power: contractInfo.power,
+            getPower: contractInfo.getPower,
             serviceCharge: contractInfo.serviceCharge,
           });
         });
