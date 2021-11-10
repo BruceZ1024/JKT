@@ -522,11 +522,44 @@ export default class Web3Provider {
   public async getApyForStake(percent: number) {
     try {
       await this.prepareConnectWallet();
-      const res = await this.minerContract.methods.getApy(percent).call();
-      console.info(`getApy: ${JSON.stringify(res)}`);
-      return res;
+      const apy = await this.minerContract.methods.getApy(percent).call();
+      console.info(`getApy: ${apy}`);
+      return apy;
     } catch (e) {
-      return '0';
+      return false;
+    }
+  }
+
+  /**
+   * get lpScale
+   * @param lpToken
+   * @param percent
+   */
+  public async getHashRate(lpToken, percent) {
+    try {
+      await this.prepareConnectWallet();
+      const lpScale = await this.minerContract.methods.getHashRateByPct(lpToken, percent).call();
+      console.info(`getHashRateByPct: ${lpScale}`);
+      return lpScale;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * get computing power
+   * @param lpToken
+   * @param amount
+   * @param lpScale
+   */
+  public async getComputingPower(lpToken, amount, lpScale) {
+    try {
+      await this.prepareConnectWallet();
+      const power = await this.minerContract.methods.getPower(lpToken, amount, lpScale).call();
+      console.info(`getPower: ${power}`);
+      return power;
+    } catch (e) {
+      return false;
     }
   }
 
