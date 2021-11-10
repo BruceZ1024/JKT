@@ -16,7 +16,9 @@
       </van-cell>
       <van-cell center title=''>
         <template #right-icon>
-          <span>GET TOKEN</span>
+          <a href='https://pancakeswap.finance/swap' style='color: inherit'>
+            <span>GET TOKEN</span>
+          </a>
         </template>
       </van-cell>
     </div>

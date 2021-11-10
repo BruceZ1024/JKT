@@ -39,7 +39,7 @@
               @load='onLoad'
     >
       <van-row type='flex' justify='space-between' class='farm-li' v-for='(item, index) in list'
-               :key='item.farmName'>
+               :key='item.randomNum'>
         <van-col span='4'>
           <svg-icon :icon-class='`icon-${item.farmName}`' class='farm-image'></svg-icon>
         </van-col>
@@ -100,7 +100,7 @@
         listLoad: false,
         finished: true,
         redeemShow: false,
-        authPopShow: false,
+        authPopShow: true,
         stakePopShow: false,
         bitChecked: false,
         jktChecked: false,
@@ -159,6 +159,10 @@
 
       function handleStakeClose() {
         state.stakePopShow = false;
+        getEarningCount();
+        getUserInfo();
+        getFarmList();
+        getJktAllowance();
       }
 
       function handleAuthDone() {
@@ -193,9 +197,11 @@
         res.map(async (lpTokenAddress: any) => {
           const contract = await Web3Provider.getInstance().createLpTokenContract(lpTokenAddress);
           const [contractName, contractInfo, allowance] = await Promise.all([Web3Provider.getInstance().getSymbol(contract), Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress), Web3Provider.getInstance().checkAllowance(contract)]);
-
+          const randomNum = Math.floor(Math.random() * 1000);
           list.value.push({
+            randomNum,
             allowance,
+            lpTokenAddress,
             token: contract,
             farmName: contractName,
             farmApy: contractInfo.apy,

@@ -97,8 +97,8 @@ export default defineComponent({
         return;
       }
       const ratio = ratioItem? ratioItem.ratio : state.ratio;
-      if(props.farmData?.token) {
-        const res = await Web3Provider.getInstance().redeem(props.farmData.token, ratio);
+      if(props.farmData?.lpTokenAddress) {
+        const res = await Web3Provider.getInstance().redeem(props.farmData.lpTokenAddress, ratio);
         console.log(res);
         if (res) {
           Toast('Success');

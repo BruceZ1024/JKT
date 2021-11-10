@@ -14,7 +14,7 @@
         </p>
       </div>
       <van-cell v-if='buttonVisible'>
-        <van-button type='danger' block @click='goTo(`/${targetUrl}`)'>Go to {{ targetName }}
+        <van-button type='danger' block @click='btnClick'>Go to {{ targetName }}
         </van-button>
       </van-cell>
       <div class='account-safe-area-bottom'></div>
@@ -38,6 +38,7 @@ export default defineComponent({
     targetUrl: String,
     targetName: String,
     buttonVisible: Boolean,
+    btnCb: Function,
   },
   emits: ['closeSuccessPopup'],
   setup(props, context) {
@@ -57,10 +58,18 @@ export default defineComponent({
       context.emit('closeSuccessPopup');
     }
 
+    function btnClick() {
+      if(props.btnCb) {
+        props.btnCb();
+      } else {
+        goTo(`/${props.targetUrl}`);
+      }
+    }
+
     watchEffect(() => {
       state.showSuccess = props.show || false;
     });
-    return { state, handleClose, goTo };
+    return { state, handleClose, btnClick };
   },
 });
 </script>

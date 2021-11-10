@@ -575,6 +575,7 @@ export default class Web3Provider {
       console.log(lpToken, amount, percent);
       const res = await this.minerContract.methods.deposit(lpToken, amount, percent).send({ from: this.currentAccount });
       console.info(`deposit: ${JSON.stringify(res)}`);
+      return res;
     } catch (e) {
       return false;
     }
