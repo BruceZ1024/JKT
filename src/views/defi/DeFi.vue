@@ -196,6 +196,7 @@
 
           list.value.push({
             allowance,
+            lpTokenAddress,
             token: contract,
             farmName: contractName,
             farmApy: contractInfo.apy,
