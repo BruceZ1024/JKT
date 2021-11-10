@@ -30,7 +30,7 @@
         </van-cell-group>
       </div>
       <van-cell>
-        <van-button type="danger" block @click="active">Activate</van-button>
+        <van-button type="danger" :loading='loading' block @click="active">Activate</van-button>
       </van-cell>
       <div class="account-safe-area-bottom"></div>
     </van-cell-group>
@@ -55,6 +55,7 @@
         const showAddress = ref(false);
         const invitation = ref();
         invitation.value = '';
+        const loading = ref(false);
 
         async function checkParent() {
           const parent = await Web3Provider.getInstance().getParentInfo();
@@ -73,8 +74,10 @@
         }
 
         async function active() {
+          if(loading.value){return};
           const parentAccount = invitation.value && invitation.value.length === 42 ? invitation.value : undefined;
           if (parentAccount) {
+            loading.value = true;
             const res = await Web3Provider.getInstance().bindParentAccount(parentAccount);
             if (res) {
               showAddress.value = true;
@@ -82,6 +85,7 @@
               // 0x0000000000000000000000000000000000000000 is no parent
               if (parent && parent !== '0x0000000000000000000000000000000000000000') {
                 Toast.success('Account activation success!');
+                loading.value = false;
                 router.push({
                   path: '/home',
                 });
@@ -91,6 +95,7 @@
             } else {
               Toast.fail('Failed to active your account!');
             }
+            loading.value = false;
           }
         }
 
@@ -100,6 +105,7 @@
           showAddress,
           invitation,
           active,
+          loading,
         };
       },
     },

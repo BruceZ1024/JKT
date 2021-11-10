@@ -85,7 +85,7 @@
   </van-cell-group>
   <span class='upgrade-label'> Wallet Balance: {{ JKTBalance }} JKT</span>
   <div class='pay-button'>
-    <van-button type='danger' block @click='onPay'>Pay</van-button>
+    <van-button type='danger' :loading='loading' block @click='onPay'>Pay</van-button>
   </div>
   <result-popup :show='showSuccess' title='Congratulations'
                 icon-class='dropdown-green'
@@ -119,6 +119,7 @@
     setup(props, ctx) {
       const showPicker = ref(false);
       const showSuccess = ref(false);
+      const loading = ref(false);
       const userInfo = ref();
       userInfo.value = {};
       const checked = ref('0');
@@ -165,8 +166,10 @@
       };
 
       const onPay = async () => {
+        if(loading.value){return};
         let selectedVipLevel = parseInt(checked.value);
         if (selectedVipLevel > 0 && checked.value > userInfo.value.eUserLevel && selectedVipLevel <= 3) {
+          loading.value = true;
           const result = await Web3Provider.getInstance().upgradeVip(selectedVipLevel);
           if (result) {
             vipPrice.value = '0.00';
@@ -175,6 +178,7 @@
             Toast.fail('Update VIP failed, please try again');
           }
           refreshUserInfo();
+          loading.value = false;
           ctx.emit('postRefreshUserInfo');
         } else {
           Toast.fail('Please select a valid VIP Level');
@@ -194,6 +198,7 @@
         onVIPSelect,
         onPay,
         onVIPLevelClick,
+        loading,
 
       };
     },
