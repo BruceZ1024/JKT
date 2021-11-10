@@ -1,7 +1,7 @@
 <template>
-  <van-cell :label="'$ '+USDTBalance">
+  <van-cell :label="'$ '+(showAmount ? USDTBalance : '*******')">
     <template #title>
-      {{showAmount ? JKTBalance : '******'}}
+      {{showAmount ? JKTBalance : '********'}}
       <svg-icon :icon-class="showAmount ? 'show' : 'hidden'" @click="toggleShow()" style='width:16px; height:16px;'
                 class="right-icon-account"></svg-icon>
     </template>
