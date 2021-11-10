@@ -113,9 +113,9 @@
       onMounted(async () => {
         const [a, b] = await Promise.all([Web3Provider.getInstance().getJKTTotal(), Web3Provider.getInstance().getJKTDecimals()]);
         totalJKTSupply.value = formatCurrency(a / Math.pow(10, b));
-        const lpInfo = await Web3Provider.getInstance().getLpInformation();
-        if (lpInfo) {
-          totalBurn.value = formatCurrency((parseFloat(lpInfo.eLpBurn) + parseFloat(lpInfo.eVipBurn))/Math.pow(10, b));
+        const hashInfo = await Web3Provider.getInstance().getHashInformation();
+        if (hashInfo) {
+          totalBurn.value = formatCurrency((parseFloat(hashInfo.eLpBurn) + parseFloat(hashInfo.eVipBurn))/Math.pow(10, b));
         }
       });
       return {
@@ -126,7 +126,6 @@
         totalJKTSupply,
         window,
         copyToClipboard,
-
       };
     },
   });

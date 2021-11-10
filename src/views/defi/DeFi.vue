@@ -16,12 +16,12 @@
   <van-row class='button-row'>
     <button class='gray-button'>
       <span class='text-type-1'>Personal Power</span>
-      <br />
+      <br/>
       <span class='text-type-2'>{{ countData.eSelfHash }}</span>
     </button>
     <button class='gray-button'>
       <span class='text-type-1'>Extra Power</span>
-      <br />
+      <br/>
       <span class='text-type-2'>{{ countData.eTeamHash }}</span>
     </button>
   </van-row>
@@ -76,7 +76,7 @@
   </div>
   <authorize-popup :auth-show='state.authPopShow' :icon-data='iconData'
                    @auth-pop-close='handleAuthClose' @auth-done='handleAuthDone'
-                   ></authorize-popup>
+  ></authorize-popup>
   <redeem-popup :redeem-show='state.redeemShow' :farm-data='farmLiData'
                 @redeem-pop-close='handleRedeemClose'></redeem-popup>
   <stake-popup :stake-pop-show='state.stakePopShow'
@@ -85,275 +85,276 @@
 
 <script lang='ts'>
 
-import { defineComponent, onMounted, reactive, ref } from 'vue';
-import AuthorizePopup from '@/components/AuthorizePopup.vue';
-import RedeemPopup from '@/components/RedeemPopup.vue';
-import StakePopup from '@/components/StakePopup.vue';
-import Web3Provider from '../../utils/Web3Provider';
-import SvgIcon from '@/components/SvgIcon.vue';
+  import { defineComponent, onMounted, reactive, ref } from 'vue';
+  import AuthorizePopup from '@/components/AuthorizePopup.vue';
+  import RedeemPopup from '@/components/RedeemPopup.vue';
+  import StakePopup from '@/components/StakePopup.vue';
+  import Web3Provider from '../../utils/Web3Provider';
+  import SvgIcon from '@/components/SvgIcon.vue';
 
-export default defineComponent({
-  name: 'deFi',
-  components: { SvgIcon, AuthorizePopup, RedeemPopup, StakePopup },
-  setup() {
-    const state = reactive({
-      listLoad: false,
-      finished: true,
-      redeemShow: false,
-      authPopShow: false,
-      stakePopShow: false,
-      bitChecked: false,
-      jktChecked: false,
-    });
-
-    const countData = reactive({
-      earningCount: 0,
-      eSelfHash: 0,
-      eTeamHash: 0,
-    });
-
-    const jktInfo = reactive({
-      allowance: '',
-      token: '',
-    })
-
-    const iconData = ref();
-    iconData.value = [];
-
-    const list = ref();
-    list.value = [];
-
-    const farmLiData = ref();
-    farmLiData.value = {};
-
-    function onLoad() {
-      console.log('onload');
-    }
-
-    function handleRedeem(index: number) {
-      state.redeemShow = true;
-      farmLiData.value = list.value[index];
-    }
-
-    async function handleStake(index: number) {
-      if(jktInfo.allowance === '0' || list.value[index].allowance === '0') {
-        state.authPopShow = true;
-        iconData.value = [];
-        iconData.value.push(list.value[index], { allowance: jktInfo.allowance,
-          token: jktInfo.token,
-          farmName: 'JKT'});
-      }
-    }
-
-    function handleAuthClose() {
-      state.authPopShow = false;
-    }
-
-    function handleRedeemClose() {
-      state.redeemShow = false;
-    }
-
-    function handleStakeClose() {
-      state.stakePopShow = false;
-    }
-
-    function handleAuthDone() {
-      state.authPopShow = false;
-      state.stakePopShow = true;
-    }
-
-    async function getEarningCount() {
-      countData.earningCount = await Web3Provider.getInstance().getDefiEarning();
-    }
-
-    async function toClaimed() {
-      const claimedStatus = await Web3Provider.getInstance().withdrawFarmReward();
-      if (claimedStatus) {
-        await getEarningCount();
-      } else {
-        console.log('claimed failed');
-      }
-    }
-
-    async function getUserInfo() {
-      const res = await Web3Provider.getInstance().getUserInfo();
-      if (res) {
-        countData.eTeamHash = res.eTeamHash;
-        countData.eSelfHash = res.eSelfHash;
-      }
-    }
-
-    async function getFarmList() {
-      list.value = [];
-      const res = await Web3Provider.getInstance().getFarmList();
-      res.map(async (item: any) => {
-        const contract = await Web3Provider.getInstance().createLpTokenContract(item);
-        const contractName = await Web3Provider.getInstance().getSymbol(contract);
-        const contractInfo = await Web3Provider.getInstance().getStakePoolInfo(contract);
-        const allowance = await Web3Provider.getInstance().checkAllowance(contract);
-        list.value.push({
-          allowance,
-          token: contract,
-          farmName: contractName,
-          farmApy: '593.35%',
-          jktStaked: contractInfo.jktStaked,
-          bitStaked: contractInfo.lpTokenStaked,
-          power: contractInfo.power,
-          serviceCharge: contractInfo.serviceCharge,
-        });
+  export default defineComponent({
+    name: 'deFi',
+    components: { SvgIcon, AuthorizePopup, RedeemPopup, StakePopup },
+    setup() {
+      const state = reactive({
+        listLoad: false,
+        finished: true,
+        redeemShow: false,
+        authPopShow: false,
+        stakePopShow: false,
+        bitChecked: false,
+        jktChecked: false,
       });
-    }
 
-    async function getJktAllowance() {
-      jktInfo.token = await Web3Provider.getInstance().getJKTContract();
-      jktInfo.allowance = await Web3Provider.getInstance().checkAllowance(jktInfo.token);
-    }
+      const countData = reactive({
+        earningCount: 0,
+        eSelfHash: 0,
+        eTeamHash: 0,
+      });
 
-    onMounted(() => {
-      getEarningCount();
-      getUserInfo();
-      getFarmList();
-      getJktAllowance();
-    });
+      const jktInfo = reactive({
+        allowance: '',
+        token: '',
+      });
 
-    return {
-      state,
-      countData,
-      list,
-      iconData,
-      farmLiData,
-      onLoad,
-      handleRedeem,
-      handleAuthClose,
-      handleStake,
-      handleRedeemClose,
-      handleStakeClose,
-      handleAuthDone,
-      toClaimed,
-    };
-  },
-});
+      const iconData = ref();
+      iconData.value = [];
+
+      const list = ref();
+      list.value = [];
+
+      const farmLiData = ref();
+      farmLiData.value = {};
+
+      function onLoad() {
+        console.log('onload');
+      }
+
+      function handleRedeem(index: number) {
+        state.redeemShow = true;
+        farmLiData.value = list.value[index];
+      }
+
+      async function handleStake(index: number) {
+        if (jktInfo.allowance === '0' || list.value[index].allowance === '0') {
+          state.authPopShow = true;
+          iconData.value = [];
+          iconData.value.push(list.value[index], {
+            allowance: jktInfo.allowance,
+            token: jktInfo.token,
+            farmName: 'JKT',
+          });
+        }
+      }
+
+      function handleAuthClose() {
+        state.authPopShow = false;
+      }
+
+      function handleRedeemClose() {
+        state.redeemShow = false;
+      }
+
+      function handleStakeClose() {
+        state.stakePopShow = false;
+      }
+
+      function handleAuthDone() {
+        state.authPopShow = false;
+        state.stakePopShow = true;
+      }
+
+      async function getEarningCount() {
+        countData.earningCount = await Web3Provider.getInstance().getDefiEarning();
+      }
+
+      async function toClaimed() {
+        const claimedStatus = await Web3Provider.getInstance().withdrawFarmReward();
+        if (claimedStatus) {
+          await getEarningCount();
+        } else {
+          console.log('claimed failed');
+        }
+      }
+
+      async function getUserInfo() {
+        const res = await Web3Provider.getInstance().getUserInfo();
+        if (res) {
+          countData.eTeamHash = res.eTeamHash;
+          countData.eSelfHash = res.eSelfHash;
+        }
+      }
+
+      async function getFarmList() {
+        list.value = [];
+        const res = await Web3Provider.getInstance().getFarmList();
+        res.map(async (lpTokenAddress: any) => {
+          const contract = await Web3Provider.getInstance().createLpTokenContract(lpTokenAddress);
+          const [contractName, contractInfo, allowance] = await Promise.all([Web3Provider.getInstance().getSymbol(contract), Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress), Web3Provider.getInstance().checkAllowance(contract)]);
+
+          list.value.push({
+            allowance,
+            token: contract,
+            farmName: contractName,
+            farmApy: '593.35%',
+            jktStaked: contractInfo.jktStaked,
+            bitStaked: contractInfo.lpTokenStaked,
+            power: contractInfo.power,
+            serviceCharge: contractInfo.serviceCharge,
+          });
+        });
+      }
+
+      async function getJktAllowance() {
+        jktInfo.token = await Web3Provider.getInstance().getJKTContract();
+        jktInfo.allowance = await Web3Provider.getInstance().checkAllowance(jktInfo.token);
+      }
+
+      onMounted(() => {
+        getEarningCount();
+        getUserInfo();
+        getFarmList();
+        getJktAllowance();
+      });
+
+      return {
+        state,
+        countData,
+        list,
+        iconData,
+        farmLiData,
+        onLoad,
+        handleRedeem,
+        handleAuthClose,
+        handleStake,
+        handleRedeemClose,
+        handleStakeClose,
+        handleAuthDone,
+        toClaimed,
+      };
+    },
+  });
 </script>
 <style scoped lang='scss'>
-.earning {
-  color: #fff;
-  background-color: $brand-red;
-
-  .van-cell__title {
-    flex: 1.5;
-  }
-
-  .earning-title {
-    display: inline-block;
-    margin-left: 13px;
-    font-size: 16px;
-    font-weight: 400;
-  }
-
-  .earning-subtitle {
-    margin-left: 37px;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  .earning-claimed {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
+  .earning {
     color: #fff;
-    margin-top: 30px;
-  }
-}
+    background-color: $brand-red;
 
-.button-row {
-  padding: 8px 16px;
-  display: flex;
-  justify-content: space-between;
+    .van-cell__title {
+      flex: 1.5;
+    }
 
-  .gray-button {
-    height: 64px;
-    background-color: #202125;
-    border-radius: 10px;
-    border: none;
-    text-align: left;
-    padding: 5px;
-    width: 49%;
-
-    .text-type-1 {
+    .earning-title {
+      display: inline-block;
+      margin-left: 13px;
       font-size: 16px;
-      font-weight: normal;
-      line-height: 16px;
-      color: #FFFFFF;
-      vertical-align: middle;
+      font-weight: 400;
     }
 
-    .text-type-2 {
+    .earning-subtitle {
+      margin-left: 37px;
       font-size: 13px;
-      font-weight: normal;
-      line-height: 16px;
-      color: #575962;
-      vertical-align: middle;
+      font-weight: 600;
+    }
+
+    .earning-claimed {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 30px;
     }
   }
-}
 
-.notice-bar {
-  color: #fff;
-  background-color: $brand-red;
-}
+  .button-row {
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
 
-.farm-list {
-  padding: 16px;
+    .gray-button {
+      height: 64px;
+      background-color: #202125;
+      border-radius: 10px;
+      border: none;
+      text-align: left;
+      padding: 5px;
+      width: 49%;
 
-  .farm-title {
+      .text-type-1 {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 16px;
+        color: #FFFFFF;
+        vertical-align: middle;
+      }
+
+      .text-type-2 {
+        font-size: 13px;
+        font-weight: normal;
+        line-height: 16px;
+        color: #575962;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .notice-bar {
     color: #fff;
-    font-size: 17px;
-    line-height: 2;
+    background-color: $brand-red;
   }
 
-  .farm-info {
-    padding: 5px 0;
-  }
+  .farm-list {
+    padding: 16px;
 
-  .farm-image {
-    width: 100%;
-    height: auto;
-  }
+    .farm-title {
+      color: #fff;
+      font-size: 17px;
+      line-height: 2;
+    }
 
-  .farm-info-title {
-    font-size: 16px;
-    color: #fff;
-    font-weight: 400;
-  }
+    .farm-info {
+      padding: 5px 0;
+    }
 
-  .farm-info-subtitle {
-    font-size: 12px;
-    line-height: 2;
-    font-weight: 400;
-    color: #979797;
-  }
+    .farm-image {
+      width: 100%;
+      height: auto;
+    }
 
-  .farm-info-power {
-    font-size: 12px;
-    line-height: 2;
-    font-weight: 600;
-  }
+    .farm-info-title {
+      font-size: 16px;
+      color: #fff;
+      font-weight: 400;
+    }
 
-  .farm-btn-redeem {
-    font-size: 12px;
-    line-height: 2;
-    height: 24px;
-    border-radius: 4px;
-    color: $brand-red;
-    border-color: $brand-red;
-    background-color: transparent;
-  }
+    .farm-info-subtitle {
+      font-size: 12px;
+      line-height: 2;
+      font-weight: 400;
+      color: #979797;
+    }
 
-  .farm-btn-stake {
-    font-size: 12px;
-    line-height: 2;
-    height: 24px;
-    border-radius: 4px;
+    .farm-info-power {
+      font-size: 12px;
+      line-height: 2;
+      font-weight: 600;
+    }
+
+    .farm-btn-redeem {
+      font-size: 12px;
+      line-height: 2;
+      height: 24px;
+      border-radius: 4px;
+      color: $brand-red;
+      border-color: $brand-red;
+      background-color: transparent;
+    }
+
+    .farm-btn-stake {
+      font-size: 12px;
+      line-height: 2;
+      height: 24px;
+      border-radius: 4px;
+    }
   }
-}
 </style>

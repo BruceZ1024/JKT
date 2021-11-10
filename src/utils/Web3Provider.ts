@@ -109,7 +109,7 @@ export default class Web3Provider {
   }
 
   /**
-   * login wallet
+   * wake up wallet to request account
    */
   private async requestAccount() {
     try {
@@ -166,7 +166,7 @@ export default class Web3Provider {
   }
 
   /**
-   * create new contract based on lpToken address
+   * create new contract based on provided lpToken address
    * @param lpToken
    */
   public createLpTokenContract(lpToken: string) {
@@ -176,7 +176,7 @@ export default class Web3Provider {
   }
 
   /**
-   * check whether has parent
+   * check account whether has parent
    */
   public async getParentInfo() {
     try {
@@ -190,7 +190,7 @@ export default class Web3Provider {
   }
 
   /**
-   * bind parent account
+   * bind parent account with current account
    * @param parentAccount
    */
   public async bindParentAccount(parentAccount: string) {
@@ -228,7 +228,7 @@ export default class Web3Provider {
   }
 
   /**
-   * get lp information
+   * get hash information
    * eTotalHashRate = 1; // 总算力
    * eTotalLpHashRate = 2; // 总质押的算力
    * eStartBlock = 3;
@@ -240,10 +240,10 @@ export default class Web3Provider {
    * eTotalMint = 9; // 总发放的收益
    * eThresholdMutiple = 10;
    */
-  public async getLpInformation() {
+  public async getHashInformation() {
     await this.prepareConnectWallet();
-    const res = await this.minerContract.methods.getLpInfo().call();
-    console.info(`getLpInfo: ${JSON.stringify(res)}`);
+    const res = await this.minerContract.methods.getHashInfo().call();
+    console.info(`getHashInfo: ${JSON.stringify(res)}`);
     const [eTotalHashRate, eTotalLpHashRate, eStartBlock, eLpBurn, eVipBurn, eLastUpdateBlock, eOneShareGet, eOneShareScale, eTotalMint, eThresholdMutiple] = res;
     return {
       eTotalHashRate,
@@ -275,11 +275,10 @@ export default class Web3Provider {
   }
 
   /**
-   * update vip level
+   * upgrade vip level, newLevel must be greater than current level
    * @param newLevel
-   * newLevel must be greater than current level
    */
-  public async updateVip(newLevel: number) {
+  public async upgradeVip(newLevel: number) {
     try {
       await this.prepareConnectWallet();
       const result = await this.checkAllowance(this.jktContract);
@@ -296,6 +295,9 @@ export default class Web3Provider {
     }
   }
 
+  /**
+   * get exchange for 1 USDT equal how much JKT
+   */
   public async getExchangeOfUsdtToJkt() {
     try {
       await this.prepareConnectWallet();
@@ -351,7 +353,7 @@ export default class Web3Provider {
   }
 
   /**
-   * get balance of lpToken
+   * get balance of provided lpToken
    */
   public async getBalance(contract) {
     try {
@@ -365,7 +367,7 @@ export default class Web3Provider {
   }
 
   /**
-   * get the decimals of lpToken
+   * get the decimals of provided lpToken
    */
   public async getDecimals(contract) {
     try {
@@ -379,7 +381,7 @@ export default class Web3Provider {
   }
 
   /**
-   * get the symbol of lpToken
+   * get the symbol of provided lpToken
    * @param contract
    */
   public async getSymbol(contract) {
@@ -394,7 +396,7 @@ export default class Web3Provider {
   }
 
   /**
-   * check allowance
+   * check allowance of provided lpToken
    */
   public async checkAllowance(contract) {
     try {
@@ -408,7 +410,7 @@ export default class Web3Provider {
   }
 
   /**
-   * get approve permission
+   * get approve permission of provided lpToken
    */
   public async getApprove(contract) {
     try {
@@ -422,7 +424,7 @@ export default class Web3Provider {
   }
 
   /**
-   * get DeFi earning
+   * get DeFi earning amount
    */
   public async getDefiEarning() {
     try {
@@ -436,7 +438,7 @@ export default class Web3Provider {
   }
 
   /**
-   * DeFi earning, to be claimed
+   * claimed DeFi earning rewards
    */
   public async withdrawFarmReward() {
     try {
@@ -451,7 +453,7 @@ export default class Web3Provider {
 
 
   /**
-   * get farm lptoken list
+   * get all of farm LpToken list
    */
   public async getFarmList() {
     try {
@@ -466,7 +468,7 @@ export default class Web3Provider {
 
 
   /**
-   * get information of stake pool
+   * get information of stake LP pool
    * @param lpToken
    */
   public async getStakePoolInfo(lpToken) {
@@ -474,8 +476,8 @@ export default class Web3Provider {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.getLpInfo(this.currentAccount, lpToken).call();
       console.info(`getStakePoolInfo: ${JSON.stringify(res)}`);
-      const [lpTokenStaked, jktStaked, power, serviceCharge] = res;
-      return { lpTokenStaked, jktStaked, power, serviceCharge };
+      const [lpTokenStaked, jktStaked, power, serviceCharge, getPower, apy] = res;
+      return { lpTokenStaked, jktStaked, power, serviceCharge, getPower, apy };
     } catch (e) {
       return {};
     }

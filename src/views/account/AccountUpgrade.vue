@@ -167,7 +167,7 @@
       const onPay = async () => {
         let selectedVipLevel = parseInt(checked.value);
         if (selectedVipLevel > 0 && checked.value > userInfo.value.eUserLevel && selectedVipLevel <= 3) {
-          const result = await Web3Provider.getInstance().updateVip(selectedVipLevel);
+          const result = await Web3Provider.getInstance().upgradeVip(selectedVipLevel);
           if (result) {
             vipPrice.value = '0.00';
             showSuccess.value = true;
