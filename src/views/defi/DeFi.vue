@@ -100,7 +100,7 @@
         listLoad: false,
         finished: true,
         redeemShow: false,
-        authPopShow: true,
+        authPopShow: false,
         stakePopShow: false,
         bitChecked: false,
         jktChecked: false,

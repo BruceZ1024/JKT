@@ -47,7 +47,7 @@
     </div>
     <div class='pop-apy'>
       <span>Computing Power:</span>
-      <span>100</span>
+      <span>{{ state.power }}</span>
     </div>
     <div style='padding: 10px 16px'>
       <van-button class='button done-btn' type='danger' :loading='false'
@@ -106,6 +106,7 @@ export default defineComponent({
       inputBValue: 0,
       decimal: 0,
       apy: '',
+      power: '',
     });
 
     const resultState = reactive({
@@ -183,6 +184,15 @@ export default defineComponent({
       state.apy = Number(apy) / Math.pow(10, state.decimal);
     }
 
+    async function getComputingPower() {
+      const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
+      if (props.iconData) {
+        const module = await Web3Provider.getInstance().getHashRate(props.iconData[0].lpTokenAddress, state.ratio);
+        const powerNum = await Web3Provider.getInstance().getComputingPower(props.iconData[0].lpTokenAddress, inputNum, module);
+        state.power = (new BigNumber(powerNum).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
+      }
+    }
+
     function handleInputChange() {
       state.inputValue = Number(state.inputValue).toFixed(4);
       if (state.inputValue > state.balanceNum) {
@@ -190,6 +200,7 @@ export default defineComponent({
         state.inputValue = 0;
       } else {
         transferLpTokenToJKT();
+        getComputingPower();
       }
     }
 
@@ -210,6 +221,7 @@ export default defineComponent({
       state.ratio = tags.value[index].num;
       transferLpTokenToJKT();
       getAPY();
+      getComputingPower();
     }
 
     function closeResultPopup() {
@@ -221,6 +233,7 @@ export default defineComponent({
       if (state.stakePopShow) {
         await getBalance();
         getAPY();
+        getComputingPower();
       }
     });
     return {
