@@ -41,7 +41,7 @@
       <van-row type='flex' justify='space-between' class='farm-li' v-for='(item, index) in list'
                :key='item.randomNum'>
         <van-col span='4'>
-          <svg-icon :icon-class='`icon-${item.farmName}`' class='farm-image'></svg-icon>
+          <svg-icon :icon-class='item.farmName' class='farm-image'></svg-icon>
         </van-col>
         <van-col span='19' class='farm-info'>
           <van-row type='flex' justify='space-between' class='farm-info-title'>
@@ -331,8 +331,9 @@
     }
 
     .farm-image {
-      width: 100%;
-      height: auto;
+      width: 50px;
+      height: 50px;
+      margin-top: 10px;
     }
 
     .farm-info-title {
