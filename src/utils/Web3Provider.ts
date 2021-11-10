@@ -509,6 +509,7 @@ export default class Web3Provider {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.getLpPayJKT(lpToken, amount, percent).call();
       console.info(`getLpPayJKT: ${JSON.stringify(res)}`);
+      return res;
     } catch (e) {
       return false;
     }
@@ -523,6 +524,7 @@ export default class Web3Provider {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.getApy(percent).call();
       console.info(`getApy: ${JSON.stringify(res)}`);
+      return res;
     } catch (e) {
       return '0';
     }

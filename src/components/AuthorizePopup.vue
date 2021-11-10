@@ -10,7 +10,7 @@
     <div class='pop-switch'>
       <van-cell center :title='item.farmName' v-for='(item, index) in authList' :key='item.farmName'>
         <template #right-icon>
-          <van-switch v-model='authList[index].allowance' :disabled='authList[index].allowance !== "0"'
+          <van-switch v-model='authList[index].active' :disabled='authList[index].active'
                       size='22' active-color='#CD2A16' @change='getApprove(index, authList[index].token)'/>
         </template>
       </van-cell>
@@ -38,7 +38,7 @@ import Web3Provider from '@/utils/Web3Provider';
 export default defineComponent({
   name: 'authorizePopup',
   props: { authShow: Boolean, iconData: Array },
-  emits: ['authPopClose', 'authDone'],
+  emits: ['authPopClose', 'authDone', 'gottenApprove'],
   setup(props, context) {
     const state = reactive({
       authPopShow: false,
@@ -63,6 +63,8 @@ export default defineComponent({
       const res = await Web3Provider.getInstance().getApprove(token);
       if (!res) {
         authList.value[index].allowance = '0';
+      } else {
+        context.emit('gottenApprove', index);
       }
     }
 
@@ -70,7 +72,12 @@ export default defineComponent({
 
     watchEffect(() => {
       state.authPopShow = props.authShow || false;
-      authList.value = props.iconData || [];
+      authList.value = [];
+      if (props.iconData) {
+        props.iconData.forEach((item: any) => {
+          authList.value.push({...item, ...{active: item.allowance !== '0'}});
+        })
+      }
     });
 
     return { state, authList, handleClose, onAuthCancel, onAuthDone, getApprove};

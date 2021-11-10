@@ -75,11 +75,11 @@
     </van-list>
   </div>
   <authorize-popup :auth-show='state.authPopShow' :icon-data='iconData'
-                   @auth-pop-close='handleAuthClose' @auth-done='handleAuthDone'
+                   @auth-pop-close='handleAuthClose' @auth-done='handleAuthDone' @gotten-approve='handleApprove'
   ></authorize-popup>
   <redeem-popup :redeem-show='state.redeemShow' :farm-data='farmLiData'
                 @redeem-pop-close='handleRedeemClose'></redeem-popup>
-  <stake-popup :stake-pop-show='state.stakePopShow'
+  <stake-popup :stake-pop-show='state.stakePopShow' :icon-data='iconData'
                @stake-pop-close='handleStakeClose'></stake-popup>
 </template>
 
@@ -136,14 +136,16 @@
       }
 
       async function handleStake(index: number) {
+        iconData.value = [];
+        iconData.value.push(list.value[index], {
+          allowance: jktInfo.allowance,
+          token: jktInfo.token,
+          farmName: 'JKT',
+        });
         if (jktInfo.allowance === '0' || list.value[index].allowance === '0') {
           state.authPopShow = true;
-          iconData.value = [];
-          iconData.value.push(list.value[index], {
-            allowance: jktInfo.allowance,
-            token: jktInfo.token,
-            farmName: 'JKT',
-          });
+        } else {
+          state.stakePopShow = true;
         }
       }
 
@@ -211,6 +213,10 @@
         jktInfo.allowance = await Web3Provider.getInstance().checkAllowance(jktInfo.token);
       }
 
+      function handleApprove(index: number) {
+        iconData.value[index].allowance = '1';
+      }
+
       onMounted(() => {
         getEarningCount();
         getUserInfo();
@@ -232,6 +238,7 @@
         handleStakeClose,
         handleAuthDone,
         toClaimed,
+        handleApprove,
       };
     },
   });

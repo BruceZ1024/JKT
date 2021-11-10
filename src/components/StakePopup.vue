@@ -3,41 +3,46 @@
              round
              class='farm-pop'
              style='background-color: #202125;'>
-    <van-cell title='Stake JKT-BIT' class='van-cell-no-border pop-title'>
+    <van-cell :title='`Stake ${iconData[1].farmName}-${iconData[0].farmName}`'
+              class='van-cell-no-border pop-title'>
     </van-cell>
     <div class='pop-subtitle'>Input</div>
     <div style='padding:5px 16px'>
-      <van-field class='pop-input' v-model='state.inputValue' type='number'>
+      <van-field class='pop-input' v-model='state.inputValue' type='number'
+                 @change='handleInputChange'>
         <template #button>
-          <span style='color: red; margin-right: 10px;'>MAX</span>
-          <span>BIT</span>
+          <van-button plain @click='handleMaxInput'
+                      style='background-color: transparent; border: none;'>
+            <span style='color: red; margin-right: 10px;'>MAX</span>
+            <span>{{ iconData[0].farmName }}</span>
+          </van-button>
         </template>
       </van-field>
     </div>
     <div class='pop-sub-header'>
-      BIT Balance: 34234,32
+      {{ iconData[0].farmName }} Balance: {{ state.balance }}
     </div>
     <div class='pop-subtitle'>
       Staking Ratio
     </div>
     <div class='pop-tags'>
-      <van-tag class='pop-tag' type='50' :mark='false' :plain='false'> 20%</van-tag>
-      <van-tag class='pop-tag' type='50' :mark='false' :plain='false'> 50%</van-tag>
-      <van-tag class='pop-tag' type='50' :mark='false' :plain='false'> 80%</van-tag>
+      <van-tag :class='{"pop-tag": true, "pop-tag-active": tag.active}' type='50' :mark='false'
+               :plain='false' v-for='(tag, index) in tags' :key='tag.num' @click='handleTagSelect(index)'> {{ tag.num }}%
+      </van-tag>
     </div>
     <div class='pop-subtitle'>
       Estimated JKT Required
     </div>
     <div style='padding: 16px'>
-      <van-field class='pop-input' v-model='state.inputValue' :disabled='true' type='number'>
+      <van-field class='pop-input' v-model='state.inputBValue' :disabled='true' type='number'>
       </van-field>
     </div>
     <div class='pop-sub-header'>
-      JKT Balance: 34234,32
+      JKT Balance: {{ state.jktBalance }}
     </div>
     <div class='pop-apy'>
       <span>APY:</span>
-      <span>234234%</span>
+      <span>{{ state.apy }}%</span>
     </div>
     <div class='pop-apy'>
       <span>Computing Power:</span>
@@ -53,16 +58,43 @@
 </template>
 
 <script>
-import { reactive, watchEffect, defineComponent } from 'vue';
+import { reactive, watchEffect, defineComponent, ref } from 'vue';
+import Web3Provider from '../utils/Web3Provider.ts';
+import { formatCurrency } from '@/utils/baseUtils';
+import { Toast } from 'vant';
+import web3Utils from 'web3-utils';
+
 
 export default defineComponent({
   name: 'stakePopup',
-  props: { stakePopShow: Boolean },
+  props: { stakePopShow: Boolean, iconData: Array },
   emits: ['stakePopClose'],
   setup(props, context) {
+    const tags = ref([
+      {
+        num: 50,
+        active: true,
+      },
+      {
+        num: 70,
+        active: false,
+      },
+      {
+        num: 80,
+        active: false,
+      },
+    ]);
+
     const state = reactive({
       stakePopShow: false,
-      inputValue: '',
+      inputValue: 0,
+      balance: 'Loading',
+      jktBalance: 'Loading',
+      balanceNum: 0,
+      ratio: tags.value[0].num,
+      inputBValue: 0,
+      decimal: 0,
+      apy: '',
     });
 
     function handleClose() {
@@ -73,10 +105,78 @@ export default defineComponent({
       console.log('onStake');
     }
 
-    watchEffect(() => {
+    async function getBalance() {
+      if (props.iconData) {
+        const [jktB, jktD, jktU] = await Promise.all(
+          [
+            Web3Provider.getInstance().getJKTBalance(),
+            Web3Provider.getInstance().getJKTDecimals(),
+            Web3Provider.getInstance().getBalance(props.iconData[0].token),
+          ],
+        );
+        state.decimal = await Web3Provider.getInstance().getDecimals(props.iconData[0].token);
+        state.balanceNum = jktU / Math.pow(10, state.decimal);
+        state.balance = formatCurrency(jktU / Math.pow(10, state.decimal));
+        state.jktBalance = formatCurrency(jktB / Math.pow(10, jktD));
+      }
+    }
+
+    function handleMaxInput() {
+      state.inputValue = state.balance;
+    }
+
+    async function transferLpTokenToJKT() {
+      const inputNum = web3Utils.toBN(Number(state.inputValue) * Math.pow(10, state.decimal));
+      console.log(inputNum);
+      if(props.iconData) {
+        state.inputBValue = await Web3Provider.getInstance().transferLpTokenToJKT(props.iconData[0].token, inputNum, state.ratio);
+      }
+    }
+
+    async function getAPY() {
+      const apy = await Web3Provider.getInstance().getApyForStake(state.ratio);
+      console.log(apy);
+      state.apy = Number(apy) / Math.pow(10, state.decimal);
+    }
+
+    function handleInputChange() {
+      state.inputValue = Number(state.inputValue).toFixed(4);
+      if (state.inputValue > state.balanceNum) {
+        Toast('input number should less than balance');
+        state.inputValue = 0;
+      } else {
+        transferLpTokenToJKT();
+      }
+    }
+
+    function handleTagSelect(index) {
+      tags.value = [{
+        num: 50,
+        active: false,
+      },
+        {
+          num: 70,
+          active: false,
+        },
+        {
+          num: 80,
+          active: false,
+        },]
+      tags.value[index].active = true;
+      state.ratio = tags.value[index].num;
+      transferLpTokenToJKT();
+      getAPY();
+    }
+
+
+    watchEffect(async () => {
       state.stakePopShow = props.stakePopShow || false;
+      if (state.stakePopShow) {
+        await getBalance();
+        getAPY();
+      }
     });
-    return { state, handleClose, onStake };
+    return { state, tags, handleClose, onStake, handleMaxInput, handleInputChange, handleTagSelect };
   },
 });
 </script>
@@ -124,6 +224,10 @@ export default defineComponent({
     line-height: 16px;
     font-weight: 300;
     background-color: #0E0F11;
+  }
+  .pop-tag-active {
+    color:#fff;
+    background: $brand-red;
   }
 }
 
