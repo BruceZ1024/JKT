@@ -71,7 +71,7 @@ import { reactive, watchEffect, defineComponent, ref } from 'vue';
 import Web3Provider from '../utils/Web3Provider.ts';
 import { formatCurrency } from '@/utils/baseUtils';
 import { Toast } from 'vant';
-import web3Utils from 'web3-utils';
+import BigNumber from "bignumber.js"
 import ResultPopup from '../components/ResultPopup.vue';
 
 
@@ -128,10 +128,10 @@ export default defineComponent({
 
     async function onStake() {
       console.log('onStake');
-      const inputNum = web3Utils.toBN(Number(state.inputValue) * Math.pow(10, state.decimal));
-      console.log(inputNum);
+      const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
       if (props.iconData) {
-        const res = await Web3Provider.getInstance().stake(props.iconData[0].token, inputNum, state.ratio);
+        const res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
+        console.log(res);
         if (!res) {
           Toast('Stake Failed');
           resultState.buttonVisible = false;
@@ -139,13 +139,13 @@ export default defineComponent({
           resultState.title = 'Error';
           resultState.intro = 'We were unable to add the tokens from your wallet to the pool. Please try again.';
           resultState.show = true;
-          return;
+        } else {
+          resultState.buttonVisible = true;
+          resultState.iconClass = 'dropdown-green';
+          resultState.title = 'Congratulation';
+          resultState.intro = 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Unstake”.';
+          resultState.show = true;
         }
-        resultState.buttonVisible = true;
-        resultState.iconClass = 'dropdown-green';
-        resultState.title = 'Congratulation';
-        resultState.intro = 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Unstake”.';
-        resultState.show = true;
       }
     }
 
@@ -170,10 +170,10 @@ export default defineComponent({
     }
 
     async function transferLpTokenToJKT() {
-      const inputNum = web3Utils.toBN(Number(state.inputValue) * Math.pow(10, state.decimal));
-      console.log(inputNum);
+      const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
       if (props.iconData) {
-        state.inputBValue = await Web3Provider.getInstance().transferLpTokenToJKT(props.iconData[0].token, inputNum, state.ratio);
+        const valueB = await Web3Provider.getInstance().transferLpTokenToJKT(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
+        state.inputBValue = (new BigNumber(valueB).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
       }
     }
 
