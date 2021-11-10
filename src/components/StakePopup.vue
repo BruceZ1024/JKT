@@ -27,7 +27,8 @@
     </div>
     <div class='pop-tags'>
       <van-tag :class='{"pop-tag": true, "pop-tag-active": tag.active}' type='50' :mark='false'
-               :plain='false' v-for='(tag, index) in tags' :key='tag.num' @click='handleTagSelect(index)'> {{ tag.num }}%
+               :plain='false' v-for='(tag, index) in tags' :key='tag.num'
+               @click='handleTagSelect(index)'> {{ tag.num }}%
       </van-tag>
     </div>
     <div class='pop-subtitle'>
@@ -49,12 +50,20 @@
       <span>100</span>
     </div>
     <div style='padding: 10px 16px'>
-      <van-button class='button done-btn' type='danger' :loading='false' @click='onStake'>
+      <van-button class='button done-btn' type='danger' :loading='false'
+                  :disabled='state.inputValue === "0"' @click='onStake'>
         Stake
       </van-button>
     </div>
   </van-popup>
-
+  <result-popup :show='resultState.show'
+                :title='resultState.title'
+                :iconClass='resultState.iconClass'
+                :intro='resultState.intro'
+                :targetUrl='resultState.targetUrl'
+                :targetName='resultState.targetName'
+                :btn-cb='resultState.buttonCb'
+                :buttonVisible='resultState.buttonVisible' @closeSuccessPopup='closeResultPopup'></result-popup>
 </template>
 
 <script>
@@ -63,12 +72,14 @@ import Web3Provider from '../utils/Web3Provider.ts';
 import { formatCurrency } from '@/utils/baseUtils';
 import { Toast } from 'vant';
 import web3Utils from 'web3-utils';
+import ResultPopup from '../components/ResultPopup.vue';
 
 
 export default defineComponent({
   name: 'stakePopup',
   props: { stakePopShow: Boolean, iconData: Array },
   emits: ['stakePopClose'],
+  components: { ResultPopup },
   setup(props, context) {
     const tags = ref([
       {
@@ -97,12 +108,45 @@ export default defineComponent({
       apy: '',
     });
 
+    const resultState = reactive({
+      show: false,
+      title: 'Congratulation',
+      iconClass: 'dropdown-green',
+      intro: 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Unstake”.',
+      targetUrl: 'deFi?',
+      targetName: 'Farm',
+      buttonCb: () => {
+        resultState.show = false;
+        context.emit('stakePopClose');
+      },
+      buttonVisible: true,
+    });
+
     function handleClose() {
       context.emit('stakePopClose');
     }
 
-    function onStake() {
+    async function onStake() {
       console.log('onStake');
+      const inputNum = web3Utils.toBN(Number(state.inputValue) * Math.pow(10, state.decimal));
+      console.log(inputNum);
+      if (props.iconData) {
+        const res = await Web3Provider.getInstance().stake(props.iconData[0].token, inputNum, state.ratio);
+        if (!res) {
+          Toast('Stake Failed');
+          resultState.buttonVisible = false;
+          resultState.iconClass = 'dropdown';
+          resultState.title = 'Error';
+          resultState.intro = 'We were unable to add the tokens from your wallet to the pool. Please try again.';
+          resultState.show = true;
+          return;
+        }
+        resultState.buttonVisible = true;
+        resultState.iconClass = 'dropdown-green';
+        resultState.title = 'Congratulation';
+        resultState.intro = 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Unstake”.';
+        resultState.show = true;
+      }
     }
 
     async function getBalance() {
@@ -128,7 +172,7 @@ export default defineComponent({
     async function transferLpTokenToJKT() {
       const inputNum = web3Utils.toBN(Number(state.inputValue) * Math.pow(10, state.decimal));
       console.log(inputNum);
-      if(props.iconData) {
+      if (props.iconData) {
         state.inputBValue = await Web3Provider.getInstance().transferLpTokenToJKT(props.iconData[0].token, inputNum, state.ratio);
       }
     }
@@ -161,13 +205,16 @@ export default defineComponent({
         {
           num: 80,
           active: false,
-        },]
+        }];
       tags.value[index].active = true;
       state.ratio = tags.value[index].num;
       transferLpTokenToJKT();
       getAPY();
     }
 
+    function closeResultPopup() {
+      resultState.show = false;
+    }
 
     watchEffect(async () => {
       state.stakePopShow = props.stakePopShow || false;
@@ -176,7 +223,17 @@ export default defineComponent({
         getAPY();
       }
     });
-    return { state, tags, handleClose, onStake, handleMaxInput, handleInputChange, handleTagSelect };
+    return {
+      resultState,
+      state,
+      tags,
+      handleClose,
+      onStake,
+      handleMaxInput,
+      handleInputChange,
+      handleTagSelect,
+      closeResultPopup,
+    };
   },
 });
 </script>
@@ -225,8 +282,9 @@ export default defineComponent({
     font-weight: 300;
     background-color: #0E0F11;
   }
+
   .pop-tag-active {
-    color:#fff;
+    color: #fff;
     background: $brand-red;
   }
 }
