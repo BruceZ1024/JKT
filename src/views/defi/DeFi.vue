@@ -32,10 +32,14 @@
   />
   <div class='farm-list'>
     <div class='farm-title'>Farm</div>
+    <div class='loading-tips' v-if='state.listLoad' style='text-align: center;'>
+      <van-loading  color='#CD2A16' size='30px'/> 加载中...
+    </div>
     <van-list class='farm-list-wrapper'
               v-model='state.listLoad'
               :finished='state.finished'
               finished-text='No More'
+              loading-text='Loading~'
               @load='onLoad'
     >
       <van-row type='flex' justify='space-between' class='farm-li' v-for='(item, index) in list'
@@ -99,8 +103,8 @@
     components: { SvgIcon, AuthorizePopup, RedeemPopup, StakePopup },
     setup() {
       const state = reactive({
-        listLoad: false,
-        finished: true,
+        listLoad: true,
+        finished: false,
         redeemShow: false,
         authPopShow: false,
         stakePopShow: false,
@@ -196,9 +200,11 @@
       }
 
       async function getFarmList() {
+        state.listLoad = true;
+        state.finished = false;
         list.value = [];
         const res = await Web3Provider.getInstance().getFarmList();
-        res.map(async (lpTokenAddress: any) => {
+        await res.map(async (lpTokenAddress: any) => {
           const contract = await Web3Provider.getInstance().createLpTokenContract(lpTokenAddress);
           const [contractName, contractInfo, allowance, jktDecimal, lpTokenDecimal] = await Promise.all([Web3Provider.getInstance().getSymbol(contract), Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress), Web3Provider.getInstance().checkAllowance(contract), Web3Provider.getInstance().getJKTDecimals(), Web3Provider.getInstance().getDecimals(contract)]);
           const randomNum = Math.floor(Math.random() * 1000);
@@ -220,6 +226,8 @@
             serviceCharge: contractInfo.serviceCharge,
           });
         });
+        state.listLoad = false;
+        state.finished = true;
       }
 
       async function getJktAllowance() {
