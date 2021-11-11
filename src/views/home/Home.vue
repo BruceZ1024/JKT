@@ -148,15 +148,13 @@ export default defineComponent({
 
 .home-notice {
     background-color: #202125;
-    width: 100%;
-    height: 40px;
     margin-top: 15px;
+    padding: 0 15px;
 }
 
 .notice-icon {
     width: 14px;
     height: 14px;
-    margin-left: 15px;
 }
 
 .notice-text {
