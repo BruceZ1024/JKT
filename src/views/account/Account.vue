@@ -192,9 +192,9 @@
       userAddress.value = '';
 
       const JKTBalance = ref();
-      JKTBalance.value = 0.00;
+      JKTBalance.value = 'Loading...';
       const USDTBalance = ref();
-      USDTBalance.value = 0.00;
+      USDTBalance.value = 'Loading...';
 
       const communityAddress = ref(COMMUNITE_ADDRESS);
 

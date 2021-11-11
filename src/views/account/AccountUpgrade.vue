@@ -127,7 +127,7 @@
       const checked = ref('0');
       const router = useRouter();
       const JKTBalance = ref();
-      JKTBalance.value = 0;
+      JKTBalance.value = 'Loading...';
       const vipPrice = ref();
       vipPrice.value = '0.0000';
       const goTo = (r, query) => {
@@ -157,6 +157,7 @@
 
       const onVIPSelect = async () => {
         if (checked.value > '0' && checked.value > userInfo.value.eUserLevel) {
+          vipPrice.value = 'Loading...'
           let selectedVipLevel = parseInt(checked.value);
           const [a, b] = await Promise.all([Web3Provider.getInstance().calculateVipPrice(selectedVipLevel), Web3Provider.getInstance().getJKTDecimals()]);
           vipPrice.value = formatCurrency(a / Math.pow(10, b));
