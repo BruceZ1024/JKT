@@ -139,11 +139,16 @@
 
       async function handleStake(index: number) {
         iconData.value = [];
-        iconData.value.push(list.value[index], {
-          allowance: jktInfo.allowance,
-          token: jktInfo.token,
-          farmName: 'JKT',
-        });
+        if(list.value[index].farmName !== 'JKT') {
+          iconData.value.push(list.value[index], {
+            allowance: jktInfo.allowance,
+            token: jktInfo.token,
+            farmName: 'JKT',
+          });
+        } else {
+          iconData.value.push(list.value[index]);
+        }
+
         if (jktInfo.allowance === '0' || list.value[index].allowance === '0') {
           state.authPopShow = true;
         } else {

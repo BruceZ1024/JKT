@@ -6,7 +6,7 @@
     </van-cell>
     <van-row type='flex' justify='space-between' class='redeem-info'>
       <van-col span='4'>
-        <svg-icon :icon-class='`icon-${farmData.farmName}`' class='farm-image'></svg-icon>
+        <svg-icon :icon-class='`${farmData.farmName}`' class='farm-image'></svg-icon>
       </van-col>
       <van-col span='19' class='farm-info'>
         <van-row type='flex' justify='space-between' class='farm-info-title'>
@@ -75,7 +75,7 @@
       }, {
         name: 50, ratio: 50, active: false,
       }, {
-        name: 'MAX', ratio: 100, active: false,
+        name: 100, ratio: 100, active: false,
       }];
 
       function handleClose() {
@@ -116,7 +116,7 @@
         }, {
           name: 50, ratio: 50, active: false,
         }, {
-          name: 'MAX', ratio: 100, active: false,
+          name: 100, ratio: 100, active: false,
         }];
         tagsList.value[index].active = true;
         state.ratio = '';
@@ -128,7 +128,7 @@
         }, {
           name: 50, ratio: 50, active: false,
         }, {
-          name: 'MAX', ratio: 100, active: false,
+          name: 100, ratio: 100, active: false,
         }];
         state.ratio = state.ratio.toFixed(2);
       }
@@ -160,8 +160,9 @@
   }
 
   .farm-image {
-    width: 100%;
-    height: auto;
+    width: 60px;
+    height: 60px;
+    margin-top: 10px;
   }
 
   .farm-info-title {

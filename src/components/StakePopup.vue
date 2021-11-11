@@ -3,7 +3,7 @@
              round
              class='farm-pop'
              style='background-color: #202125;'>
-    <van-cell :title='`Stake ${iconData[1].farmName}-${iconData[0].farmName}`'
+    <van-cell :title='`Stake JKT -${iconData[0].farmName}`'
               class='van-cell-no-border pop-title'>
     </van-cell>
     <div class='pop-subtitle'>Input</div>
