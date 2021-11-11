@@ -22,23 +22,23 @@
     <div class='pop-sub-header'>
       {{ iconData[0].farmName }} Balance: {{ state.balance }}
     </div>
-    <div class='pop-subtitle'>
+    <div class='pop-subtitle' v-if='iconData.length === 2'>
       Staking Ratio
     </div>
-    <div class='pop-tags'>
+    <div class='pop-tags' v-if='iconData.length === 2'>
       <van-tag :class='{"pop-tag": true, "pop-tag-active": tag.active}' type='50' :mark='false'
                :plain='false' v-for='(tag, index) in tags' :key='tag.num'
                @click='handleTagSelect(index)'> {{ tag.num }}%
       </van-tag>
     </div>
-    <div class='pop-subtitle'>
+    <div class='pop-subtitle' v-if='iconData.length === 2'>
       Estimated JKT Required
     </div>
-    <div style='padding: 16px'>
+    <div style='padding: 16px' v-if='iconData.length === 2'>
       <van-field class='pop-input' v-model='state.inputBValue' :disabled='true' type='number'>
       </van-field>
     </div>
-    <div class='pop-sub-header'>
+    <div class='pop-sub-header' v-if='iconData.length === 2'>
       JKT Balance: {{ state.jktBalance }}
     </div>
     <div class='pop-apy'>
@@ -132,7 +132,14 @@ export default defineComponent({
       console.log('onStake');
       const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
       if (props.iconData) {
-        const res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
+        let res
+        if(props.iconData.length === 2) {
+          // JTK-XXX
+          res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
+        } else {
+          // JKT-JKT
+          res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, 100);
+        }
         console.log(res);
         if (!res) {
           Toast('Stake Failed');

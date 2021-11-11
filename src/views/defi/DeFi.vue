@@ -53,11 +53,11 @@
             <van-col>APY {{ item.farmApy }}%</van-col>
           </van-row>
           <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-            <van-col>JKT Staked: {{ item.jktStaked }}</van-col>
+            <van-col>{{ item.farmName }} Staked: {{ item.bitStaked }}</van-col>
             <van-col>Rewards in JKT</van-col>
           </van-row>
-          <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-            <van-col>{{ item.farmName }} Staked: {{ item.bitStaked }}</van-col>
+          <van-row v-if='item.farmName !== "JKT"' type='flex' justify='space-between' class='farm-info-subtitle'>
+            <van-col>JKT Staked: {{ item.jktStaked }}</van-col>
           </van-row>
           <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
             <van-col>Power: {{ item.power }}</van-col>
