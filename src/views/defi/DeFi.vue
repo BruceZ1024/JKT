@@ -89,6 +89,7 @@
   <stake-popup :stake-pop-show='state.stakePopShow' :icon-data='iconData'
                :stake-cb='refreshDiFiData'
                @stake-pop-close='handleStakeClose'></stake-popup>
+  <loading-overlay :show='loading'></loading-overlay>
 </template>
 
 <script lang='ts'>
@@ -102,11 +103,15 @@ import SvgIcon from '@/components/SvgIcon.vue';
 import { formatCurrency } from '@/utils/baseUtils';
 import BigNumber from 'bignumber.js';
 import { BNB_TOKEN_ADDRESS } from '@/const/address/tokenAddress';
+import LoadingOverlay from '@/components/LoadingOverlay.vue';
+import { Toast } from 'vant';
 
 export default defineComponent({
   name: 'deFi',
-  components: { SvgIcon, AuthorizePopup, RedeemPopup, StakePopup },
+  components: { SvgIcon, AuthorizePopup, RedeemPopup, StakePopup, LoadingOverlay },
   setup() {
+    const loading = ref(false);
+
     const state = reactive({
       listLoad: true,
       finished: false,
@@ -188,11 +193,15 @@ export default defineComponent({
     }
 
     async function toClaimed() {
+      loading.value = true;
       const claimedStatus = await Web3Provider.getInstance().withdrawFarmReward();
       if (claimedStatus) {
+        loading.value = false;
         await getEarningCount();
+        Toast.success('Claimed success!');
       } else {
-        console.log('claimed failed');
+        loading.value = false;
+        Toast.fail('Claimed failed!');
       }
     }
 
@@ -282,6 +291,7 @@ export default defineComponent({
     });
 
     return {
+      loading,
       state,
       countData,
       list,
