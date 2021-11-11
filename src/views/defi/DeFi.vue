@@ -118,9 +118,9 @@ export default defineComponent({
     });
 
     const countData = reactive({
-      earningCount: 0.00,
-      eSelfHash: 0.00,
-      eTeamHash: 0.00,
+      earningCount: 'Loading...',
+      eSelfHash: 'Loading...',
+      eTeamHash: 'Loading...',
     });
 
     const jktInfo = reactive({
@@ -199,8 +199,8 @@ export default defineComponent({
     async function getUserInfo() {
       const [res, decimal] = await Promise.all([Web3Provider.getInstance().getUserInfo(), Web3Provider.getInstance().getJKTDecimals()]);
       if (res) {
-        countData.eTeamHash = Number(new BigNumber(res.eTeamHash).div(new BigNumber(10).pow(decimal)).toFixed(2));
-        countData.eSelfHash = Number(new BigNumber(res.eSelfHash).div(new BigNumber(10).pow(decimal)).toFixed(2));
+        countData.eTeamHash = String(new BigNumber(res.eTeamHash).div(new BigNumber(10).pow(decimal)).toFixed(2));
+        countData.eSelfHash = String(new BigNumber(res.eSelfHash).div(new BigNumber(10).pow(decimal)).toFixed(2));
       }
     }
 

@@ -49,6 +49,7 @@
       </van-button>
     </div>
   </van-popup>
+  <loading-overlay :show='loading'></loading-overlay>
 </template>
 
 <script>
@@ -56,13 +57,16 @@
   import SvgIcon from '@/components/SvgIcon';
   import { Toast } from 'vant';
   import Web3Provider from '@/utils/Web3Provider';
+  import LoadingOverlay from '@/components/LoadingOverlay.vue';
 
   export default defineComponent({
     name: 'redeemPopup',
-    components: { SvgIcon },
-    props: { redeemShow: Boolean, farmData: Object, redeemCb: Function},
+    components: { SvgIcon, LoadingOverlay },
+    props: { redeemShow: Boolean, farmData: Object, redeemCb: Function },
     emits: ['redeemPopClose'],
     setup(props, context) {
+      const loading = ref(false);
+
       const state = reactive({
         redeemShow: false,
         ratio: '',
@@ -89,22 +93,26 @@
         console.log('onAuthDone');
         const ratioItem = tagsList.value.find((item) => item.active === true);
         if (!ratioItem && !state.ratio) {
-          Toast('please choose ratio');
+          Toast.fail('Please choose percentage!');
           return;
         } else if (state.ratio > 100) {
-          Toast('Ratio should less than 100');
+          Toast.fail('Invalid percentage!');
           return;
         }
         const ratio = ratioItem ? ratioItem.ratio : state.ratio;
         if (props.farmData?.lpTokenAddress) {
+          loading.value = true;
+
           const res = await Web3Provider.getInstance().redeem(props.farmData.lpTokenAddress, ratio);
           console.log(res);
           if (res) {
-            Toast('Success');
+            loading.value = false;
+            Toast.success('Redeem success!');
             props.redeemCb();
             context.emit('redeemPopClose');
           } else {
-            Toast('Failed');
+            loading.value = false;
+            Toast.fail('Redeem failed!');
           }
         }
       }
@@ -135,7 +143,7 @@
       watchEffect(() => {
         state.redeemShow = props.redeemShow || false;
       });
-      return { state, tagsList, handleClose, onAuthCancel, onAuthDone, handleRatioSelect, inputChange };
+      return { loading, state, tagsList, handleClose, onAuthCancel, onAuthDone, handleRatioSelect, inputChange };
     },
   })
   ;

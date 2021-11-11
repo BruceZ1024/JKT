@@ -1,58 +1,59 @@
 <template>
-<van-overlay v-model:show='state.loading' @click='btnClick'>
+  <van-overlay v-model:show='state.loading' z-index='9999' @click='btnClick'>
 
     <div class="wrapper" @click.stop>
-        <div class="block">
-            <van-loading type="spinner" size="120px" color="red" />
-        </div>
+      <div class="block">
+        <van-loading type="spinner" size="120px" color="red"/>
+      </div>
     </div>
-</van-overlay>
+  </van-overlay>
 </template>
 
 <script>
-import {
+  import {
     defineComponent,
     reactive,
-    watchEffect
-} from 'vue';
+    watchEffect,
+  } from 'vue';
 
-export default defineComponent({
+  export default defineComponent({
     name: 'loadingOverlay',
     props: {
-        show: Boolean,
-        btnCb: Function,
+      show: Boolean,
+      btnCb: Function,
     },
     setup(props, context) {
-        const state = reactive({
-            loading: false,
-        });
+      const state = reactive({
+        loading: false,
+      });
 
-        function btnClick() {
-            if (props.btnCb) {
-                props.btnCb();
-            }
+      function btnClick() {
+        if (props.btnCb) {
+          props.btnCb();
         }
-        watchEffect(() => {
-            state.loading = props.show || false;
-        });
-        return {
-            state,
-            btnClick
-        };
+      }
+
+      watchEffect(() => {
+        state.loading = props.show || false;
+      });
+      return {
+        state,
+        btnClick,
+      };
     },
-});
+  });
 </script>
 
 <style scoped>
-.wrapper {
+  .wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-}
+  }
 
-.block {
+  .block {
     width: 120px;
     height: 120px;
-}
+  }
 </style>
