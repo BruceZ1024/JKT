@@ -35,6 +35,7 @@
       <div class="account-safe-area-bottom"></div>
     </van-cell-group>
   </van-popup>
+  <loading-overlay :show='loading'></loading-overlay>
 </template>
 
 <script>
@@ -44,11 +45,12 @@
   import Web3Provider from '@/utils/Web3Provider';
   import { useRouter } from 'vue-router';
   import { Toast } from 'vant';
+  import LoadingOverlay from '@/components/LoadingOverlay.vue'
 
   export default defineComponent(
     {
       name: 'splashScreen',
-      components: { SvgIcon },
+      components: { SvgIcon, LoadingOverlay },
       setup() {
         const router = useRouter();
         const urls = ref([]);

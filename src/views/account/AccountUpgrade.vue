@@ -85,13 +85,14 @@
   </van-cell-group>
   <span class='upgrade-label'> Wallet Balance: {{ JKTBalance }} JKT</span>
   <div class='pay-button'>
-    <van-button type='danger' :loading='loading' block @click='onPay'>Pay</van-button>
+    <van-button type='danger' :loading="loading" block @click='onPay'>Pay</van-button>
   </div>
   <result-popup :show='showSuccess' title='Congratulations'
                 icon-class='dropdown-green'
                 intro='You have successfully upgraded your account. Now you can power up your earnings.'
                 target-url='account' target-name='My Account'
                 :button-visible='true' @closeSuccessPopup='showSuccess = false'></result-popup>
+<loading-overlay :show='loading'></loading-overlay>
 </template>
 
 <script>
@@ -108,12 +109,13 @@
   import { formatCurrency } from '@/utils/baseUtils';
   import { vipLevel } from '@/const/vipLevel';
   import ResultPopup from '@/components/ResultPopup.vue';
+  import LoadingOverlay from '@/components/LoadingOverlay.vue'
   import { Toast } from 'vant';
 
   export default defineComponent({
     name: 'accountUpgrade',
     components: {
-      SvgIcon, ResultPopup,
+      SvgIcon, ResultPopup, LoadingOverlay,
     },
     emits: ['postRefreshUserInfo'],
     setup(props, ctx) {
