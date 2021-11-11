@@ -55,7 +55,6 @@
   import { reactive, watchEffect, defineComponent, ref } from 'vue';
   import SvgIcon from '@/components/SvgIcon';
   import { Toast } from 'vant';
-  import Web3 from 'web3';
   import Web3Provider from '@/utils/Web3Provider';
 
   export default defineComponent({
@@ -130,7 +129,7 @@
         }, {
           name: 100, ratio: 100, active: false,
         }];
-        state.ratio = state.ratio.toFixed(2);
+        state.ratio = Number(state.ratio) > 100 ? 100 : Number(state.ratio).toFixed(0);
       }
 
       watchEffect(() => {
