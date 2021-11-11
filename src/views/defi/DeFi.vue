@@ -77,9 +77,9 @@
   <authorize-popup :auth-show='state.authPopShow' :icon-data='iconData'
                    @auth-pop-close='handleAuthClose' @auth-done='handleAuthDone' @gotten-approve='handleApprove'
   ></authorize-popup>
-  <redeem-popup :redeem-show='state.redeemShow' :farm-data='farmLiData'
+  <redeem-popup :redeem-show='state.redeemShow' :farm-data='farmLiData' :redeem-cb='refreshDiFiData'
                 @redeem-pop-close='handleRedeemClose'></redeem-popup>
-  <stake-popup :stake-pop-show='state.stakePopShow' :icon-data='iconData'
+  <stake-popup :stake-pop-show='state.stakePopShow' :icon-data='iconData' :stake-cb='refreshDiFiData'
                @stake-pop-close='handleStakeClose'></stake-popup>
 </template>
 
@@ -161,10 +161,6 @@
 
       function handleStakeClose() {
         state.stakePopShow = false;
-        getEarningCount();
-        getUserInfo();
-        getFarmList();
-        getJktAllowance();
       }
 
       function handleAuthDone() {
@@ -230,6 +226,13 @@
         iconData.value[index].allowance = '1';
       }
 
+      function refreshDiFiData() {
+        getEarningCount();
+        getUserInfo();
+        getFarmList();
+        getJktAllowance();
+      }
+
       onMounted(() => {
         getEarningCount();
         getUserInfo();
@@ -252,6 +255,7 @@
         handleAuthDone,
         toClaimed,
         handleApprove,
+        refreshDiFiData,
       };
     },
   });

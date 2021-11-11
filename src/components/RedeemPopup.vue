@@ -61,7 +61,7 @@
   export default defineComponent({
     name: 'redeemPopup',
     components: { SvgIcon },
-    props: { redeemShow: Boolean, farmData: Object },
+    props: { redeemShow: Boolean, farmData: Object, redeemCb: Function},
     emits: ['redeemPopClose'],
     setup(props, context) {
       const state = reactive({
@@ -102,6 +102,7 @@
           console.log(res);
           if (res) {
             Toast('Success');
+            props.redeemCb();
             context.emit('redeemPopClose');
           } else {
             Toast('Failed');

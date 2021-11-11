@@ -77,7 +77,7 @@ import ResultPopup from '../components/ResultPopup.vue';
 
 export default defineComponent({
   name: 'stakePopup',
-  props: { stakePopShow: Boolean, iconData: Array },
+  props: { stakePopShow: Boolean, iconData: Array, stakeCb: Function },
   emits: ['stakePopClose'],
   components: { ResultPopup },
   setup(props, context) {
@@ -118,6 +118,7 @@ export default defineComponent({
       targetName: 'Farm',
       buttonCb: () => {
         resultState.show = false;
+        props.stakeCb();
         context.emit('stakePopClose');
       },
       buttonVisible: true,

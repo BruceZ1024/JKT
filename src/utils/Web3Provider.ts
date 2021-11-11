@@ -490,6 +490,7 @@ export default class Web3Provider {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.takeBack(lpToken, percent).send({ from: this.currentAccount });
       console.info(`takeBack: ${JSON.stringify(res)}`);
+      return res;
     } catch (e) {
       return false;
     }
