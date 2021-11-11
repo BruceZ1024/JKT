@@ -566,12 +566,13 @@ export default class Web3Provider {
    * @param lpToken
    * @param amount
    * @param percent
+   * @param value
    */
-  public async stake(lpToken, amount, percent) {
+  public async stake(lpToken, amount, percent, value?) {
     try {
       await this.prepareConnectWallet();
       console.log(lpToken, amount, percent);
-      const res = await this.minerContract.methods.deposit(lpToken, amount, percent).send({ from: this.currentAccount });
+      const res = await this.minerContract.methods.deposit(lpToken, amount, percent).send({ from: this.currentAccount, value: value });
       console.info(`deposit: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
