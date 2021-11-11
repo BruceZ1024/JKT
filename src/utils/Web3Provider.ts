@@ -3,9 +3,8 @@ import { ethers } from 'ethers';
 import { EventHandler } from './EventManager';
 import detectEthereumProvider from '@metamask/detect-provider';
 import {
-  TEST_JKT_TOKEN_ADDRESS,
-  TEST_MINER_TOKEN_ADDRESS,
-  TEST_USDT_TOKEN_ADDRESS,
+  JKT_TOKEN_ADDRESS,
+  MINER_TOKEN_ADDRESS,
 } from '@/const/address/tokenAddress';
 
 const JKT_ABI = require('../const/abi/jkt_abi.json');
@@ -21,15 +20,13 @@ export default class Web3Provider {
   private eventManager: any;
   private readonly jktTokenAddress: string;
   private readonly minerTokenAddress: string;
-  private readonly usdtTokenAddress: string;
   // BSC chainId is '0x38'
   private readonly bscChainId: string = '0x61';
 
   public constructor() {
     this.eventManager = EventHandler;
-    this.jktTokenAddress = TEST_JKT_TOKEN_ADDRESS;
-    this.minerTokenAddress = TEST_MINER_TOKEN_ADDRESS;
-    this.usdtTokenAddress = TEST_USDT_TOKEN_ADDRESS;
+    this.jktTokenAddress = JKT_TOKEN_ADDRESS;
+    this.minerTokenAddress = MINER_TOKEN_ADDRESS;
   }
 
   public static getInstance(): Web3Provider {
@@ -569,7 +566,7 @@ export default class Web3Provider {
    * @param amount
    * @param percent
    */
-  public async stake(lpToken: string, amount: number, percent: number) {
+  public async stake(lpToken, amount, percent) {
     try {
       await this.prepareConnectWallet();
       console.log(lpToken, amount, percent);
@@ -596,5 +593,19 @@ export default class Web3Provider {
   public async getJKTContract() {
     !this.jktContract && await this.prepareConnectWallet();
     return this.jktContract;
+  }
+
+  /**
+   * get wallet BNB balance
+   */
+  public async getWalletBalance() {
+    try {
+      const wei = await this.provider.request({ method: 'eth_getBalance', params: [this.currentAccount, 'latest'] });
+      const balance = Web3.utils.fromWei(wei, 'ether');
+      console.info(`getWalletBalance: ${balance}`);
+      return balance;
+    } catch (error) {
+      return false;
+    }
   }
 }
