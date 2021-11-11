@@ -164,10 +164,10 @@ export default defineComponent({
           [
             Web3Provider.getInstance().getJKTBalance(),
             Web3Provider.getInstance().getJKTDecimals(),
-            Web3Provider.getInstance().getBalance(props.iconData[0].token),
+            Web3Provider.getInstance().getBalance(props.iconData[0].contract),
           ],
         );
-        state.decimal = await Web3Provider.getInstance().getDecimals(props.iconData[0].token);
+        state.decimal = await Web3Provider.getInstance().getDecimals(props.iconData[0].contract);
         state.balanceNum = new BigNumber(jktU).div(new BigNumber(10).pow(state.decimal)).toFixed(2);
         state.balance = formatCurrency(state.balanceNum);
         state.jktBalance = formatCurrency(new BigNumber(jktB).div(new BigNumber(10).pow(jktD)));

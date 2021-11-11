@@ -11,7 +11,7 @@
       <van-cell center :title='item.farmName' v-for='(item, index) in authList' :key='item.farmName'>
         <template #right-icon>
           <van-switch v-model='authList[index].active' :disabled='authList[index].active'
-                      size='22' active-color='#CD2A16' @change='getApprove(index, authList[index].token)'/>
+                      size='22' active-color='#CD2A16' @change='getApprove(index, authList[index].contract)'/>
         </template>
       </van-cell>
       <van-cell center title=''>
