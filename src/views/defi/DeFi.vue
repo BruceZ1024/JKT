@@ -33,7 +33,7 @@
   <div class='farm-list'>
     <div class='farm-title'>Farm</div>
     <div class='loading-tips' v-if='state.listLoad' style='text-align: center;'>
-      <van-loading  color='#CD2A16' size='30px'/> 加载中...
+      <van-loading  color='#CD2A16' size='30px'/> Loading...
     </div>
     <van-list class='farm-list-wrapper'
               v-model='state.listLoad'
