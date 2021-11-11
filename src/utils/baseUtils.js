@@ -3,7 +3,7 @@ export function formatCurrency(value, currency, decimals) {
   value = parseFloat(value);
   if (!isFinite(value) || (!value && value !== 0)) return '';
   currency = currency != null ? currency : '';
-  decimals = decimals != null ? decimals : 4;
+  decimals = decimals != null ? decimals : 2;
   var stringified = Math.abs(value).toFixed(decimals);
   var _int = decimals
     ? stringified.slice(0, -1 - decimals)

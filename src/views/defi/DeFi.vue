@@ -56,13 +56,13 @@
             <van-col>{{ item.farmName }} Staked: {{ item.bitStaked }}</van-col>
           </van-row>
           <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-            <van-col>Power: {{ item.power }}%</van-col>
+            <van-col>Power: {{ item.power }}</van-col>
           </van-row>
           <van-row type='flex' justify='space-between'>
             <span class='farm-info-power'>GET {{ item.getPower }}% POWER</span>
             <van-button class='farm-btn-redeem' plain type='primary' :loading='false'
                         @click='handleRedeem(index)'
-                        :disabled='item.jktStaked === `0` || item.bitStaked === `0`'>
+                        :disabled='item.jktStaked === `0.00` || item.bitStaked === `0.00`'>
               Redeem
             </van-button>
             <van-button class='farm-btn-stake' type='danger' :loading='false'
@@ -91,6 +91,8 @@
   import StakePopup from '@/components/StakePopup.vue';
   import Web3Provider from '../../utils/Web3Provider';
   import SvgIcon from '@/components/SvgIcon.vue';
+  import { formatCurrency } from '@/utils/baseUtils';
+  import BigNumber from 'bignumber.js';
 
   export default defineComponent({
     name: 'deFi',
@@ -107,9 +109,9 @@
       });
 
       const countData = reactive({
-        earningCount: 0,
-        eSelfHash: 0,
-        eTeamHash: 0,
+        earningCount: 0.00,
+        eSelfHash: 0.00,
+        eTeamHash: 0.00,
       });
 
       const jktInfo = reactive({
@@ -171,7 +173,8 @@
       }
 
       async function getEarningCount() {
-        countData.earningCount = await Web3Provider.getInstance().getDefiEarning();
+        const [defiEarning, decimal] = await Promise.all([Web3Provider.getInstance().getDefiEarning(), Web3Provider.getInstance().getJKTDecimals()]);
+        countData.earningCount = formatCurrency(new BigNumber(defiEarning).div(new BigNumber(10).pow(decimal)));
       }
 
       async function toClaimed() {
@@ -184,10 +187,10 @@
       }
 
       async function getUserInfo() {
-        const res = await Web3Provider.getInstance().getUserInfo();
+        const [res, decimal] = await Promise.all([Web3Provider.getInstance().getUserInfo(), Web3Provider.getInstance().getJKTDecimals()]);
         if (res) {
-          countData.eTeamHash = res.eTeamHash;
-          countData.eSelfHash = res.eSelfHash;
+          countData.eTeamHash = Number(new BigNumber(res.eTeamHash).div(new BigNumber(10).pow(decimal)).toFixed(2));
+          countData.eSelfHash = Number(new BigNumber(res.eSelfHash).div(new BigNumber(10).pow(decimal)).toFixed(2));
         }
       }
 
@@ -196,18 +199,22 @@
         const res = await Web3Provider.getInstance().getFarmList();
         res.map(async (lpTokenAddress: any) => {
           const contract = await Web3Provider.getInstance().createLpTokenContract(lpTokenAddress);
-          const [contractName, contractInfo, allowance] = await Promise.all([Web3Provider.getInstance().getSymbol(contract), Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress), Web3Provider.getInstance().checkAllowance(contract)]);
+          const [contractName, contractInfo, allowance, jktDecimal, lpTokenDecimal] = await Promise.all([Web3Provider.getInstance().getSymbol(contract), Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress), Web3Provider.getInstance().checkAllowance(contract), Web3Provider.getInstance().getJKTDecimals(), Web3Provider.getInstance().getDecimals(contract)]);
           const randomNum = Math.floor(Math.random() * 1000);
+          const farmApy = new BigNumber(contractInfo.apy).div(new BigNumber(10).pow(jktDecimal)).times(100).toFixed(2);
+          const jktStaked = formatCurrency(new BigNumber(contractInfo.jktStaked).div(new BigNumber(10).pow(jktDecimal)));
+          const bitStaked = formatCurrency(new BigNumber(contractInfo.lpTokenStaked).div(new BigNumber(10).pow(lpTokenDecimal)));
+          const power = new BigNumber(contractInfo.power).div(new BigNumber(10).pow(jktDecimal)).toFixed(2);
           list.value.push({
             randomNum,
             allowance,
             lpTokenAddress,
             token: contract,
             farmName: contractName,
-            farmApy: contractInfo.apy,
-            jktStaked: contractInfo.jktStaked,
-            bitStaked: contractInfo.lpTokenStaked,
-            power: contractInfo.power,
+            farmApy: farmApy,
+            jktStaked: jktStaked,
+            bitStaked: bitStaked,
+            power: power,
             getPower: contractInfo.getPower,
             serviceCharge: contractInfo.serviceCharge,
           });

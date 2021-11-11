@@ -32,13 +32,13 @@
                :plain='false' @click='handleRatioSelect(index)'>{{ tag.name }}%
       </van-tag>
       <van-tag class='pop-tag-custom' type='50' :mark='false' :plain='false'>
-        <input type='number' v-model='state.ratio' placeholder='Custom' step='.01' @change='inputChange'>
+        <input type='digit' v-model='state.ratio' placeholder='Custom' @change='inputChange'>
       </van-tag>
     </div>
     <div class='pop-intro'>
       Direct JKT redemption charges {{ farmData.serviceCharge }}% if you pledged within 7 days, and
       it
-      will trun to 1% after 7 days.
+      will turn to 1% after 7 days.
     </div>
     <div class='pop-btns'>
       <van-button class='button cancel-btn' type='default' :loading='false' @click='onAuthCancel'>
@@ -52,201 +52,203 @@
 </template>
 
 <script>
-import { reactive, watchEffect, defineComponent, ref } from 'vue';
-import SvgIcon from '@/components/SvgIcon';
-import { Toast } from 'vant';
-import Web3 from 'web3';
-import Web3Provider from '@/utils/Web3Provider';
+  import { reactive, watchEffect, defineComponent, ref } from 'vue';
+  import SvgIcon from '@/components/SvgIcon';
+  import { Toast } from 'vant';
+  import Web3 from 'web3';
+  import Web3Provider from '@/utils/Web3Provider';
 
-export default defineComponent({
-  name: 'redeemPopup',
-  components: { SvgIcon },
-  props: { redeemShow: Boolean, farmData: Object },
-  emits: ['redeemPopClose'],
-  setup(props, context) {
-    const state = reactive({
-      redeemShow: false,
-      ratio: '',
-    });
+  export default defineComponent({
+    name: 'redeemPopup',
+    components: { SvgIcon },
+    props: { redeemShow: Boolean, farmData: Object },
+    emits: ['redeemPopClose'],
+    setup(props, context) {
+      const state = reactive({
+        redeemShow: false,
+        ratio: '',
+      });
 
-    const tagsList = ref();
-    tagsList.value = [{
-      name: 20, ratio: 20, active: false,
-    }, {
-      name: 50, ratio: 50, active: false,
-    }, {
-      name: 'MAX', ratio: 100, active: false,
-    }];
+      const tagsList = ref();
+      tagsList.value = [{
+        name: 20, ratio: 20, active: false,
+      }, {
+        name: 50, ratio: 50, active: false,
+      }, {
+        name: 'MAX', ratio: 100, active: false,
+      }];
 
-    function handleClose() {
-      context.emit('redeemPopClose');
-    }
-
-    function onAuthCancel() {
-      context.emit('redeemPopClose');
-    }
-
-    async function onAuthDone() {
-      console.log('onAuthDone');
-      const ratioItem = tagsList.value.find((item) => item.active === true);
-      if(!ratioItem && !state.ratio) {
-        Toast('please choose ratio');
-        return;
-      } else if(state.ratio > 100){
-        Toast('Ratio should less than 100');
-        return;
+      function handleClose() {
+        context.emit('redeemPopClose');
       }
-      const ratio = ratioItem? ratioItem.ratio : state.ratio;
-      if(props.farmData?.lpTokenAddress) {
-        const res = await Web3Provider.getInstance().redeem(props.farmData.lpTokenAddress, ratio);
-        console.log(res);
-        if (res) {
-          Toast('Success');
-          context.emit('redeemPopClose');
-        } else {
-          Toast('Failed');
+
+      function onAuthCancel() {
+        context.emit('redeemPopClose');
+      }
+
+      async function onAuthDone() {
+        console.log('onAuthDone');
+        const ratioItem = tagsList.value.find((item) => item.active === true);
+        if (!ratioItem && !state.ratio) {
+          Toast('please choose ratio');
+          return;
+        } else if (state.ratio > 100) {
+          Toast('Ratio should less than 100');
+          return;
+        }
+        const ratio = ratioItem ? ratioItem.ratio : state.ratio;
+        if (props.farmData?.lpTokenAddress) {
+          const res = await Web3Provider.getInstance().redeem(props.farmData.lpTokenAddress, ratio);
+          console.log(res);
+          if (res) {
+            Toast('Success');
+            context.emit('redeemPopClose');
+          } else {
+            Toast('Failed');
+          }
         }
       }
-    }
 
-    function handleRatioSelect(index) {
-      tagsList.value = [{
-        name: 20, ratio: 20, active: false,
-      }, {
-        name: 50, ratio: 50, active: false,
-      }, {
-        name: 'MAX', ratio: 100, active: false,
-      }]
-      tagsList.value[index].active = true;
-      state.ratio = '';
-    }
+      function handleRatioSelect(index) {
+        tagsList.value = [{
+          name: 20, ratio: 20, active: false,
+        }, {
+          name: 50, ratio: 50, active: false,
+        }, {
+          name: 'MAX', ratio: 100, active: false,
+        }];
+        tagsList.value[index].active = true;
+        state.ratio = '';
+      }
 
-    function inputChange() {
-      tagsList.value = [{
-        name: 20, ratio: 20, active: false,
-      }, {
-        name: 50, ratio: 50, active: false,
-      }, {
-        name: 'MAX', ratio: 100, active: false,
-      }]
-      state.ratio = state.ratio.toFixed(2);
-    }
+      function inputChange() {
+        tagsList.value = [{
+          name: 20, ratio: 20, active: false,
+        }, {
+          name: 50, ratio: 50, active: false,
+        }, {
+          name: 'MAX', ratio: 100, active: false,
+        }];
+        state.ratio = state.ratio.toFixed(2);
+      }
 
-    watchEffect(() => {
-      state.redeemShow = props.redeemShow || false;
-    });
-    return { state, tagsList, handleClose, onAuthCancel, onAuthDone, handleRatioSelect, inputChange };
-  },
-})
-;
+      watchEffect(() => {
+        state.redeemShow = props.redeemShow || false;
+      });
+      return { state, tagsList, handleClose, onAuthCancel, onAuthDone, handleRatioSelect, inputChange };
+    },
+  })
+  ;
 </script>
 
 <style scoped lang='scss'>
-.pop-title {
-  font-size: 22px;
-  line-height: 2;
-  font-weight: 700;
-  color: #fff;
-  background-color: transparent;
-
-  &:after {
-    border-bottom: none;
-  }
-}
-
-.farm-info {
-  padding: 5px 16px;
-}
-
-.farm-image {
-  width: 100%;
-  height: auto;
-}
-
-.farm-info-title {
-  font-size: 16px;
-  color: #fff;
-  font-weight: 400;
-}
-
-.farm-info-subtitle {
-  font-size: 12px;
-  line-height: 2;
-  font-weight: 400;
-  color: #979797;
-}
-
-.farm-info-power {
-  font-size: 12px;
-  line-height: 2;
-  font-weight: 600;
-}
-
-.pop-subtitle {
-  padding: 0 16px;
-  color: #fff;
-  font-size: 17px;
-  line-height: 2;
-}
-
-.pop-tags {
-  padding: 0 16px;
-  display: flex;
-  justify-content: space-between;
-
-  .pop-tag {
-    padding: 2px 15px;
-    font-size: 13px;
-    line-height: 16px;
-    font-weight: 300;
-    background-color: #0E0F11;
-  }
-  .pop-tag-active {
-    color:#fff;
-    background: $brand-red;
-  }
-
-  .pop-tag-custom {
-    color: #575962;
-    width: 50px;
-    height: 20px;
-    input {
-      width: 100%;
-      height: 100%;
-      background-color: transparent;
-      border:none;
-      color: #fff;
-    }
-  }
-}
-
-.pop-intro {
-  font-size: 13px;
-  line-height: 21px;
-  font-weight: 300;
-  padding: 16px;
-  color: #979797;
-  text-align: right;
-}
-
-.pop-btns {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px;
-
-  .button {
-    width: 48%;
-    height: 44px;
-    line-height: 44px;
-    font-size: 15px;
+  .pop-title {
+    font-size: 22px;
+    line-height: 2;
     font-weight: 700;
     color: #fff;
-    border-radius: 4px;
+    background-color: transparent;
+
+    &:after {
+      border-bottom: none;
+    }
   }
 
-  .cancel-btn {
-    background-color: #979797;
-    border-color: #979797;
+  .farm-info {
+    padding: 5px 16px;
   }
-}
+
+  .farm-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .farm-info-title {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  .farm-info-subtitle {
+    font-size: 12px;
+    line-height: 2;
+    font-weight: 400;
+    color: #979797;
+  }
+
+  .farm-info-power {
+    font-size: 12px;
+    line-height: 2;
+    font-weight: 600;
+  }
+
+  .pop-subtitle {
+    padding: 0 16px;
+    color: #fff;
+    font-size: 17px;
+    line-height: 2;
+  }
+
+  .pop-tags {
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+
+    .pop-tag {
+      padding: 2px 15px;
+      font-size: 13px;
+      line-height: 16px;
+      font-weight: 300;
+      background-color: #0E0F11;
+    }
+
+    .pop-tag-active {
+      color: #fff;
+      background: $brand-red;
+    }
+
+    .pop-tag-custom {
+      color: #575962;
+      width: 50px;
+      height: 20px;
+
+      input {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        border: none;
+        color: #fff;
+      }
+    }
+  }
+
+  .pop-intro {
+    font-size: 13px;
+    line-height: 21px;
+    font-weight: 300;
+    padding: 16px;
+    color: #979797;
+    text-align: right;
+  }
+
+  .pop-btns {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+
+    .button {
+      width: 48%;
+      height: 44px;
+      line-height: 44px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .cancel-btn {
+      background-color: #979797;
+      border-color: #979797;
+    }
+  }
 </style>

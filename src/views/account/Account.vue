@@ -178,6 +178,7 @@
   import Web3Provider from '../../utils/Web3Provider';
   import { COMMUNITE_ADDRESS } from '@/const/address/linkAddress';
   import { vipLevel } from '@/const/vipLevel';
+  import BigNumber from 'bignumber.js';
 
   export default defineComponent({
     components: {
@@ -215,10 +216,12 @@
       onMounted(async () => {
         userInfo.value = await Web3Provider.getInstance().getUserInfo();
         userAddress.value = await Web3Provider.getInstance().getAccountAddress();
-        const [a, b] = await Promise.all([Web3Provider.getInstance().getJKTBalance(), Web3Provider.getInstance().getJKTDecimals()]);
-        JKTBalance.value = formatCurrency(a / Math.pow(10, b));
+
+        const [total, decimal] = await Promise.all([Web3Provider.getInstance().getJKTBalance(), Web3Provider.getInstance().getJKTDecimals()]);
+        JKTBalance.value = formatCurrency(new BigNumber(total).div(new BigNumber(10).pow(decimal)));
+
         const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
-        USDTBalance.value = formatCurrency(a / exchangeOfUsdtToJkt);
+        USDTBalance.value = formatCurrency(new BigNumber(total).div(new BigNumber(exchangeOfUsdtToJkt)));
       });
 
       return {

@@ -91,6 +91,7 @@
   import Web3Provider from '../../utils/Web3Provider';
   import { formatCurrency } from '@/utils/baseUtils';
   import { MINER_TOKEN_ADDRESS } from '@/const/address/tokenAddress';
+  import BigNumber from 'bignumber.js';
   import {
     copyToClipboard,
   } from '@/utils/clipboard';
@@ -108,14 +109,14 @@
       const totalJKT = ref(formatCurrency(1000000000));
       const totalBurn = ref();
       const totalJKTSupply = ref();
-      totalBurn.value = 0;
-      totalJKTSupply.value = 0;
+      totalBurn.value = 0.00;
+      totalJKTSupply.value = 0.00;
       onMounted(async () => {
-        const [a, b] = await Promise.all([Web3Provider.getInstance().getJKTTotal(), Web3Provider.getInstance().getJKTDecimals()]);
-        totalJKTSupply.value = formatCurrency(a / Math.pow(10, b));
+        const [total, decimal] = await Promise.all([Web3Provider.getInstance().getJKTTotal(), Web3Provider.getInstance().getJKTDecimals()]);
+        totalJKTSupply.value = formatCurrency(new BigNumber(total).div(new BigNumber(10).pow(decimal)));
         const hashInfo = await Web3Provider.getInstance().getHashInformation();
         if (hashInfo) {
-          totalBurn.value = formatCurrency((parseFloat(hashInfo.eLpBurn) + parseFloat(hashInfo.eVipBurn))/Math.pow(10, b));
+          totalBurn.value = formatCurrency(new BigNumber(hashInfo.eLpBurn).plus(new BigNumber(hashInfo.eVipBurn)).div(new BigNumber(10).pow(decimal)));
         }
       });
       return {
