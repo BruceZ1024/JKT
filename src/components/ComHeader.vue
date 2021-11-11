@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar :border='false'>
+  <van-nav-bar :border='false' fixed>
     <template #left>
       <svg-icon icon-class='left-arrow'
                 style="width: 24px; height: 25px; margin-right: 9px;" @click='handleGoBack'></svg-icon>

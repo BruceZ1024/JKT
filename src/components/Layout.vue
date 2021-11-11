@@ -1,6 +1,8 @@
 <template>
   <com-header :title='state.title' :vip_level='vipInfo' :adress='userAddress'></com-header>
-  <router-view @postRefreshUserInfo="refreshUserInfo"/>
+  <div style='padding-top: 50px; padding-bottom: 60px;'>
+    <router-view @postRefreshUserInfo="refreshUserInfo"/>
+  </div>
   <com-tab-bar :default-path='state.fullPath'></com-tab-bar>
 </template>
 
