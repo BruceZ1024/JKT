@@ -285,6 +285,7 @@
       margin-left: 37px;
       font-size: 13px;
       font-weight: 600;
+      display: block;
     }
 
     .earning-claimed {
