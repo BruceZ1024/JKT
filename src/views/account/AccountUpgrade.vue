@@ -162,7 +162,7 @@
           const [a, b] = await Promise.all([Web3Provider.getInstance().calculateVipPrice(selectedVipLevel), Web3Provider.getInstance().getJKTDecimals()]);
           vipPrice.value = formatCurrency(a / Math.pow(10, b));
         } else {
-          vipPrice.value = '0.00';
+          vipPrice.value = '0.0000';
         }
         showPicker.value = false;
 
@@ -175,7 +175,7 @@
           loading.value = true;
           const result = await Web3Provider.getInstance().upgradeVip(selectedVipLevel);
           if (result) {
-            vipPrice.value = '0.00';
+            vipPrice.value = '0.0000';
             showSuccess.value = true;
           } else {
             Toast.fail('Update VIP failed, please try again');

@@ -75,9 +75,23 @@ export default defineComponent({
 </script>
 
 <style lang='scss' scoped>
-.van-tabbar {
-  height: 80px;
-  background-color: #202125;
+
+
+@media screen and (min-width: 720px) {
+  .van-tabbar {
+    height: 80px;
+    background-color: #202125;
+    max-width: 720px !important;
+    margin: 0px calc((100% - 720px)/2);
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .van-tabbar {
+    height: 80px;
+    background-color: #202125;
+    width: 100%
+  }
 }
 
 .van-tabbar-item--active {

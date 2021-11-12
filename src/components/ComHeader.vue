@@ -35,12 +35,24 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.van-nav-bar {
-  background-color: #202125;
-  height: 50px;
-  width: 100%;
-  line-height: 50px;
-  font-size: 12px;
-  font-weight: 400;
+
+@media screen and (min-width: 720px) {
+  .van-nav-bar {
+    background-color: #202125;
+    height: 50px;
+    max-width: 720px !important;
+    margin: 0px calc((100% - 720px)/2);
+    line-height: 50px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .van-nav-bar {
+    background-color: #202125;
+    height: 50px;
+    width: 100%
+  }
 }
 </style>
