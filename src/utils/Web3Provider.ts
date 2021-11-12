@@ -162,6 +162,17 @@ export default class Web3Provider {
     }
   }
 
+  public async checkIsBSCChain(){
+    try {
+      await this.prepareConnectWallet();
+      const currentChainId = await this.getChainId();
+      return this.checkChainId(currentChainId);
+    } catch (e) {
+      return false;
+    }
+    
+  }
+
   /**
    * create new contract based on provided lpToken address
    * @param lpToken
