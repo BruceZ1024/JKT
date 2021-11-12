@@ -38,20 +38,24 @@
       </div>
     </div>
   </van-list>
+  <note-popup :note-show='state.noteShow' :url='state.gameUrl' @noteClose='handleNoteClose'></note-popup>
 </template>
 
 <script lang='ts'>
 
   import { defineComponent, reactive, ref } from 'vue';
   import SvgIcon from '@/components/SvgIcon.vue';
+  import NotePopup from '@/components/NotePopup.vue';
 
   export default defineComponent({
     name: 'gameFi',
-    components: { SvgIcon },
+    components: { SvgIcon, NotePopup },
     setup() {
       const state = reactive({
         listLoad: false,
         finished: true,
+        noteShow: false,
+        gameUrl: '',
       });
 
       const list = ref();
@@ -86,10 +90,15 @@
       ];
 
       function toPlay(index: number) {
-        window.location.href = list.value[index].gameUrl;
+        state.noteShow = true;
+        state.gameUrl = list.value[index].gameUrl;
       }
 
-      return { state, list, toPlay };
+      function handleNoteClose() {
+        state.noteShow = false;
+      }
+
+      return { state, list, toPlay, handleNoteClose };
     },
   });
 </script>
