@@ -183,9 +183,10 @@ $(document).ready(function() {
 });
 
 function copyContract() {
+  const jktTokenAddress = '0x8E8123e286437B281cAa8abbF3A7f0CDf72b0aE6';
   const input = document.createElement('input');
   document.body.appendChild(input);
-  input.setAttribute('value', '0x7f73f70a32394807C9cC06dAA33e6D25084B66Ea');
+  input.setAttribute('value', jktTokenAddress);
   input.select();
   if (document.execCommand('copy')) {
     document.execCommand('copy');
