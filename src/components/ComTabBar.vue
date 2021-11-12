@@ -1,4 +1,5 @@
 <template>
+<van-sticky position="bottom">
   <van-tabbar v-model='active' active-color='#CD2A16' inactive-color='#575962'>
     <van-tabbar-item v-for='item in tabBarList' :key='item.title' :to='item.path'>
       <span>{{ item.title }}</span>
@@ -7,6 +8,8 @@
       </template>
     </van-tabbar-item>
   </van-tabbar>
+</van-sticky>
+  
 </template>
 
 <script lang='ts'>

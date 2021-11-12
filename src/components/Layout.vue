@@ -1,12 +1,12 @@
 <template>
 <div style=''>
-<div class="layout-fixed-width">
-    <com-header :title='state.title' :vip_level='vipInfo' :adress='userAddress'></com-header>
-    <div style='padding-top: 50px; padding-bottom: 60px'>
-        <router-view @postRefreshUserInfo="refreshUserInfo" />
+    <div class="layout-fixed-width">
+        <com-header :title='state.title' :vip_level='vipInfo' :adress='userAddress'></com-header>
+        <div style='padding-top: 50px;padding-bottom: 80px;' class="content-section">
+            <router-view @postRefreshUserInfo="refreshUserInfo" />
+        </div>
+        <com-tab-bar :default-path='state.fullPath'></com-tab-bar>
     </div>
-    <com-tab-bar :default-path='state.fullPath'></com-tab-bar>
-</div>
 </div>
 </template>
 
@@ -93,13 +93,19 @@ export default defineComponent({
 @media screen and (min-width: 720px) {
     .layout-fixed-width {
         max-width: 720px;
-        padding: 0px calc((100% - 720px)/2)
+        padding: 0px calc((100% - 720px)/2);
+        height: 100%;
     }
 }
 
 @media screen and (max-width: 720px) {
     .layout-fixed-width {
-        width: 100%
+        width: 100%;
+        height: 100%;
     }
+}
+
+.content-section {
+    min-height: calc(100vh - 130px);
 }
 </style>
