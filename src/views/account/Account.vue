@@ -47,7 +47,7 @@
     </van-cell>
   </van-cell-group>
   <van-cell-group inset class="van-cell-group-margin">
-    <van-cell center title="JKT" label="3825.44">
+    <van-cell center title="JKT" :label="showAmount ? balance : '*******'">
       <template #icon>
         <svg-icon icon-class='small-jkt' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
       </template>
@@ -196,12 +196,16 @@
       const USDTBalance = ref();
       USDTBalance.value = 'Loading...';
 
+      const balance = ref();
+      balance.value = 'Loading...';
+
       const communityAddress = ref(COMMUNITE_ADDRESS);
 
       const showDeposit = ref(false);
       const showWithdraw = ref(false);
-      const showAmount = ref(true);
+      const showAmount = ref(localStorage.getItem('showAmount') !== null ? JSON.parse(localStorage.getItem('showAmount')): true);
       const amountDeposit = ref('');
+
       const goTo = (r, query) => {
         router.push({
           path: r,
@@ -211,6 +215,7 @@
 
       const toggleShow = () => {
         showAmount.value = !showAmount.value;
+        localStorage.setItem('showAmount', showAmount.value);
       };
 
       onMounted(async () => {
@@ -222,6 +227,8 @@
 
         const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
         USDTBalance.value = formatCurrency(new BigNumber(total).div(new BigNumber(exchangeOfUsdtToJkt)));
+      
+        balance.value = await Web3Provider.getInstance().getWalletBalance();
       });
 
       return {
@@ -239,6 +246,7 @@
         communityAddress,
         vipLevel,
         USDTBalance,
+        balance,
       };
     },
   });
