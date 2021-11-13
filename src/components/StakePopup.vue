@@ -156,7 +156,7 @@
             res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, 100);
           }
           console.log(res);
-          
+
           if (!res) {
             loading.value = false;
             resultState.buttonVisible = false;
@@ -285,7 +285,7 @@
   });
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss'>
   .pop-title {
     font-size: 22px;
     line-height: 2;
@@ -307,7 +307,7 @@
 
   .pop-input {
     background-color: #191A1E;
-    color:#fff;
+    color: #fff;
   }
 
   .pop-sub-header {
