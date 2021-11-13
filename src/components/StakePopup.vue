@@ -51,7 +51,7 @@
     </div>
     <div style='padding: 10px 16px'>
       <van-button class='button done-btn' type='danger' :loading='false'
-                  :disabled='state.inputValue === "0"' @click='onStake'>
+                  :disabled='state.inputValue === "undefined"' @click='onStake'>
         Stake
       </van-button>
     </div>
@@ -102,7 +102,7 @@
 
       const state = reactive({
         stakePopShow: false,
-        inputValue: 0,
+        inputValue: undefined,
         balance: 'Loading',
         jktBalance: 'Loading',
         balanceNum: 0,
@@ -156,6 +156,7 @@
             res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, 100);
           }
           console.log(res);
+          
           if (!res) {
             loading.value = false;
             resultState.buttonVisible = false;
@@ -164,6 +165,7 @@
             resultState.intro = 'We were unable to add the tokens from your wallet to the pool. Please try again.';
             resultState.show = true;
           } else {
+            state.stakePopShow = false;
             loading.value = false;
             resultState.buttonVisible = true;
             resultState.iconClass = 'dropdown-green';
@@ -227,7 +229,7 @@
         state.inputValue = Number(state.inputValue).toFixed(4);
         if (state.inputValue > state.balanceNum) {
           Toast('Input number should less than balance!');
-          state.inputValue = 0;
+          state.inputValue = undefined;
         } else {
           transferLpTokenToJKT();
           getComputingPower();
@@ -261,6 +263,7 @@
       watchEffect(async () => {
         state.stakePopShow = props.stakePopShow || false;
         if (state.stakePopShow) {
+          state.inputValue = undefined;
           await getBalance();
           getAPY();
           getComputingPower();
