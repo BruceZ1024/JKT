@@ -83,6 +83,7 @@ export default defineComponent({
       const res = await Web3Provider.getInstance().getApprove(token);
       if (!res) {
         authList.value[index].allowance = '0';
+        authList.value[index].active = false;
         loading.value = false;
       } else {
         context.emit('gottenApprove', index);
