@@ -36,6 +36,13 @@ export default class Web3Provider {
     return Web3Provider.instance;
   }
 
+  public getEventManager() {
+    if (!this.eventManager) {
+      this.eventManager = EventHandler;
+    }
+    return this.eventManager;
+  }
+
   /**
    * prepare all need data
    */
@@ -67,10 +74,10 @@ export default class Web3Provider {
     // Note that this event is emitted on page load.
     // If the array of accounts is non-empty, you're already connected.
     this.provider.on('accountsChanged', (accounts: Array<string>) => {
+      this.eventManager.emit('accountsChanged');
         if (accounts.length !== 0) {
           const [a] = accounts;
           console.info(`change account: ${a}`);
-          this.eventManager.emit('accountsChanged');
         }
       },
     );
