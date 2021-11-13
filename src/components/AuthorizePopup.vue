@@ -31,17 +31,22 @@
       </van-button>
     </div>
   </van-popup>
+  <loading-overlay :show='loading'></loading-overlay>
 </template>
 
 <script lang='ts'>
 import { defineComponent, reactive, ref, watchEffect } from 'vue';
 import Web3Provider from '@/utils/Web3Provider';
+import LoadingOverlay from '@/components/LoadingOverlay.vue';
 
 export default defineComponent({
   name: 'authorizePopup',
+  components: { LoadingOverlay },
   props: { authShow: Boolean, iconData: Array },
   emits: ['authPopClose', 'authDone', 'gottenApprove'],
   setup(props, context) {
+    const loading = ref(false);
+
     const state = reactive({
       authPopShow: false,
     });
@@ -62,11 +67,15 @@ export default defineComponent({
     }
 
     async function getApprove(index: number, token: string) {
+      loading.value = true;
+
       const res = await Web3Provider.getInstance().getApprove(token);
       if (!res) {
         authList.value[index].allowance = '0';
+        loading.value = false;
       } else {
         context.emit('gottenApprove', index);
+        loading.value = false;
       }
     }
 
@@ -82,7 +91,7 @@ export default defineComponent({
       }
     });
 
-    return { state, authList, handleClose, onAuthCancel, onAuthDone, getApprove};
+    return { state, authList, handleClose, onAuthCancel, onAuthDone, getApprove, loading};
   },
 });
 </script>
