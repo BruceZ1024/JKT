@@ -189,7 +189,7 @@ export default defineComponent({
 
     async function getEarningCount() {
       const [defiEarning, decimal] = await Promise.all([Web3Provider.getInstance().getDefiEarning(), Web3Provider.getInstance().getJKTDecimals()]);
-      countData.earningCount = formatCurrency(new BigNumber(defiEarning).div(new BigNumber(10).pow(decimal)));
+      countData.earningCount = formatCurrency(new BigNumber(defiEarning).div(new BigNumber(10).pow(decimal)), '', 8);
     }
 
     async function toClaimed() {
@@ -222,7 +222,8 @@ export default defineComponent({
         if (lpTokenAddress === BNB_TOKEN_ADDRESS) {
           const contractName = 'BNB';
           const lpTokenDecimal = 18;
-          const [contractInfo, jktDecimal] = await Promise.all([Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress), Web3Provider.getInstance().getJKTDecimals()]);
+          const contractInfo = await Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress);
+          const jktDecimal = await Web3Provider.getInstance().getJKTDecimals();
           const randomNum = Math.floor(Math.random() * 1000);
           const farmApy = new BigNumber(contractInfo.apy).div(new BigNumber(10).pow(jktDecimal)).times(100).toFixed(2);
           const jktStaked = formatCurrency(new BigNumber(contractInfo.jktStaked).div(new BigNumber(10).pow(jktDecimal)));
@@ -242,7 +243,10 @@ export default defineComponent({
           });
         } else {
           const contract = await Web3Provider.getInstance().createLpTokenContract(lpTokenAddress);
-          const [contractName, contractInfo, allowance, jktDecimal, lpTokenDecimal] = await Promise.all([Web3Provider.getInstance().getSymbol(contract), Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress), Web3Provider.getInstance().checkAllowance(contract), Web3Provider.getInstance().getJKTDecimals(), Web3Provider.getInstance().getDecimals(contract)]);
+          const contractName = await Web3Provider.getInstance().getSymbol(contract);
+          const contractInfo = await Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress);
+          const allowance = await Web3Provider.getInstance().checkAllowance(contract);
+          const [jktDecimal, lpTokenDecimal] = await Promise.all([Web3Provider.getInstance().getJKTDecimals(), Web3Provider.getInstance().getDecimals(contract)]);
           const randomNum = Math.floor(Math.random() * 1000);
           const farmApy = new BigNumber(contractInfo.apy).div(new BigNumber(10).pow(jktDecimal)).times(100).toFixed(2);
           const jktStaked = formatCurrency(new BigNumber(contractInfo.jktStaked).div(new BigNumber(10).pow(jktDecimal)));

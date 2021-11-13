@@ -136,7 +136,7 @@
         console.log('onStake');
         if (loading.value) {
           return;
-        };
+        }
 
         loading.value = true;
 
@@ -144,9 +144,9 @@
         if (props.iconData) {
           let res;
           if (props.iconData.length === 2) {
-            if(props.iconData[0].farmName === 'BNB') {
+            if (props.iconData[0].farmName === 'BNB') {
               // JTK-BNB
-              res = await  Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, state.ratio, inputNum);
+              res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, state.ratio, inputNum);
             } else {
               // JTK-XXX
               res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
@@ -219,14 +219,14 @@
         if (props.iconData) {
           const lpScale = await Web3Provider.getInstance().getHashRate(props.iconData[0].lpTokenAddress, state.ratio);
           const powerNum = await Web3Provider.getInstance().getComputingPower(props.iconData[0].lpTokenAddress, inputNum, lpScale);
-          state.power = (new BigNumber(powerNum).div(new BigNumber(10).pow(state.decimal))).toFixed(0);
+          state.power = (new BigNumber(powerNum).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
         }
       }
 
       function handleInputChange() {
         state.inputValue = Number(state.inputValue).toFixed(4);
         if (state.inputValue > state.balanceNum) {
-          Toast('input number should less than balance');
+          Toast('Input number should less than balance!');
           state.inputValue = 0;
         } else {
           transferLpTokenToJKT();
