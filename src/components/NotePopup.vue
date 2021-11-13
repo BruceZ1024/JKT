@@ -76,5 +76,6 @@ export default defineComponent({
 }
 .back-button {
   background-color: #979797;
+  border-color: #979797;
 }
 </style>

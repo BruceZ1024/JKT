@@ -135,16 +135,20 @@
   .background-wrapper {
     width: 100%;
     height: 100%;
+    max-width: 750px;
     background-image: url("../../assets/images/home/background.png");
     background-size: cover;
     background-position: center center;
+    position: relative;
+    margin: 0 auto;
   }
 
   .logo-icon {
     width: 94px;
     height: 94px;
     top: 415.9px;
-    left: 142px;
+    left: 50%;
+    margin-left: -47px;
     position: absolute;
   }
 
@@ -152,7 +156,8 @@
     width: 313px;
     height: 90px;
     top: 528px;
-    left: 31px;
+    left: 50%;
+    margin-left: -162px;
     position: absolute;
     font-weight: 700;
     color: #fff;
@@ -164,7 +169,8 @@
   .land-content {
     width: 302px;
     height: 54px;
-    left: 37px;
+    left: 50%;
+    margin-left: -151px;
     top: 638px;
     position: absolute;
     //color: $gray-1;
