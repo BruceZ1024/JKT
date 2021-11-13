@@ -136,7 +136,7 @@
   .background-wrapper {
     width: 100%;
     height: 100%;
-    max-width: 750px;
+    max-width: 720px;
     background-image: url("../../assets/images/home/background.png");
     background-size: cover;
     background-position: center center;
