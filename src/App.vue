@@ -11,4 +11,8 @@ html,body,#app{
   line-height: 25px;
   font-family: 'Open Sans',sans-serif;
 }
+.van-popup--bottom {
+  max-width: 750px;
+  left: auto !important;
+}
 </style>
