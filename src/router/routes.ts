@@ -83,7 +83,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/deFi',
         name: 'deFi',
         meta: {
-          title: 'Defi',
+          title: 'DeFi',
           keepAlive: false,
         },
         component: () => import('@/views/defi/DeFi.vue'),

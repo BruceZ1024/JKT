@@ -9,7 +9,7 @@
     <div class='pop-subtitle'>Input</div>
     <div style='padding:5px 16px'>
       <van-field class='pop-input' v-model='state.inputValue' type='number'
-                 @change='handleInputChange'>
+                 @change='handleInputChange' placeholder='Enter amount'>
         <template #button>
           <van-button plain @click='handleMaxInput'
                       style='background-color: transparent; border: none;'>
@@ -304,6 +304,7 @@
 
   .pop-input {
     background-color: #191A1E;
+    color:#fff;
   }
 
   .pop-sub-header {
