@@ -147,7 +147,7 @@
   .logo-icon {
     width: 94px;
     height: 94px;
-    top: 415.9px;
+    top: calc(100vh - 390px);
     left: 50%;
     margin-left: -47px;
     position: absolute;
@@ -156,7 +156,7 @@
   .landing-text {
     width: 313px;
     height: 90px;
-    top: 528px;
+    top: calc(100vh - 270px);
     left: 50%;
     margin-left: -162px;
     position: absolute;
@@ -172,13 +172,14 @@
     height: 54px;
     left: 50%;
     margin-left: -151px;
-    top: 638px;
+    top: calc(100vh - 160px);
     position: absolute;
     //color: $gray-1;
     font-size: 15px;
     line-height: 18px;
     text-align: center;
   }
+
 
   .view-more {
     width: 120px;
@@ -188,7 +189,7 @@
     color: #fff;
     position: absolute;
     right: 30px;
-    top: 734px;
+    top: calc(100vh - 50px);
 
     .view-icon {
       width: 24px;

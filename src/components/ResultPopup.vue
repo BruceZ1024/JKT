@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model:show='state.showSuccess' round position='bottom' closeable
+  <van-popup class="result-popup" v-model:show='state.showSuccess' round position='bottom' closeable
              @close='handleClose'>
     <van-cell :title='title' class='van-cell-no-border'>
       <template #icon>
@@ -73,12 +73,17 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
+<style>
 .success-label {
   margin-left: 16px;
   margin-right: 16px;
   font-size: 10pt;
   color: #575962;
+}
+.account-label-container {
+    min-height: 120px;
+}
+.result-popup{
+  background-color: #202125 !important;
 }
 </style>
