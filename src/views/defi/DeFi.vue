@@ -218,7 +218,8 @@ export default defineComponent({
       state.finished = false;
       list.value = [];
       const res = await Web3Provider.getInstance().getFarmList();
-      await res.map(async (lpTokenAddress: any) => {
+      for(let i = 0; i < res.length; i += 1 ) {
+        const lpTokenAddress = res[i];
         if (lpTokenAddress === BNB_TOKEN_ADDRESS) {
           const contractName = 'BNB';
           const lpTokenDecimal = 18;
@@ -266,7 +267,7 @@ export default defineComponent({
             serviceCharge: contractInfo.serviceCharge,
           });
         }
-      });
+      }
       state.listLoad = false;
       state.finished = true;
     }
