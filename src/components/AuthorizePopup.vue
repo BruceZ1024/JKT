@@ -38,6 +38,7 @@
 import { defineComponent, reactive, ref, watchEffect } from 'vue';
 import Web3Provider from '@/utils/Web3Provider';
 import LoadingOverlay from '@/components/LoadingOverlay.vue';
+import { Toast } from 'vant';
 
 export default defineComponent({
   name: 'authorizePopup',
@@ -63,7 +64,17 @@ export default defineComponent({
     }
 
     function onAuthDone() {
-      context.emit('authDone');
+      let authStatus = 0;
+      authList.value.forEach((item: any) => {
+        if (item.allowance !== '0') {
+          authStatus += 1;
+        }
+      })
+      if (authStatus === authList.value.length) {
+        context.emit('authDone');
+      } else {
+        Toast('Please complete authorization!');
+      }
     }
 
     async function getApprove(index: number, token: string) {
