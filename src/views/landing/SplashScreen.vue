@@ -15,27 +15,28 @@
         </span>
       <svg-icon icon-class='enter' class="view-icon"></svg-icon>
     </div>
-  </div>
-  <!-- Active Your Address pop up -->
-  <van-popup class="van-popup-fixed-height" v-model:show="showAddress" round position="bottom" closeable>
-    <van-cell title="Active Your Address" class="van-cell-no-border">
-    </van-cell>
-    <van-cell-group class="van-popup-fixed-height">
-
-      <div class="account-label-container">
-        <van-cell-group inset class="account-cell-group-dark ">
-          <van-field class="account-cell-dark" v-model="invitation" center clearable label=""
-                     placeholder="Insert invitation address">
-          </van-field>
-        </van-cell-group>
-      </div>
-      <van-cell>
-        <van-button type="danger" :loading='loading' block @click="active">Activate</van-button>
+    <!-- Active Your Address pop up -->
+    <van-popup class="van-popup-fixed-height" v-model:show="showAddress" round position="bottom" closeable>
+      <van-cell title="Active Your Address" class="van-cell-no-border">
       </van-cell>
-      <div class="account-safe-area-bottom"></div>
-    </van-cell-group>
-  </van-popup>
-  <loading-overlay :show='loading'></loading-overlay>
+      <van-cell-group class="van-popup-fixed-height">
+
+        <div class="account-label-container">
+          <van-cell-group inset class="account-cell-group-dark ">
+            <van-field class="account-cell-dark" v-model="invitation" center clearable label=""
+                       placeholder="Insert invitation address">
+            </van-field>
+          </van-cell-group>
+        </div>
+        <van-cell>
+          <van-button type="danger" :loading='loading' block @click="active">Activate</van-button>
+        </van-cell>
+        <div class="account-safe-area-bottom"></div>
+      </van-cell-group>
+    </van-popup>
+    <loading-overlay :show='loading'></loading-overlay>
+  </div>
+
 </template>
 
 <script>
