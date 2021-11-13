@@ -74,6 +74,7 @@ export default class Web3Provider {
     // Note that this event is emitted on page load.
     // If the array of accounts is non-empty, you're already connected.
     this.provider.on('accountsChanged', (accounts: Array<string>) => {
+      this.prepared = false;
       this.eventManager.emit('accountsChanged');
         if (accounts.length !== 0) {
           const [a] = accounts;
@@ -162,6 +163,7 @@ export default class Web3Provider {
     // 0x61 is testNet
     // 0x38 is BSC, will change to 0x38 in the future
     if (chainId !== this.bscChainId) {
+      this.prepared = false;
       this.eventManager.emit('NotBscChain');
       return false;
     } else {
