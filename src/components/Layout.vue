@@ -72,12 +72,14 @@
         const eventManager = Web3Provider.getInstance().getEventManager();
 
         eventManager.on('accountsChanged', () => {
+          localStorage.removeItem('parentAddr');
           router.push({
             path: '/splashScreen',
           });
         });
 
         eventManager.on('NotBscChain', () => {
+          localStorage.removeItem('parentAddr');
           router.push({
             path: '/splashScreen',
           });

@@ -69,11 +69,12 @@ export default defineComponent({
         if (item.allowance !== '0') {
           authStatus += 1;
         }
-      })
+      });
+
       if (authStatus === authList.value.length) {
         context.emit('authDone');
       } else {
-        Toast('Please complete authorization!');
+        Toast.fail('Please complete authorization!');
       }
     }
 

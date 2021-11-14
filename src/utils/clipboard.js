@@ -3,9 +3,9 @@ import { Toast } from 'vant';
 
 export function copyToClipboard(e, text) {
   let clipboard;
-  if (e && e.target.nodeName == 'svg') {
+  if (e && e.target.nodeName === 'svg') {
     clipboard = new Clipboard(e.target.parentNode, { text: () => text });
-  } else if (e && e.target.nodeName == 'use') {
+  } else if (e && e.target.nodeName === 'use') {
     clipboard = new Clipboard(e.target.parentNode.parentNode, { text: () => text });
   } else {
     clipboard = new Clipboard(e.target, { text: () => text });

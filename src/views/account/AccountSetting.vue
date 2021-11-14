@@ -11,7 +11,7 @@
         <van-button
           plain size="small"
           class="btn-small-account-min-width right-icon-account btn-plain-dark-white-dark">
-          V1.0831
+          V{{version}}
         </van-button>
       </template>
     </van-cell>
@@ -19,51 +19,57 @@
 </template>
 
 <script>
-import {
-  reactive,
-  onMounted,
-  toRefs, defineComponent,
-} from 'vue';
-import { useRouter } from 'vue-router';
-import SvgIcon from '@/components/SvgIcon.vue';
-import LanguagePicker from '@/components/LanguagePicker.vue';
-import CurrencyPicker from '@/components/CurrencyPicker.vue';
+  import {
+    reactive,
+    onMounted,
+    toRefs,
+    defineComponent,
+    ref,
+  } from 'vue';
+  import { useRouter } from 'vue-router';
+  import SvgIcon from '@/components/SvgIcon.vue';
+  import LanguagePicker from '@/components/LanguagePicker.vue';
+  import CurrencyPicker from '@/components/CurrencyPicker.vue';
+  import config from '../../../package.json';
 
-export default defineComponent({
-  components: {
-    LanguagePicker,
-    CurrencyPicker,
-    SvgIcon,
-  },
-  setup() {
-    const router = useRouter();
-    const state = reactive({
-      user: {},
-      loading: true,
-    });
-    onMounted(async () => {
-      const {
-        data,
-      } = {};
-      state.user = data;
-      state.loading = false;
-    });
-    const goBack = () => {
-      router.go(-1);
-    };
-    const goTo = (r, query) => {
-      router.push({
-        path: r,
-        query: query || {},
+  export default defineComponent({
+    components: {
+      LanguagePicker,
+      CurrencyPicker,
+      SvgIcon,
+    },
+    setup() {
+      const router = useRouter();
+      const state = reactive({
+        user: {},
+        loading: true,
       });
-    };
-    return {
-      ...toRefs(state),
-      goBack,
-      goTo,
-    };
-  },
-});
+      const version = ref();
+      version.value = config.version;
+      onMounted(async () => {
+        const {
+          data,
+        } = {};
+        state.user = data;
+        state.loading = false;
+      });
+      const goBack = () => {
+        router.go(-1);
+      };
+      const goTo = (r, query) => {
+        router.push({
+          path: r,
+          query: query || {},
+        });
+      };
+      return {
+        ...toRefs(state),
+        version,
+        goBack,
+        goTo,
+      };
+    },
+  });
 </script>
 
 <style lang="less" scoped>

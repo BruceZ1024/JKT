@@ -145,7 +145,7 @@
       </template>
     </van-cell>
     <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
-    <van-cell center title="Contact Us" is-link icon="phone-o">
+    <van-cell center title="Contact Us" is-link icon="phone-o" @click="window.open(communityAddress )">
       <template #icon>
         <svg-icon icon-class='contact-us' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
       </template>
@@ -203,7 +203,7 @@
 
       const showDeposit = ref(false);
       const showWithdraw = ref(false);
-      const showAmount = ref(localStorage.getItem('showAmount') !== null ? JSON.parse(localStorage.getItem('showAmount')): true);
+      const showAmount = ref(localStorage.getItem('showAmount') !== null ? JSON.parse(localStorage.getItem('showAmount')) : true);
       const amountDeposit = ref('');
 
       const goTo = (r, query) => {
@@ -227,7 +227,7 @@
 
         const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
         USDTBalance.value = formatCurrency(new BigNumber(total).div(new BigNumber(exchangeOfUsdtToJkt)));
-      
+
         balance.value = await Web3Provider.getInstance().getWalletBalance();
       });
 

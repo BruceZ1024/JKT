@@ -189,7 +189,7 @@
           if (props.iconData.length === 2 && props.iconData[0].farmName === 'BNB') {
             state.decimal = 18;
             state.balance = await Web3Provider.getInstance().getWalletBalance();
-            state.balanceNum = state.balance;
+            state.balanceNum = Number(state.balance);
           } else {
             state.decimal = await Web3Provider.getInstance().getDecimals(props.iconData[0].contract);
             state.balanceNum = new BigNumber(jktU).div(new BigNumber(10).pow(state.decimal)).toFixed(2);
@@ -228,7 +228,7 @@
       function handleInputChange() {
         state.inputValue = Number(state.inputValue).toFixed(4);
         if (state.inputValue > state.balanceNum) {
-          Toast('Input number should less than balance!');
+          Toast.fail('Input number should less than balance!');
           state.inputValue = undefined;
         } else {
           transferLpTokenToJKT();
