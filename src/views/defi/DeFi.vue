@@ -68,7 +68,7 @@
             <span class='farm-info-power'>GET {{ item.getPower }}% POWER</span>
             <van-button class='farm-btn-redeem' plain type='primary' :loading='false'
                         @click='handleRedeem(index)'
-                        :disabled='item.jktStaked === `0.00` || item.bitStaked === `0.00`'>
+                        :disabled='item.bitStaked === `0.00`'>
               Redeem
             </van-button>
             <van-button class='farm-btn-stake' type='danger' :loading='false'
