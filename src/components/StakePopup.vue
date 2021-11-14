@@ -355,4 +355,9 @@
     font-weight: 700;
   }
 
+  .van-field__control{
+    color: #FFF !important;
+    
+  }
+
 </style>
