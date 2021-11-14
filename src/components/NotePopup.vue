@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model:show='state.noteShow' round position='bottom' closeable
+  <van-popup class="note-popup" v-model:show='state.noteShow' round position='bottom' closeable
              @close='handleClose'>
     <van-cell title='Note' class='van-cell-no-border'>
       <template #icon>
@@ -59,7 +59,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 .success-label {
   margin-left: 16px;
   margin-right: 16px;
@@ -77,5 +77,8 @@ export default defineComponent({
 .back-button {
   background-color: #979797;
   border-color: #979797;
+}
+.note-popup{
+  background-color: #202125 !important;
 }
 </style>

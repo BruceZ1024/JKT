@@ -5,10 +5,10 @@
     <van-cell title='Redeem' class='van-cell-no-border pop-title'>
     </van-cell>
     <van-row type='flex' justify='space-between' class='redeem-info'>
-      <van-col span='4'>
-        <svg-icon :icon-class='`${farmData.farmName}`' class='farm-image'></svg-icon>
+      <van-col span='5' class='farm-info'>
+        <svg-icon :icon-class='`${farmData.farmName}`' style='width:60px; height:60px;' class='farm-image'></svg-icon>
       </van-col>
-      <van-col span='19' class='farm-info'>
+      <van-col span='18' class='farm-info'>
         <van-row type='flex' justify='space-between' class='farm-info-title'>
           <van-col>JKT - {{ farmData.farmName }}</van-col>
           <van-col>APY {{ farmData.farmApy }}</van-col>
@@ -32,7 +32,11 @@
                :plain='false' @click='handleRatioSelect(index)'>{{ tag.name }}%
       </van-tag>
       <van-tag class='pop-tag-custom' type='50' :mark='false' :plain='false'>
-        <input type='digit' v-model='state.ratio' placeholder='Custom' @change='inputChange'>
+        <van-field class="custom-rate" type='digit' v-model='state.ratio' placeholder='Custom' @change='inputChange' >
+          <template #right-icon>
+          <span>%</span>
+        </template>
+        </van-field>
       </van-tag>
     </div>
     <div class='pop-intro'>
@@ -201,7 +205,7 @@
   .pop-tags {
     padding: 0 16px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between !important;
 
     .pop-tag {
       padding: 2px 15px;
@@ -218,7 +222,7 @@
 
     .pop-tag-custom {
       color: #575962;
-      width: 50px;
+      width: 74px;
       height: 20px;
 
       input {
@@ -260,4 +264,31 @@
       border-color: #979797;
     }
   }
+  .custom-rate{
+    padding: 0px !important;
+    color: #FFF;
+    background-color: #0E0F11 !important;
+    height: 20px;
+    font-size: 13px;
+    font-weight: 300;
+    vertical-align: middle;
+    
+  }
+  .van-field__control{
+    color: #FFF !important;
+    height: 14px;
+    width: 30px;
+    border-radius: 4px; 
+    padding-left: 5px;
+    margin-bottom: 6px;
+
+    
+  }
+  .van-field__right-icon{
+    padding-right: 16px;
+    padding-left: 0px;
+    height: 16px;
+    margin-bottom: 10px;
+  }
 </style>
+

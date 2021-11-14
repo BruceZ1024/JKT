@@ -70,7 +70,7 @@
             <template #button>
               <van-button size="mini" color="#191A1E">
                 <div>
-                  <span style="color: red">MAK&nbsp;</span>
+                  <span style="color: red">MAX&nbsp;</span>
                   <span>JKT &nbsp;&nbsp;</span>
                   <van-icon name="arrow-down"/>
                 </div>
@@ -100,7 +100,7 @@
             <template #button>
               <van-button size="mini" color="#191A1E">
                 <div>
-                  <span style="color: red">MAK&nbsp;</span>
+                  <span style="color: red">MAX&nbsp;</span>
                   <span>JKT &nbsp;&nbsp;</span>
                   <van-icon name="arrow-down"/>
                 </div>
