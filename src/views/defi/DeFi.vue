@@ -189,7 +189,7 @@ export default defineComponent({
 
     async function getEarningCount() {
       const [defiEarning, decimal] = await Promise.all([Web3Provider.getInstance().getDefiEarning(), Web3Provider.getInstance().getJKTDecimals()]);
-      countData.earningCount = formatCurrency(new BigNumber(defiEarning).div(new BigNumber(10).pow(decimal)), '', 8);
+      countData.earningCount = formatCurrency(new BigNumber(defiEarning).div(new BigNumber(10).pow(decimal)), '', 10);
     }
 
     async function toClaimed() {
