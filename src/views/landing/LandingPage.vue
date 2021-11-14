@@ -38,9 +38,9 @@
               TokenMetrics
             </a>
           </li>
-<!--          <li>-->
-<!--            <a class='page-scroll' href='#'>Contract Audit</a>-->
-<!--          </li>-->
+          <li class='web-hidden'>
+            <a class='page-scroll' href=''>Contract Audit</a>
+          </li>
           <li>
             <a class='page-scroll' href='mailto:business@jokerfi.com'>Contact Us</a>
           </li>
@@ -112,7 +112,7 @@
                     </button>
                   </div>
                   <div class='col-xs-6 col-sm-6 col-md-6'>
-                    <button class='header-btn2' onclick=''>BscScan Contract</button>
+                    <button class='header-btn2' onclick="window.location.href=''">Contract Audit</button>
                   </div>
                   <div class='col-xs-2 col-sm-2 col-md-2'>
                     <div class='popup' onclick='copyContract()'>

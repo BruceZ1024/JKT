@@ -5,6 +5,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import {
   JKT_TOKEN_ADDRESS,
   MINER_TOKEN_ADDRESS,
+  BSC_CHAIN_ID,
 } from '@/const/address/tokenAddress';
 
 const JKT_ABI = require('../const/abi/jkt_abi.json');
@@ -21,12 +22,13 @@ export default class Web3Provider {
   private readonly jktTokenAddress: string;
   private readonly minerTokenAddress: string;
   // BSC chainId is '0x38'
-  private readonly bscChainId: string = '0x61';
+  private readonly bscChainId: string;
 
   public constructor() {
     this.eventManager = EventHandler;
     this.jktTokenAddress = JKT_TOKEN_ADDRESS;
     this.minerTokenAddress = MINER_TOKEN_ADDRESS;
+    this.bscChainId = BSC_CHAIN_ID;
   }
 
   public static getInstance(): Web3Provider {
