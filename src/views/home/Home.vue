@@ -7,9 +7,15 @@
 
 <div class="show-content">
     <van-row class="home-notice">
+      
         <van-col span="24">
-            <svg-icon icon-class='notice' class="notice-icon"></svg-icon>
-            <span class="notice-text">Play Mech Master on JokerManor and earn JKT in DEFI</span>
+            <van-notice-bar class="notice-bar" text="Play Mech Master on JokerManor and earn JKT in DEFI" >
+              <template #left-icon>
+                <svg-icon icon-class='notice' class="notice-icon"></svg-icon>
+              </template>
+            </van-notice-bar>
+            
+            <!-- <span class="notice-text">Play Mech Master on JokerManor and earn JKT in DEFI</span> -->
         </van-col>
     </van-row>
 
@@ -145,16 +151,21 @@ export default defineComponent({
     margin-left: 15px;
     margin-right: 15px;
 }
+.notice-bar{
+  background-color: #202125;
+  color: #FFFFFF
+}
 
 .home-notice {
     background-color: #202125;
     margin-top: 15px;
-    padding: 0 15px;
+    padding: 0 0px;
 }
 
 .notice-icon {
     width: 14px;
     height: 14px;
+    margin-right: 10px;
 }
 
 .notice-text {
