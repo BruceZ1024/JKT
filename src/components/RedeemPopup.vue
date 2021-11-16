@@ -141,7 +141,7 @@
         }, {
           name: 100, ratio: 100, active: false,
         }];
-        state.ratio = Number(state.ratio) > 100 ? 100 : Number(state.ratio).toFixed(0);
+        state.ratio = Number(state.ratio) > 100 ? 100 : Number(state.ratio);
       }
 
       watchEffect(() => {
