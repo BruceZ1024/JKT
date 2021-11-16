@@ -212,7 +212,8 @@
       }
 
       async function getAPY() {
-        const apy = await Web3Provider.getInstance().getApyForStake(state.ratio);
+        const lpScale = await Web3Provider.getInstance().getHashRate(props.iconData[0].lpTokenAddress, state.ratio);
+        const apy = await Web3Provider.getInstance().getApyForStake(lpScale);
         state.apy = new BigNumber(apy).div(new BigNumber(10).pow(state.decimal)).times(100).toFixed(0);
       }
 

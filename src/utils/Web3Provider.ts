@@ -536,13 +536,13 @@ export default class Web3Provider {
   }
 
   /**
-   * get APY for different percent
-   * @param percent
+   * get APY for different lpScale
+   * @param lpScale
    */
-  public async getApyForStake(percent: number) {
+  public async getApyForStake(lpScale) {
     try {
       await this.prepareConnectWallet();
-      const apy = await this.minerContract.methods.getApy(percent).call();
+      const apy = await this.minerContract.methods.getApy(lpScale).call();
       console.info(`getApy: ${apy}`);
       return apy;
     } catch (e) {
