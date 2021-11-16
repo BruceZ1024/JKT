@@ -66,7 +66,7 @@
           picUrl: sweetChaseImage,
           gameName: 'Sweet Chase',
           power: '100%',
-          gameUrl: '',
+          gameUrl: 'https://www.jokerfi.com/pumpingpig/',
           tags: [
             'NFT', 'Adventurer', 'Sweet',
           ],
@@ -74,7 +74,7 @@
         },
         {
           picUrl: sweetChaseImage,
-          gameName: 'Sweet Chase',
+          gameName: 'Coming Soon',
           power: '100%',
           gameUrl: '',
           tags: [
@@ -84,7 +84,7 @@
         },
         {
           picUrl: sweetChaseImage,
-          gameName: 'Sweet Chase',
+          gameName: 'Coming Soon',
           power: '100%',
           gameUrl: '',
           tags: [
@@ -94,7 +94,7 @@
         },
         {
           picUrl: sweetChaseImage,
-          gameName: 'Sweet Chase',
+          gameName: 'Coming Soon',
           power: '100%',
           gameUrl: '',
           tags: [
@@ -104,7 +104,7 @@
         },
         {
           picUrl: sweetChaseImage,
-          gameName: 'Sweet Chase',
+          gameName: 'Coming Soon',
           power: '100%',
           gameUrl: '',
           tags: [
