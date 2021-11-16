@@ -228,7 +228,7 @@
 
       function handleInputChange() {
         state.inputValue = Number(state.inputValue).toFixed(4);
-        if (state.inputValue > state.balanceNum) {
+        if (Number(state.inputValue) > Number(state.balanceNum)) {
           Toast.fail('Input number should less than balance!');
           state.inputValue = undefined;
         } else {
@@ -358,7 +358,7 @@
 
   .van-field__control{
     color: #FFF !important;
-    
+
   }
 
 </style>
