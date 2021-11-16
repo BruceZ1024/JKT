@@ -68,7 +68,7 @@
 </template>
 
 <script>
-  import { reactive, watchEffect, defineComponent, ref } from 'vue';
+  import { defineComponent, reactive, ref, watchEffect } from 'vue';
   import Web3Provider from '../utils/Web3Provider.ts';
   import { formatCurrency } from '@/utils/baseUtils';
   import { Toast } from 'vant';
@@ -192,10 +192,10 @@
             state.balanceNum = Number(state.balance);
           } else {
             state.decimal = await Web3Provider.getInstance().getDecimals(props.iconData[0].contract);
-            state.balanceNum = new BigNumber(jktU).div(new BigNumber(10).pow(state.decimal)).toFixed(2);
-            state.balance = formatCurrency(state.balanceNum);
+            state.balanceNum = new BigNumber(jktU).div(new BigNumber(10).pow(state.decimal));
+            state.balance = formatCurrency(state.balanceNum, '', 4);
           }
-          state.jktBalance = formatCurrency(new BigNumber(jktB).div(new BigNumber(10).pow(jktD)));
+          state.jktBalance = formatCurrency(new BigNumber(jktB).div(new BigNumber(10).pow(jktD)), '', 4);
         }
       }
 
@@ -218,6 +218,7 @@
       }
 
       async function getComputingPower() {
+        if (!state.inputValue) return;
         const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
         if (props.iconData) {
           const lpScale = await Web3Provider.getInstance().getHashRate(props.iconData[0].lpTokenAddress, state.ratio);
@@ -227,8 +228,8 @@
       }
 
       function handleInputChange() {
-        state.inputValue = Number(state.inputValue).toFixed(4);
-        if (state.inputValue > state.balanceNum) {
+        state.inputValue = Number(state.inputValue);
+        if (Number(state.inputValue) > Number(state.balanceNum)) {
           Toast.fail('Input number should less than balance!');
           state.inputValue = undefined;
         } else {
@@ -358,7 +359,6 @@
 
   .van-field__control{
     color: #FFF !important;
-    
   }
 
 </style>
