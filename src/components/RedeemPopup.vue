@@ -21,7 +21,7 @@
           <van-col>{{ farmData.farmName }} Staking: {{ farmData.bitStaked }}</van-col>
         </van-row>
         <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-          <van-col>Total Power: {{ farmData.power }}%</van-col>
+          <van-col>Total Power: {{ farmData.power }}</van-col>
         </van-row>
       </van-col>
     </van-row>

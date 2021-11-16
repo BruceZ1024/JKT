@@ -90,9 +90,7 @@
     onMounted,
     ref,
   } from 'vue';
-  import image1 from '@/assets/images/home/1.jpg';
-  import image2 from '@/assets/images/home/2.jpg';
-  import image3 from '@/assets/images/home/3.jpg';
+  import image1 from '@/assets/images/home/first-swipe.png';
   import SvgIcon from '@/components/SvgIcon.vue';
   import Web3Provider from '../../utils/Web3Provider';
   import {
@@ -113,7 +111,7 @@
     },
     setup() {
       const images = [
-        image1, image2, image3,
+        image1, image1, image1,
       ];
       const jktTokenAddress = ref(JKT_TOKEN_ADDRESS);
       const totalJKT = ref(formatCurrency(1000000000));

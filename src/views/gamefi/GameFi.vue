@@ -28,7 +28,8 @@
           <span>
             Power: {{item.power}}
           </span>
-          <van-button type='danger' class='game-btn' :loading='false' @click='toPlay(index)'>
+          <van-button type='danger' class='game-btn' :disabled='(item.disabled)' :loading='false'
+                      @click='toPlay(index)'>
             Play
           </van-button>
         </span>
@@ -46,6 +47,7 @@
   import { defineComponent, reactive, ref } from 'vue';
   import SvgIcon from '@/components/SvgIcon.vue';
   import NotePopup from '@/components/NotePopup.vue';
+  import sweetChaseImage from '@/assets/images/gamefi/sweet-chase.png';
 
   export default defineComponent({
     name: 'gameFi',
@@ -61,31 +63,54 @@
       const list = ref();
       list.value = [
         {
-          picUrl: '',
-          gameName: 'name',
+          picUrl: sweetChaseImage,
+          gameName: 'Sweet Chase',
           power: '100%',
-          gameUrl: 'www.baidu.com',
+          gameUrl: '',
           tags: [
-            'NFT', 'Metaverse', 'SSR Card',
+            'NFT', 'Adventurer', 'Sweet',
           ],
+          disabled: false,
         },
         {
-          picUrl: '',
-          gameName: 'name',
+          picUrl: sweetChaseImage,
+          gameName: 'Sweet Chase',
           power: '100%',
-          gameUrl: 'www.baidu.com',
+          gameUrl: '',
           tags: [
-            'NFT', 'Metaverse', 'SSR Card',
+            'NFT', 'Adventurer', 'Sweet',
           ],
+          disabled: true,
         },
         {
-          picUrl: '',
-          gameName: 'name',
+          picUrl: sweetChaseImage,
+          gameName: 'Sweet Chase',
           power: '100%',
-          gameUrl: 'www.baidu.com',
+          gameUrl: '',
           tags: [
-            'NFT', 'Metaverse', 'SSR Card',
+            'NFT', 'Adventurer', 'Sweet',
           ],
+          disabled: true,
+        },
+        {
+          picUrl: sweetChaseImage,
+          gameName: 'Sweet Chase',
+          power: '100%',
+          gameUrl: '',
+          tags: [
+            'NFT', 'Adventurer', 'Sweet',
+          ],
+          disabled: true,
+        },
+        {
+          picUrl: sweetChaseImage,
+          gameName: 'Sweet Chase',
+          power: '100%',
+          gameUrl: '',
+          tags: [
+            'NFT', 'Adventurer', 'Sweet',
+          ],
+          disabled: true,
         },
       ];
 
