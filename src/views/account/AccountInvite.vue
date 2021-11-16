@@ -82,8 +82,7 @@
       };
       onMounted(async () => {
         userAddress.value = await Web3Provider.getInstance().getAccountAddress();
-        console.log(userAddress.value);
-        invitationLink.value = INVITE_SERVER_ADDRESS + '?inviter=' + userAddress.value;
+        invitationLink.value = window.location.origin + INVITE_SERVER_ADDRESS + '?inviter=' + userAddress.value;
       });
       return {
         goTo,
