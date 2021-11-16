@@ -114,6 +114,11 @@
                   <div class='col-xs-6 col-sm-6 col-md-6'>
                     <button class='header-btn2' onclick="window.location.href='/ContractAudit/JokerManor_Contract_Audit_report.pdf'">Contract Audit</button>
                   </div>
+                </div>
+                <div class='row' style="margin-top:10px">
+                  <div class='col-xs-10 col-sm-10 col-md-10'>
+                    0x8E8123e286437B281cAa8abbF3A7f0CDf72b0aE6
+                  </div>
                   <div class='col-xs-2 col-sm-2 col-md-2'>
                     <div class='popup' onclick='copyContract()'>
                       <svg-icon icon-class='big-copy' style='width: 20px; height: 20px'></svg-icon>

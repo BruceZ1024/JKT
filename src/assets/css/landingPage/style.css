@@ -80,8 +80,7 @@ a:focus, a:hover {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    float: left;
-    margin-top: 50px;
+    
 }
 
 .popup .popuptext {
