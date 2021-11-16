@@ -48,6 +48,9 @@
   import SvgIcon from '@/components/SvgIcon.vue';
   import NotePopup from '@/components/NotePopup.vue';
   import sweetChaseImage from '@/assets/images/gamefi/sweet-chase.png';
+  import comingSoonImage1 from '@/assets/images/gamefi/coming-soon1.png';
+  import comingSoonImage2 from '@/assets/images/gamefi/coming-soon2.png';
+  import comingSoonImage3 from '@/assets/images/gamefi/coming-soon3.png';
 
   export default defineComponent({
     name: 'gameFi',
@@ -73,42 +76,32 @@
           disabled: false,
         },
         {
-          picUrl: sweetChaseImage,
+          picUrl: comingSoonImage1,
           gameName: 'Coming Soon',
           power: '100%',
           gameUrl: '',
           tags: [
-            'NFT', 'Adventurer', 'Sweet',
+            'NFT', 'Metaverse', 'SSR Card',
           ],
           disabled: true,
         },
         {
-          picUrl: sweetChaseImage,
+          picUrl: comingSoonImage2,
           gameName: 'Coming Soon',
           power: '100%',
           gameUrl: '',
           tags: [
-            'NFT', 'Adventurer', 'Sweet',
+            'NFT', 'WAR', 'SSR Card',
           ],
           disabled: true,
         },
         {
-          picUrl: sweetChaseImage,
+          picUrl: comingSoonImage3,
           gameName: 'Coming Soon',
           power: '100%',
           gameUrl: '',
           tags: [
-            'NFT', 'Adventurer', 'Sweet',
-          ],
-          disabled: true,
-        },
-        {
-          picUrl: sweetChaseImage,
-          gameName: 'Coming Soon',
-          power: '100%',
-          gameUrl: '',
-          tags: [
-            'NFT', 'Adventurer', 'Sweet',
+            'NFT', 'RBG', 'SSR Card',
           ],
           disabled: true,
         },
