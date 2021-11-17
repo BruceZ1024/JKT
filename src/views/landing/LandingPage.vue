@@ -107,7 +107,7 @@
                 <div class='row'>
                   <div class='col-xs-4 col-sm-4 col-md-4'>
                     <button class='header-btn'
-                            onclick="window.location.href='https://pancakeswap.finance/swap?outputCurrency=0xc864019047b864b6ab609a968ae2725dfaee808a'">
+                            onclick="window.location.href='https://pancakeswap.finance/swap'">
                       Buy JKT
                     </button>
                   </div>
@@ -131,7 +131,7 @@
             </div>
             <div class='row header-mobile web-hidden'>
               <button class='header-mobile-btn'
-                      onclick="window.location.href='https://biconomy.com/Launchpad'">
+                      onclick="window.location.href='https://pancakeswap.finance/swap'">
                 Buy JKT
               </button>
               <div class='dropup' style='display: inline-block;'>
