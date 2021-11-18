@@ -23,9 +23,6 @@
       </van-cell>
     </div>
     <div class='pop-btns'>
-      <van-button class='button cancel-btn' type='default' :loading='false' @click='onAuthCancel'>
-        Cancel
-      </van-button>
       <van-button class='button done-btn' type='danger' :loading='false' @click='onAuthDone'>
         Done
       </van-button>
@@ -56,10 +53,6 @@ export default defineComponent({
     authList.value = [];
 
     function handleClose() {
-      context.emit('authPopClose');
-    }
-
-    function onAuthCancel() {
       context.emit('authPopClose');
     }
 
@@ -104,7 +97,7 @@ export default defineComponent({
       }
     });
 
-    return { state, authList, handleClose, onAuthCancel, onAuthDone, getApprove, loading};
+    return { state, authList, handleClose, onAuthDone, getApprove, loading};
   },
 });
 </script>
@@ -148,7 +141,7 @@ export default defineComponent({
   padding: 16px;
 
   .button {
-    width: 48%;
+    width: 100%;
     height: 44px;
     line-height: 44px;
     font-size: 15px;

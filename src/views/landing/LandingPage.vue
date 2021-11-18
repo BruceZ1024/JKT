@@ -471,7 +471,7 @@
                         <svg-icon icon-class='dot' style='width: 24px;height: 24px'></svg-icon>
                     </span>
             <div class='changer-left-forth wow bounceInLeft' data-wow-delay='0.1s'>
-              <h3>2022 Q4</h3>
+              <h3>2021 Q4</h3>
               <h5>Exchanges Listing & Official Launch</h5>
               <p class='mobile-hidden'>We will complete the development and launch of our inhouse
                 Metaverse gaming
@@ -485,7 +485,7 @@
                 developing this Metaverse ecosystem, JokerManor will formally launch a large,
                 inclusive
                 and integrated
-                meta-universe game in 2022 Q3.</p>
+                meta-universe game in 2021 Q3.</p>
             </div>
             <div class='clearfix'></div>
           </div>
