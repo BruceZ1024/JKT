@@ -170,7 +170,7 @@
             resultState.buttonVisible = true;
             resultState.iconClass = 'dropdown-green';
             resultState.title = 'Congratulation';
-            resultState.intro = 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Unstake”.';
+            resultState.intro = 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Redeem”.';
             resultState.show = true;
           }
         }
