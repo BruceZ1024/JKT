@@ -456,7 +456,7 @@
                     </span>
             <div class='changer-right-trd wow bounceInRight'>
               <h3>2021 Q3</h3>
-              <h5>Metaverse Blockchain Game Launch</h5>
+              <h5>Exchanges Listing & Official Launch</h5>
               <p class='mobile-hidden'>We will officially launch the product and start building a
                 community around it,
                 alongside this we will also complete our partnerships for the listing of the JKT
@@ -472,7 +472,7 @@
                     </span>
             <div class='changer-left-forth wow bounceInLeft' data-wow-delay='0.1s'>
               <h3>2021 Q4</h3>
-              <h5>Exchanges Listing & Official Launch</h5>
+              <h5>Metaverse Blockchain Game Launch</h5>
               <p class='mobile-hidden'>We will complete the development and launch of our inhouse
                 Metaverse gaming
                 infrastructure and then
@@ -485,7 +485,7 @@
                 developing this Metaverse ecosystem, JokerManor will formally launch a large,
                 inclusive
                 and integrated
-                meta-universe game in 2021 Q3.</p>
+                meta-universe game in 2022 Q1.</p>
             </div>
             <div class='clearfix'></div>
           </div>
