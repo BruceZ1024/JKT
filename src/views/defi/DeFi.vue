@@ -279,10 +279,11 @@ export default defineComponent({
 
     function handleApprove(index: number) {
       const targetItem = list.value.find((item) => item.farmName === iconData.value[index].farmName);
-      if(targetItem) {
+      if (iconData.value[index].farmName === 'JKT') {
         targetItem.allowance = '1';
-      } else {
         jktInfo.allowance = '1';
+      } else {
+        targetItem.allowance = '1';
       }
     }
 
