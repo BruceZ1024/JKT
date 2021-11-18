@@ -278,7 +278,12 @@ export default defineComponent({
     }
 
     function handleApprove(index: number) {
-      iconData.value[index].allowance = '1';
+      const targetItem = list.value.find((item) => item.farmName === iconData.value[index].farmName);
+      if(targetItem) {
+        targetItem.allowance = '1';
+      } else {
+        jktInfo.allowance = '1';
+      }
     }
 
     function refreshDiFiData() {
