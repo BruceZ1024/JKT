@@ -570,12 +570,12 @@ export default class Web3Provider {
    * get computing power
    * @param lpToken
    * @param amount
-   * @param lpScale
+   * @param percent
    */
-  public async getComputingPower(lpToken, amount, lpScale) {
+  public async getComputingPower(lpToken, amount, percent) {
     try {
       await this.prepareConnectWallet();
-      const power = await this.minerContract.methods.getPower(lpToken, amount, lpScale).call();
+      const power = await this.minerContract.methods.getPower(lpToken, amount, percent).call();
       console.info(`getPower: ${power}`);
       return power;
     } catch (e) {

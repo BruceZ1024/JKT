@@ -221,8 +221,7 @@
         if (!state.inputValue) return;
         const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
         if (props.iconData) {
-          const lpScale = await Web3Provider.getInstance().getHashRate(props.iconData[0].lpTokenAddress, state.ratio);
-          const powerNum = await Web3Provider.getInstance().getComputingPower(props.iconData[0].lpTokenAddress, inputNum, lpScale);
+          const powerNum = await Web3Provider.getInstance().getComputingPower(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
           state.power = (new BigNumber(powerNum).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
         }
       }
