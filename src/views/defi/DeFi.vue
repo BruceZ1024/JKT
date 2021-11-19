@@ -206,14 +206,19 @@ export default defineComponent({
           const jktStaked = formatCurrency(new BigNumber(lpInfo.jktStaked).div(new BigNumber(10).pow(jktDecimal)));
           const lpTokenStaked = formatCurrency(new BigNumber(lpInfo.lpTokenStaked).div(new BigNumber(10).pow(farmlist.value[i].decimal)));
           const power = new BigNumber(lpInfo.power).div(new BigNumber(10).pow(jktDecimal)).toFixed(2);
-
+          const stakeInfoArray: any = [];
+          if(farmlist.value[i].authTypes.length === 2) {
+            stakeInfoArray.push(lpTokenStaked, jktStaked, power);
+          } else {
+            stakeInfoArray.push(lpTokenStaked, power);
+          }
           farmlist.value[i].lpTokenInfo = {
             allowance,
             lpTokenAddress,
             contract,
             farmName: farmlist.value[i].farmSymbol,
             farmApy: farmApy,
-            stakedInfo:[jktStaked, lpTokenStaked, power],
+            stakedInfo:stakeInfoArray,
             getPower: lpInfo.getPower,
             serviceCharge: lpInfo.serviceCharge,
           };
