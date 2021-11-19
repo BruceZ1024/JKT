@@ -3,7 +3,7 @@
              round
              class='farm-pop'
              style='background-color: #202125;'>
-    <van-cell :title='`Stake JKT -${iconData[0].farmName}`'
+    <van-cell :title='`Stake ${lpTokenList[0].farmSymbol}`'
               class='van-cell-no-border pop-title'>
     </van-cell>
     <div class='pop-subtitle'>Input</div>
@@ -14,32 +14,32 @@
           <van-button plain @click='handleMaxInput'
                       style='background-color: transparent; border: none;'>
             <span style='color: red; margin-right: 10px;'>MAX</span>
-            <span>{{ iconData[0].farmName }}</span>
+            <span>{{ lpTokenList[0].authTypes[0] }}</span>
           </van-button>
         </template>
       </van-field>
     </div>
     <div class='pop-sub-header'>
-      {{ iconData[0].farmName }} Balance: {{ state.balance }}
+      {{ lpTokenList[0].authTypes[0] }} Balance: {{ state.balance }}
     </div>
-    <div class='pop-subtitle' v-if='iconData.length === 2'>
+    <div class='pop-subtitle' v-if='lpTokenList.length === 2'>
       Staking Ratio
     </div>
-    <div class='pop-tags' v-if='iconData.length === 2'>
+    <div class='pop-tags' v-if='lpTokenList.length === 2'>
       <van-tag :class='{"pop-tag": true, "pop-tag-active": tag.active}' type='50' :mark='false'
                :plain='false' v-for='(tag, index) in tags' :key='tag.num'
                @click='handleTagSelect(index)'> {{ tag.num }}%
       </van-tag>
     </div>
-    <div class='pop-subtitle' v-if='iconData.length === 2'>
+    <div class='pop-subtitle' v-if='lpTokenList.length === 2'>
       Estimated JKT Required
     </div>
-    <div style='padding: 16px' v-if='iconData.length === 2'>
+    <div style='padding: 16px' v-if='lpTokenList.length === 2'>
       <van-field class='pop-input' v-model='state.inputBValue' :disabled='true' type='number'>
       </van-field>
     </div>
-    <div class='pop-sub-header' v-if='iconData.length === 2'>
-      JKT Balance: {{ state.jktBalance }}
+    <div class='pop-sub-header' v-if='lpTokenList.length === 2'>
+      {{lpTokenList[0].authTypes[1] }} Balance: {{ state.jktBalance }}
     </div>
     <div class='pop-apy'>
       <span>APY:</span>
@@ -51,7 +51,7 @@
     </div>
     <div style='padding: 10px 16px'>
       <van-button class='button done-btn' type='danger' :loading='false'
-                  :disabled='state.inputValue === undefined' @click='onStake'>
+                  :disabled='!state.inputValue || !Number(state.inputValue)' @click='onStake'>
         Stake
       </van-button>
     </div>
@@ -75,11 +75,12 @@
   import BigNumber from 'bignumber.js';
   import ResultPopup from '../components/ResultPopup.vue';
   import LoadingOverlay from '@/components/LoadingOverlay.vue';
+  import { JKT_DECIMAL } from '@/const/address/tokenAddress';
 
 
   export default defineComponent({
     name: 'stakePopup',
-    props: { stakePopShow: Boolean, iconData: Array, stakeCb: Function },
+    props: { stakePopShow: Boolean, lpTokenList: Array, stakeCb: Function },
     emits: ['stakePopClose'],
     components: { ResultPopup, LoadingOverlay },
     setup(props, context) {
@@ -142,19 +143,20 @@
         loading.value = true;
 
         const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
-        if (props.iconData) {
+        if (props.lpTokenList) {
           let res;
-          if (props.iconData.length === 2) {
-            if (props.iconData[0].farmName === 'BNB') {
+          if (props.lpTokenList.length === 2) {
+            // double coins stake
+            if (props.lpTokenList[0].farmSymbol === 'JKT-BNB') {
               // JTK-BNB
-              res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, state.ratio, inputNum);
+              res = await Web3Provider.getInstance().stake(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, state.ratio, inputNum);
             } else {
               // JTK-XXX
-              res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
+              res = await Web3Provider.getInstance().stake(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, state.ratio);
             }
           } else {
-            // JKT-JKT
-            res = await Web3Provider.getInstance().stake(props.iconData[0].lpTokenAddress, inputNum, 100);
+            // single coin stake
+            res = await Web3Provider.getInstance().stake(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, 100);
           }
           console.log(res);
 
@@ -173,30 +175,30 @@
             resultState.title = 'Congratulation';
             resultState.intro = 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Redeem”.';
             resultState.show = true;
+            props.stakeCb();
           }
         }
       }
 
       async function getBalance() {
-        if (props.iconData) {
-          const [jktB, jktD, jktU] = await Promise.all(
+        if (props.lpTokenList) {
+          const decimal = JKT_DECIMAL;
+          const [jktB, lpTokenB] = await Promise.all(
             [
               Web3Provider.getInstance().getJKTBalance(),
-              Web3Provider.getInstance().getJKTDecimals(),
-              Web3Provider.getInstance().getBalance(props.iconData[0].contract),
+              Web3Provider.getInstance().getBalance(props.lpTokenList[0].lpTokenInfo.contract),
             ],
           );
+          state.decimal = props.lpTokenList[0].decimal;
 
-          if (props.iconData.length === 2 && props.iconData[0].farmName === 'BNB') {
-            state.decimal = 18;
+          if (props.lpTokenList[0].farmSymbol === 'JKT-BNB') {
             state.balance = await Web3Provider.getInstance().getWalletBalance();
             state.balanceNum = Number(state.balance);
           } else {
-            state.decimal = await Web3Provider.getInstance().getDecimals(props.iconData[0].contract);
-            state.balanceNum = new BigNumber(jktU).div(new BigNumber(10).pow(state.decimal)).toFixed(4);
+            state.balanceNum = new BigNumber(lpTokenB).div(new BigNumber(10).pow(state.decimal));
             state.balance = formatCurrency(state.balanceNum, '', 4);
           }
-          state.jktBalanceNum = new BigNumber(jktB).div(new BigNumber(10).pow(jktD)).toFixed(4);
+          state.jktBalanceNum = new BigNumber(jktB).div(new BigNumber(10).pow(decimal));
           state.jktBalance = formatCurrency(state.jktBalanceNum, '', 4);
         }
       }
@@ -208,10 +210,9 @@
       }
 
       async function transferLpTokenToJKT() {
-        if (!state.inputValue) return;
-        const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
-        if (props.iconData) {
-          const valueB = await Web3Provider.getInstance().transferLpTokenToJKT(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
+        const inputNum = new BigNumber(state.inputValue || 0).times(new BigNumber(10).pow(state.decimal));
+        if (props.lpTokenList) {
+          const valueB = await Web3Provider.getInstance().transferLpTokenToJKT(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, state.ratio);
           state.inputBValue = (new BigNumber(valueB).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
           if (Number(state.inputBValue) > Number(state.jktBalanceNum)) {
             Toast.fail('Input number should less than balance!');
@@ -223,22 +224,20 @@
       }
 
       async function getAPY() {
-        const lpScale = await Web3Provider.getInstance().getHashRate(props.iconData[0].lpTokenAddress, state.ratio);
+        const lpScale = await Web3Provider.getInstance().getHashRate(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, state.ratio);
         const apy = await Web3Provider.getInstance().getApyForStake(lpScale);
         state.apy = new BigNumber(apy).div(new BigNumber(10).pow(state.decimal)).times(100).toFixed(0);
       }
 
       async function getComputingPower() {
-        if (!state.inputValue) return;
-        const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
-        if (props.iconData) {
-          const powerNum = await Web3Provider.getInstance().getComputingPower(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
+        const inputNum = new BigNumber(state.inputValue || 0).times(new BigNumber(10).pow(state.decimal));
+        if (props.lpTokenList) {
+          const powerNum = await Web3Provider.getInstance().getComputingPower(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, state.ratio);
           state.power = (new BigNumber(powerNum).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
         }
       }
 
       function handleInputChange() {
-        state.inputValue = Number(state.inputValue);
         if (Number(state.inputValue) > Number(state.balanceNum)) {
           Toast.fail('Input number should less than balance!');
           state.inputValue = undefined;

@@ -6,22 +6,16 @@
     </van-cell>
     <van-row type='flex' justify='space-between' class='redeem-info'>
       <van-col span='5' class='farm-info'>
-        <svg-icon :icon-class='`${farmData.farmName}`' style='width:60px; height:60px;' class='farm-image'></svg-icon>
+        <svg-icon :icon-class='`${farmData.farmIcon}`' style='width:60px; height:60px;' class='farm-image'></svg-icon>
       </van-col>
       <van-col span='18' class='farm-info'>
         <van-row type='flex' justify='space-between' class='farm-info-title'>
-          <van-col>JKT - {{ farmData.farmName }}</van-col>
-          <van-col>APY {{ farmData.farmApy }}</van-col>
+          <van-col>{{ farmData.farmSymbol }}</van-col>
+          <van-col>APY {{ farmData.lpTokenInfo.farmApy }}</van-col>
         </van-row>
-        <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-          <van-col>JKT Staking: {{ farmData.jktStaked }}</van-col>
-          <van-col>Rewards in JKT</van-col>
-        </van-row>
-        <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-          <van-col>{{ farmData.farmName }} Staking: {{ farmData.bitStaked }}</van-col>
-        </van-row>
-        <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-          <van-col>Total Power: {{ farmData.power }}</van-col>
+        <van-row v-for='(item, index) in farmData.stakeList' :key='item.title' type='flex' justify='space-between' class='farm-info-subtitle'>
+          <van-col>{{ item.title }} {{farmData.lpTokenInfo.stakedInfo[index]}}</van-col>
+          <van-col>{{ item.description }}</van-col>
         </van-row>
       </van-col>
     </van-row>
@@ -40,15 +34,15 @@
       </van-tag>
     </div>
     <div class='pop-intro'>
-      Direct JKT redemption charges {{ farmData.serviceCharge }}% if you pledged within 7 days, and
+      Direct JKT redemption charges {{ farmData.lpTokenInfo.serviceCharge }}% if you pledged within 7 days, and
       it
       will turn to 1% after 7 days.
     </div>
     <div class='pop-btns'>
-      <van-button class='button cancel-btn' type='default' :loading='false' @click='onAuthCancel'>
+      <van-button class='button cancel-btn' type='default' :loading='false' @click='onRedeemCancel'>
         Cancel
       </van-button>
-      <van-button class='button done-btn' type='danger' :loading='false' @click='onAuthDone'>
+      <van-button class='button done-btn' type='danger' :loading='false' @click='onRedeemDone'>
         Done
       </van-button>
     </div>
@@ -89,11 +83,11 @@
         context.emit('redeemPopClose');
       }
 
-      function onAuthCancel() {
+      function onRedeemCancel() {
         context.emit('redeemPopClose');
       }
 
-      async function onAuthDone() {
+      async function onRedeemDone() {
         console.log('onAuthDone');
         const ratioItem = tagsList.value.find((item) => item.active === true);
         if (!ratioItem && !state.ratio) {
@@ -104,10 +98,10 @@
           return;
         }
         const ratio = ratioItem ? ratioItem.ratio : state.ratio;
-        if (props.farmData?.lpTokenAddress) {
+        if (props.farmData?.lpToken) {
           loading.value = true;
 
-          const res = await Web3Provider.getInstance().redeem(props.farmData.lpTokenAddress, ratio);
+          const res = await Web3Provider.getInstance().redeem(props.farmData.lpToken, ratio);
           console.log(res);
           if (res) {
             loading.value = false;
@@ -147,7 +141,7 @@
       watchEffect(() => {
         state.redeemShow = props.redeemShow || false;
       });
-      return { loading, state, tagsList, handleClose, onAuthCancel, onAuthDone, handleRatioSelect, inputChange };
+      return { loading, state, tagsList, handleClose, onRedeemCancel, onRedeemDone, handleRatioSelect, inputChange };
     },
   })
   ;
@@ -272,17 +266,17 @@
     font-size: 13px;
     font-weight: 300;
     vertical-align: middle;
-    
+
   }
   .van-field__control{
     color: #FFF !important;
     height: 14px;
     width: 30px;
-    border-radius: 4px; 
+    border-radius: 4px;
     padding-left: 5px;
     margin-bottom: 6px;
 
-    
+
   }
   .van-field__right-icon{
     padding-right: 16px;

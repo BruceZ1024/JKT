@@ -8,10 +8,10 @@
       You need to authorize the contracts to access the following assets.
     </div>
     <div class='pop-switch'>
-      <van-cell center :title='item.farmName' v-for='(item, index) in authList' :key='item.farmName'>
+      <van-cell center :title='item' v-for='(item, index) in authList[0].authTypes' :key='item'>
         <template #right-icon>
           <van-switch v-model='authList[index].active' :disabled='authList[index].active'
-                      size='22' active-color='#CD2A16' @change='getApprove(index, authList[index].contract)'/>
+                      size='22' active-color='#CD2A16' @change='getApprove(index, authList[index].lpTokenInfo.contract)'/>
         </template>
       </van-cell>
       <van-cell center title=''>
@@ -40,7 +40,7 @@ import { Toast } from 'vant';
 export default defineComponent({
   name: 'authorizePopup',
   components: { LoadingOverlay },
-  props: { authShow: Boolean, iconData: Array },
+  props: { authShow: Boolean, lpTokenList: Array },
   emits: ['authPopClose', 'authDone', 'gottenApprove'],
   setup(props, context) {
     const loading = ref(false);
@@ -90,9 +90,9 @@ export default defineComponent({
     watchEffect(() => {
       state.authPopShow = props.authShow || false;
       authList.value = [];
-      if (props.iconData) {
-        props.iconData.forEach((item: any) => {
-          authList.value.push({...item, ...{active: item.allowance !== '0'}});
+      if (props.lpTokenList) {
+        props.lpTokenList.forEach((item: any) => {
+          authList.value.push({...item, ...{active: item.lpTokenInfo.allowance !== '0'}});
         })
       }
     });

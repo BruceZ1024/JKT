@@ -32,43 +32,26 @@
   />
   <div class='farm-list'>
     <div class='farm-title'>Farm</div>
-    <div class='loading-tips' v-if='state.listLoad' style='text-align: center;'>
-      <van-loading color='#CD2A16' size='30px' />
-      Loading...
-    </div>
-    <van-list class='farm-list-wrapper'
-              v-model='state.listLoad'
-              :finished='state.finished'
-              finished-text='No More'
-              loading-text='Loading~'
-              @load='onLoad'
-    >
-      <van-row type='flex' justify='space-between' class='farm-li' v-for='(item, index) in list'
-               :key='item.randomNum'>
+    <van-list class='farm-list-wrapper'>
+      <van-row type='flex' justify='space-between' class='farm-li' v-for='(item, index) in farmlist'
+               :key='item.farmSymbol'>
         <van-col span='4'>
-          <svg-icon :icon-class='item.farmName' class='farm-image'></svg-icon>
+          <svg-icon :icon-class='item.farmIcon' class='farm-image'></svg-icon>
         </van-col>
         <van-col span='19' class='farm-info'>
           <van-row type='flex' justify='space-between' class='farm-info-title'>
-            <van-col>JKT - {{ item.farmName }}</van-col>
-            <van-col>APY {{ item.farmApy }}%</van-col>
+            <van-col>{{ item.farmSymbol }}</van-col>
+            <van-col>APY {{ item.lpTokenInfo?.farmApy ||'---'}}%</van-col>
           </van-row>
-          <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-            <van-col>{{ item.farmName }} Staked: {{ item.bitStaked }}</van-col>
-            <van-col>Rewards in JKT</van-col>
-          </van-row>
-          <van-row v-if='item.farmName !== "JKT"' type='flex' justify='space-between'
-                   class='farm-info-subtitle'>
-            <van-col>JKT Staked: {{ item.jktStaked }}</van-col>
-          </van-row>
-          <van-row type='flex' justify='space-between' class='farm-info-subtitle'>
-            <van-col>Power: {{ item.power }}</van-col>
+          <van-row v-for='(stakeInfo, index) in item.stakeList' :key='stakeInfo.title' type='flex' justify='space-between' class='farm-info-subtitle'>
+            <van-col>{{stakeInfo.title}} {{item.lpTokenInfo ? item.lpTokenInfo.stakedInfo[index] : '---'}}</van-col>
+            <van-col>{{stakeInfo.description}}</van-col>
           </van-row>
           <van-row type='flex' justify='space-between'>
-            <span class='farm-info-power'>GET {{ item.getPower }}% POWER</span>
+            <span class='farm-info-power'>GET {{ item.lpTokenInfo?.getPower || '---' }}% POWER</span>
             <van-button class='farm-btn-redeem' plain type='primary' :loading='false'
                         @click='handleRedeem(index)'
-                        :disabled='item.bitStaked === `0.00`'>
+                        :disabled='(item.lpTokenInfo?.stakedInfo[item.lpTokenInfo.stakedInfo.length -2]  || `0.00`) === `0.00`'>
               Redeem
             </van-button>
             <van-button class='farm-btn-stake' type='danger' :loading='false'
@@ -80,14 +63,14 @@
       </van-row>
     </van-list>
   </div>
-  <authorize-popup :auth-show='state.authPopShow' :icon-data='iconData'
+  <authorize-popup :auth-show='state.authPopShow' :lp-token-list='lpTokenList'
                    @auth-pop-close='handleAuthClose' @auth-done='handleAuthDone'
                    @gotten-approve='handleApprove'
   ></authorize-popup>
-  <redeem-popup :redeem-show='state.redeemShow' :farm-data='farmLiData' :redeem-cb='refreshDiFiData'
+  <redeem-popup :redeem-show='state.redeemShow' :farm-data='farmLiData' :redeem-cb='refreshDeFiData'
                 @redeem-pop-close='handleRedeemClose'></redeem-popup>
-  <stake-popup :stake-pop-show='state.stakePopShow' :icon-data='iconData'
-               :stake-cb='refreshDiFiData'
+  <stake-popup :stake-pop-show='state.stakePopShow' :lp-token-list='lpTokenList'
+               :stake-cb='refreshDeFiData'
                @stake-pop-close='handleStakeClose'></stake-popup>
   <loading-overlay :show='loading'></loading-overlay>
 </template>
@@ -102,8 +85,9 @@ import Web3Provider from '../../utils/Web3Provider';
 import SvgIcon from '@/components/SvgIcon.vue';
 import { formatCurrency } from '@/utils/baseUtils';
 import BigNumber from 'bignumber.js';
-import { BNB_TOKEN_ADDRESS } from '@/const/address/tokenAddress';
+import { JKT_DECIMAL } from '@/const/address/tokenAddress';
 import LoadingOverlay from '@/components/LoadingOverlay.vue';
+import farmConfig from '@/const/config.js';
 import { Toast } from 'vant';
 
 export default defineComponent({
@@ -112,9 +96,10 @@ export default defineComponent({
   setup() {
     const loading = ref(false);
 
+    const farmlist = ref();
+    farmlist.value = farmConfig.farmList;
+
     const state = reactive({
-      listLoad: true,
-      finished: false,
       redeemShow: false,
       authPopShow: false,
       stakePopShow: false,
@@ -133,8 +118,8 @@ export default defineComponent({
       contract: '',
     });
 
-    const iconData = ref();
-    iconData.value = [];
+    const lpTokenList = ref();
+    lpTokenList.value = [];
 
     const list = ref();
     list.value = [];
@@ -142,28 +127,25 @@ export default defineComponent({
     const farmLiData = ref();
     farmLiData.value = {};
 
-    function onLoad() {
-      console.log('onload');
-    }
-
     function handleRedeem(index: number) {
       state.redeemShow = true;
-      farmLiData.value = list.value[index];
+      farmLiData.value = farmlist.value[index];
     }
 
     async function handleStake(index: number) {
-      iconData.value = [];
-      if (list.value[index].farmName !== 'JKT') {
-        iconData.value.push(list.value[index], {
-          allowance: jktInfo.allowance,
-          contract: jktInfo.contract,
-          farmName: 'JKT',
+      lpTokenList.value = [];
+      if (farmlist.value[index].authTypes.length === 2) {
+        lpTokenList.value.push(farmlist.value[index], {
+          lpTokenInfo: {
+            allowance: jktInfo.allowance,
+            contract: jktInfo.contract,
+          }
         });
       } else {
-        iconData.value.push(list.value[index]);
+        lpTokenList.value.push(farmlist.value[index]);
       }
 
-      if (jktInfo.allowance === '0' || list.value[index].allowance === '0') {
+      if (jktInfo.allowance === '0' || farmlist.value[index].lpTokenInfo.allowance === '0') {
         state.authPopShow = true;
       } else {
         state.stakePopShow = true;
@@ -214,62 +196,28 @@ export default defineComponent({
     }
 
     async function getFarmList() {
-      state.listLoad = true;
-      state.finished = false;
-      list.value = [];
-      const res = await Web3Provider.getInstance().getFarmList();
-      for(let i = 0; i < res.length; i += 1 ) {
-        const lpTokenAddress = res[i];
-        if (lpTokenAddress === BNB_TOKEN_ADDRESS) {
-          const contractName = 'BNB';
-          const lpTokenDecimal = 18;
-          const contractInfo = await Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress);
-          const jktDecimal = await Web3Provider.getInstance().getJKTDecimals();
-          const randomNum = Math.floor(Math.random() * 1000);
-          const farmApy = new BigNumber(contractInfo.apy).div(new BigNumber(10).pow(jktDecimal)).times(100).toFixed(2);
-          const jktStaked = formatCurrency(new BigNumber(contractInfo.jktStaked).div(new BigNumber(10).pow(jktDecimal)));
-          const bitStaked = formatCurrency(new BigNumber(contractInfo.lpTokenStaked).div(new BigNumber(10).pow(lpTokenDecimal)));
-          const power = new BigNumber(contractInfo.power).div(new BigNumber(10).pow(jktDecimal)).toFixed(2);
-          list.value.push({
-            randomNum,
-            allowance: '1',
-            lpTokenAddress,
-            farmName: contractName,
-            farmApy: farmApy,
-            jktStaked: jktStaked,
-            bitStaked: bitStaked,
-            power: power,
-            getPower: contractInfo.getPower,
-            serviceCharge: contractInfo.serviceCharge,
-          });
-        } else {
+      for(let i = 0; i < farmlist.value.length; i += 1 ) {
+        const lpTokenAddress = farmlist.value[i].lpToken;
           const contract = await Web3Provider.getInstance().createLpTokenContract(lpTokenAddress);
-          const contractName = await Web3Provider.getInstance().getSymbol(contract);
-          const contractInfo = await Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress);
+          const lpInfo = await Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress);
           const allowance = await Web3Provider.getInstance().checkAllowance(contract);
-          const [jktDecimal, lpTokenDecimal] = await Promise.all([Web3Provider.getInstance().getJKTDecimals(), Web3Provider.getInstance().getDecimals(contract)]);
-          const randomNum = Math.floor(Math.random() * 1000);
-          const farmApy = new BigNumber(contractInfo.apy).div(new BigNumber(10).pow(jktDecimal)).times(100).toFixed(2);
-          const jktStaked = formatCurrency(new BigNumber(contractInfo.jktStaked).div(new BigNumber(10).pow(jktDecimal)));
-          const bitStaked = formatCurrency(new BigNumber(contractInfo.lpTokenStaked).div(new BigNumber(10).pow(lpTokenDecimal)));
-          const power = new BigNumber(contractInfo.power).div(new BigNumber(10).pow(jktDecimal)).toFixed(2);
-          list.value.push({
-            randomNum,
+          const jktDecimal = JKT_DECIMAL;
+          const farmApy = new BigNumber(lpInfo.apy).div(new BigNumber(10).pow(jktDecimal)).times(100).toFixed(2);
+          const jktStaked = formatCurrency(new BigNumber(lpInfo.jktStaked).div(new BigNumber(10).pow(jktDecimal)));
+          const lpTokenStaked = formatCurrency(new BigNumber(lpInfo.lpTokenStaked).div(new BigNumber(10).pow(farmlist.value[i].decimal)));
+          const power = new BigNumber(lpInfo.power).div(new BigNumber(10).pow(jktDecimal)).toFixed(2);
+
+          farmlist.value[i].lpTokenInfo = {
             allowance,
             lpTokenAddress,
             contract,
-            farmName: contractName,
+            farmName: farmlist.value[i].farmSymbol,
             farmApy: farmApy,
-            jktStaked: jktStaked,
-            bitStaked: bitStaked,
-            power: power,
-            getPower: contractInfo.getPower,
-            serviceCharge: contractInfo.serviceCharge,
-          });
-        }
+            stakedInfo:[jktStaked, lpTokenStaked, power],
+            getPower: lpInfo.getPower,
+            serviceCharge: lpInfo.serviceCharge,
+          };
       }
-      state.listLoad = false;
-      state.finished = true;
     }
 
     async function getJktAllowance() {
@@ -278,20 +226,19 @@ export default defineComponent({
     }
 
     function handleApprove(index: number) {
-      const targetItem = list.value.find((item) => item.farmName === iconData.value[index].farmName);
-      if (iconData.value[index].farmName === 'JKT') {
-        targetItem.allowance = '1';
+      const targetItem = farmlist.value.find((item) => item.lpTokenInfo.contract === lpTokenList.value[index].lpTokenInfo.contract);
+      if (!lpTokenList.value[index].farmSymbol) {
+        targetItem.lpTokenInfo.allowance = '1';
         jktInfo.allowance = '1';
       } else {
-        targetItem.allowance = '1';
+        targetItem.lpTokenInfo.allowance = '1';
       }
     }
 
-    function refreshDiFiData() {
+    function refreshDeFiData() {
       getEarningCount();
       getUserInfo();
       getFarmList();
-      getJktAllowance();
     }
 
     onMounted(() => {
@@ -304,11 +251,11 @@ export default defineComponent({
     return {
       loading,
       state,
+      farmlist,
       countData,
       list,
-      iconData,
+      lpTokenList,
       farmLiData,
-      onLoad,
       handleRedeem,
       handleAuthClose,
       handleStake,
@@ -317,7 +264,7 @@ export default defineComponent({
       handleAuthDone,
       toClaimed,
       handleApprove,
-      refreshDiFiData,
+      refreshDeFiData,
     };
   },
 });
