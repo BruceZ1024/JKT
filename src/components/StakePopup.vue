@@ -51,7 +51,7 @@
     </div>
     <div style='padding: 10px 16px'>
       <van-button class='button done-btn' type='danger' :loading='false'
-                  :disabled='state.inputValue === "undefined"' @click='onStake'>
+                  :disabled='state.inputValue === undefined' @click='onStake'>
         Stake
       </van-button>
     </div>
@@ -106,8 +106,9 @@
         balance: 'Loading',
         jktBalance: 'Loading',
         balanceNum: 0,
+        jktBalanceNum: 0,
         ratio: tags.value[0].num,
-        inputBValue: 0,
+        inputBValue: undefined,
         decimal: 0,
         apy: '',
         power: '',
@@ -192,22 +193,32 @@
             state.balanceNum = Number(state.balance);
           } else {
             state.decimal = await Web3Provider.getInstance().getDecimals(props.iconData[0].contract);
-            state.balanceNum = new BigNumber(jktU).div(new BigNumber(10).pow(state.decimal));
+            state.balanceNum = new BigNumber(jktU).div(new BigNumber(10).pow(state.decimal)).toFixed(4);
             state.balance = formatCurrency(state.balanceNum, '', 4);
           }
-          state.jktBalance = formatCurrency(new BigNumber(jktB).div(new BigNumber(10).pow(jktD)), '', 4);
+          state.jktBalanceNum = new BigNumber(jktB).div(new BigNumber(10).pow(jktD)).toFixed(4);
+          state.jktBalance = formatCurrency(state.jktBalanceNum, '', 4);
         }
       }
 
       function handleMaxInput() {
-        state.inputValue = state.balance;
+        state.inputValue = state.balanceNum;
+        transferLpTokenToJKT();
+        getComputingPower();
       }
 
       async function transferLpTokenToJKT() {
+        if (!state.inputValue) return;
         const inputNum = new BigNumber(state.inputValue).times(new BigNumber(10).pow(state.decimal));
         if (props.iconData) {
           const valueB = await Web3Provider.getInstance().transferLpTokenToJKT(props.iconData[0].lpTokenAddress, inputNum, state.ratio);
           state.inputBValue = (new BigNumber(valueB).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
+          if (Number(state.inputBValue) > Number(state.jktBalanceNum)) {
+            Toast.fail('Input number should less than balance!');
+            state.inputValue =undefined;
+            state.inputBValue =undefined;
+            state.power = undefined;
+          }
         }
       }
 
@@ -231,6 +242,8 @@
         if (Number(state.inputValue) > Number(state.balanceNum)) {
           Toast.fail('Input number should less than balance!');
           state.inputValue = undefined;
+          state.inputBValue = undefined;
+          state.power = undefined;
         } else {
           transferLpTokenToJKT();
           getComputingPower();
@@ -265,9 +278,10 @@
         state.stakePopShow = props.stakePopShow || false;
         if (state.stakePopShow) {
           state.inputValue = undefined;
+          state.inputBValue = undefined;
+          state.power = undefined;
           await getBalance();
-          getAPY();
-          getComputingPower();
+          await getAPY();
         }
       });
       return {
