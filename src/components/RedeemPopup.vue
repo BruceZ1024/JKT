@@ -13,7 +13,8 @@
           <van-col>{{ farmData.farmSymbol }}</van-col>
           <van-col>APY {{ farmData.lpTokenInfo.farmApy }}</van-col>
         </van-row>
-        <van-row v-for='(item, index) in farmData.stakeList' :key='item.title' type='flex' justify='space-between' class='farm-info-subtitle'>
+        <van-row v-for='(item, index) in farmData.stakeList' :key='item.title' type='flex' justify='space-between'
+                 class='farm-info-subtitle'>
           <van-col>{{ item.title }} {{farmData.lpTokenInfo.stakedInfo[index]}}</van-col>
           <van-col>{{ item.description }}</van-col>
         </van-row>
@@ -26,10 +27,10 @@
                :plain='false' @click='handleRatioSelect(index)'>{{ tag.name }}%
       </van-tag>
       <van-tag class='pop-tag-custom' type='50' :mark='false' :plain='false'>
-        <van-field class="custom-rate" type='digit' v-model='state.ratio' placeholder='Custom' @change='inputChange' >
+        <van-field class="custom-rate" type='digit' v-model='state.ratio' placeholder='Custom' @change='inputChange'>
           <template #right-icon>
-          <span>%</span>
-        </template>
+            <span>%</span>
+          </template>
         </van-field>
       </van-tag>
     </div>
@@ -88,7 +89,7 @@
       }
 
       async function onRedeemDone() {
-        console.log('onAuthDone');
+        console.log('onRedeemDone');
         const ratioItem = tagsList.value.find((item) => item.active === true);
         if (!ratioItem && !state.ratio) {
           Toast.fail('Please choose percentage!');
@@ -258,7 +259,8 @@
       border-color: #979797;
     }
   }
-  .custom-rate{
+
+  .custom-rate {
     padding: 0px !important;
     color: #FFF;
     background-color: #0E0F11 !important;
@@ -268,7 +270,8 @@
     vertical-align: middle;
 
   }
-  .van-field__control{
+
+  .van-field__control {
     color: #FFF !important;
     height: 14px;
     width: 30px;
@@ -278,7 +281,8 @@
 
 
   }
-  .van-field__right-icon{
+
+  .van-field__right-icon {
     padding-right: 16px;
     padding-left: 0px;
     height: 16px;

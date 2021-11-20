@@ -142,8 +142,6 @@ export default class Web3Provider {
 
     this.jktContract = new web3.eth.Contract(JKT_ABI, this.jktTokenAddress);
     this.minerContract = new web3.eth.Contract(MINER_ABI, this.minerTokenAddress);
-
-    console.log(this.jktContract, this.minerContract);
   }
 
   /**

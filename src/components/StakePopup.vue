@@ -119,7 +119,7 @@
         show: false,
         title: 'Congratulation',
         iconClass: 'dropdown-green',
-        intro: 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Unstake”.',
+        intro: 'Your tokens have been added to the pool. You will now earn rewards proportional to your share in the pool. To stop staking, click on “Redeem”.',
         targetUrl: 'deFi?',
         targetName: 'Farm',
         buttonCb: () => {
@@ -182,13 +182,13 @@
 
       async function getBalance() {
         if (props.lpTokenList) {
-          const decimal = JKT_DECIMAL;
           const [jktB, lpTokenB] = await Promise.all(
             [
               Web3Provider.getInstance().getJKTBalance(),
               Web3Provider.getInstance().getBalance(props.lpTokenList[0].lpTokenInfo.contract),
             ],
           );
+
           state.decimal = props.lpTokenList[0].decimal;
 
           if (props.lpTokenList[0].farmSymbol === 'JKT-BNB') {
@@ -198,14 +198,17 @@
             state.balanceNum = new BigNumber(lpTokenB).div(new BigNumber(10).pow(state.decimal));
             state.balance = formatCurrency(state.balanceNum, '', 4);
           }
-          state.jktBalanceNum = new BigNumber(jktB).div(new BigNumber(10).pow(decimal));
+          state.jktBalanceNum = new BigNumber(jktB).div(new BigNumber(10).pow(JKT_DECIMAL));
           state.jktBalance = formatCurrency(state.jktBalanceNum, '', 4);
         }
       }
 
       function handleMaxInput() {
         state.inputValue = state.balanceNum;
-        transferLpTokenToJKT();
+        // double coins stake need to transfer to JKT
+        if (props.lpTokenList[0].authTypes.length === 2) {
+          transferLpTokenToJKT();
+        }
         getComputingPower();
       }
 
@@ -215,9 +218,9 @@
           const valueB = await Web3Provider.getInstance().transferLpTokenToJKT(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, state.ratio);
           state.inputBValue = (new BigNumber(valueB).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
           if (Number(state.inputBValue) > Number(state.jktBalanceNum)) {
-            Toast.fail('Input number should less than balance!');
-            state.inputValue =undefined;
-            state.inputBValue =undefined;
+            Toast.fail('You do not have enough JKT balance!');
+            state.inputValue = undefined;
+            state.inputBValue = undefined;
             state.power = undefined;
           }
         }
@@ -239,7 +242,7 @@
 
       function handleInputChange() {
         if (Number(state.inputValue) > Number(state.balanceNum)) {
-          Toast.fail('Input number should less than balance!');
+          Toast.fail('Input amount should less than balance!');
           state.inputValue = undefined;
           state.inputBValue = undefined;
           state.power = undefined;
@@ -369,7 +372,7 @@
     font-weight: 700;
   }
 
-  .van-field__control{
+  .van-field__control {
     color: #FFF !important;
   }
 
