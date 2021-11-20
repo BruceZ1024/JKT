@@ -592,12 +592,29 @@ export default class Web3Provider {
   public async stake(lpToken, amount, percent, value?) {
     try {
       await this.prepareConnectWallet();
-      console.log(lpToken, amount, percent);
       const res = await this.minerContract.methods.deposit(lpToken, amount, percent).send({
         from: this.currentAccount,
         value: value,
       });
       console.info(`deposit: ${JSON.stringify(res)}`);
+      return res;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * transfer money to others
+   * @param toAddress
+   * @param amount
+   */
+  public async transferMoney(toAddress, amount) {
+    try {
+      await this.prepareConnectWallet();
+      const res = await this.jktContract.methods.transfer(toAddress, amount).send({
+        from: this.currentAccount,
+      });
+      console.info(`transfer: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
       return false;
