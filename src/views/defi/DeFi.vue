@@ -202,11 +202,11 @@
           const contract = await Web3Provider.getInstance().createLpTokenContract(lpTokenAddress);
           const lpInfo = await Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress);
           const allowance = await Web3Provider.getInstance().checkAllowance(contract);
-          const jktDecimal = JKT_DECIMAL;
-          const farmApy = new BigNumber(lpInfo.apy).div(new BigNumber(10).pow(jktDecimal)).times(100).toFixed(2);
-          const jktStaked = formatCurrency(new BigNumber(lpInfo.jktStaked).div(new BigNumber(10).pow(jktDecimal)));
+          const farmApy = new BigNumber(lpInfo.apy).div(new BigNumber(10).pow(JKT_DECIMAL)).times(100).toFixed(2);
+          const jktStaked = formatCurrency(new BigNumber(lpInfo.jktStaked).div(new BigNumber(10).pow(JKT_DECIMAL)));
           const lpTokenStaked = formatCurrency(new BigNumber(lpInfo.lpTokenStaked).div(new BigNumber(10).pow(farmlist.value[i].decimal)));
-          const power = new BigNumber(lpInfo.power).div(new BigNumber(10).pow(jktDecimal)).toFixed(2);
+          const power = new BigNumber(lpInfo.power).div(new BigNumber(10).pow(JKT_DECIMAL)).toFixed(2);
+
           const stakeInfoArray: any = [];
           if (farmlist.value[i].authTypes.length === 2) {
             stakeInfoArray.push(lpTokenStaked, jktStaked, power);

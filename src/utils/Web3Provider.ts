@@ -76,8 +76,8 @@ export default class Web3Provider {
     // Note that this event is emitted on page load.
     // If the array of accounts is non-empty, you're already connected.
     this.provider.on('accountsChanged', (accounts: Array<string>) => {
-      this.prepared = false;
-      this.eventManager.emit('accountsChanged');
+        this.prepared = false;
+        this.eventManager.emit('accountsChanged');
         if (accounts.length !== 0) {
           const [a] = accounts;
           console.info(`change account: ${a}`);
@@ -171,7 +171,7 @@ export default class Web3Provider {
     }
   }
 
-  public async checkIsBSCChain(){
+  public async checkIsBSCChain() {
     try {
       await this.prepareConnectWallet();
       const currentChainId = await this.getChainId();
@@ -179,14 +179,15 @@ export default class Web3Provider {
     } catch (e) {
       return false;
     }
-    
+
   }
 
   /**
    * create new contract based on provided lpToken address
    * @param lpToken
    */
-  public createLpTokenContract(lpToken: string) {
+  public async createLpTokenContract(lpToken: string) {
+    await this.prepareConnectWallet();
     const web3 = new Web3();
     web3.setProvider(this.provider);
     return new web3.eth.Contract(JKT_ABI, lpToken);
@@ -592,7 +593,10 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       console.log(lpToken, amount, percent);
-      const res = await this.minerContract.methods.deposit(lpToken, amount, percent).send({ from: this.currentAccount, value: value });
+      const res = await this.minerContract.methods.deposit(lpToken, amount, percent).send({
+        from: this.currentAccount,
+        value: value,
+      });
       console.info(`deposit: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
