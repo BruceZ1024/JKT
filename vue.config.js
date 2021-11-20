@@ -25,6 +25,18 @@ module.exports = {
 
   publicPath: './',
 
+  devServer: {
+    proxy: {
+      '/api': {
+          target: 'https://www.biconomy.com/api/v2',
+          changeOrigin: true,
+          pathRewrite: {
+              '^/api': ''
+          }
+      }
+    }
+  },
+
   configureWebpack: {
     name: 'jkt',
     resolve: {
