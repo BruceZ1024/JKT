@@ -112,15 +112,15 @@
 </script>
 
 <style scoped>
-  @media screen and (min-width: 720px) {
+  @media screen and (min-width: 426px) {
     .layout-fixed-width {
-      max-width: 720px;
-      padding: 0px calc((100% - 720px) / 2);
+      max-width: 426px;
+      padding: 0px calc((100% - 426px) / 2);
       height: 100%;
     }
   }
 
-  @media screen and (max-width: 720px) {
+  @media screen and (max-width: 426px) {
     .layout-fixed-width {
       width: 100%;
       height: 100%;

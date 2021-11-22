@@ -80,16 +80,16 @@ export default defineComponent({
 <style lang='scss' scoped>
 
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: 426px) {
   .van-tabbar {
     height: 80px;
     background-color: #202125;
-    max-width: 720px !important;
-    margin: 0px calc((100% - 720px)/2);
+    max-width: 426px !important;
+    margin: 0px calc((100% - 426px)/2);
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 426px) {
   .van-tabbar {
     height: 80px;
     background-color: #202125;
