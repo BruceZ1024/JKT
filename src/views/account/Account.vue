@@ -234,7 +234,7 @@ export default defineComponent({
             localStorage.setItem('showAmount', showAmount.value);
         };
 
-        const handleDeposit = async() => {
+        const handleDeposit = async () => {
             const ammount = Number(amountDeposit.value);
             if (ammount > Number(JKTBalanceNum.value) || ammount === 0) {
                 Toast.fail('Input number should less than balance and bigger than 0!');
@@ -244,6 +244,7 @@ export default defineComponent({
                 Toast.fail('No balance to Deposit!');
                 return;
             }
+            await getTransferAddress();
             if (transferAddress.value && ammount > 0) {
                 loading.value = true;
                 const res = await Web3Provider.getInstance().transferMoney(transferAddress.value, new BigNumber(ammount).times(new BigNumber(10).pow(JKT_DECIMAL)))
@@ -251,9 +252,9 @@ export default defineComponent({
                     Toast.success("Deposit success !!!");
                     //Toast.success('The process will take 3~5 minutes, please check later');
                     initData();
-                    
+
                 } else {
-                  Toast.fail("Deposit failed !!!");
+                    Toast.fail("Deposit failed !!!");
                 }
                 initData();
                 showDeposit.value = false;
@@ -261,7 +262,7 @@ export default defineComponent({
             }
         }
 
-        const handleWithdraw = async() => {
+        const handleWithdraw = async () => {
             const ammount = Number(amountWithdraw.value);
             if (ammount > Number(balance.value) || ammount === 0) {
                 Toast.fail('Input number should less than balance and bigger than 0!');
@@ -271,6 +272,7 @@ export default defineComponent({
                 Toast.fail('No balance to withdraw!');
                 return;
             }
+            await getTransferAddress();
             if (transferAddress.value && ammount > 0) {
                 loading.value = true;
                 await request.post('/withdraw', {
@@ -287,7 +289,12 @@ export default defineComponent({
                     }
                     showWithdraw.value = false;
                     loading.value = false;
-                });
+                }).catch((err) => {
+                    showWithdraw.value = false;
+                    loading.value = false;
+                    Toast.fail("Withdraw failed !!!");
+                    console.log(err);
+                });;
             }
         }
 
@@ -308,21 +315,32 @@ export default defineComponent({
                 if (res.code === 0) {
                     balance.value = res.result;
                 }
+            }).catch((err) => {
+                console.log(err);
             });
+        }
+
+        const getTransferAddress = async () => {
+            if (!transferAddress.value) {
+                await request.get('/getaddress', {
+                    params: {
+                        userid: userAddress.value
+                    }
+                }).then((res) => {
+                    if (res.code === 0) {
+                        transferAddress.value = res.result;
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }
+
         }
 
         onMounted(async () => {
             userInfo.value = await Web3Provider.getInstance().getUserInfo();
             userAddress.value = await Web3Provider.getInstance().getAccountAddress();
-            await request.get('/getaddress', {
-                params: {
-                    userid: userAddress.value
-                }
-            }).then((res) => {
-                if (res.code === 0) {
-                    transferAddress.value = res.result;
-                }
-            });
+            await getTransferAddress();
             await initData();
         });
 
