@@ -24,7 +24,7 @@ service.interceptors.response.use(
     return res;
   },
   (error: Error) => {
-    Toast.fail(error.message);
+    //Toast.fail(error.message);
     return Promise.reject(error);
   },
 );
