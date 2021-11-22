@@ -61,7 +61,8 @@
               </button>
               <ul class='dropdown-menu' aria-labelledby='dropdownMenu1'>
                 <li><a
-                  href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf' style="font-family: 'Open Sans', sans-serif">English</a>
+                  href='http://www.jokerfi.com/whitepaper/JokerManor_Whitepaper.pdf'
+                  style="font-family: 'Open Sans', sans-serif">English</a>
                 </li>
                 <li><a href='https://jokerfi.com/whitepaper/JokerManor-Whitepaper-KR.pdf'>Korean</a>
                 </li>
@@ -112,7 +113,10 @@
                     </button>
                   </div>
                   <div class='col-xs-6 col-sm-6 col-md-6'>
-                    <button class='header-btn2' onclick="window.location.href='/ContractAudit/JokerManor_Contract_Audit_report.pdf'">Contract Audit</button>
+                    <button class='header-btn2'
+                            onclick="window.location.href='/ContractAudit/JokerManor_Contract_Audit_report.pdf'">
+                      Contract Audit
+                    </button>
                   </div>
                 </div>
                 <div class='row' style="margin-top:10px">
@@ -503,7 +507,7 @@
       <div class='row'>
         <div class='col-xs-12 col-sm-2 col-md-2 col-sm-offset-1 col-md-offset-1'>
           <a href='#'>
-            <svg-icon icon-class='position1' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position1' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Chief Technology Officer & Co-Founder</h5>
           <p class='name'>Lorenzo</p>
@@ -511,7 +515,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position2' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position2' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Strategic Development & Partnerships</h5>
           <p class='name'>John</p>
@@ -521,7 +525,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position3' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position3' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Chief Executive Officer & Founder</h5>
           <p class='name'>Barry</p>
@@ -529,7 +533,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position4' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position4' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Chief Marketing Officer</h5>
           <p class='name'>Doris</p>
@@ -538,7 +542,7 @@
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='position5' style='width: 171px; height: 171px;' />
+            <svg-icon icon-class='position5' style='width: 171px; height: 171px;'/>
           </a>
           <h5 class='position'>Chief Operations Officer</h5>
           <p class='name'>Eric</p>
@@ -562,32 +566,32 @@
       <div class='row partner-imgs'>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner1' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner1' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner2' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner2' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner3' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner3' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner4' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner4' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2'>
           <a href='#'>
-            <svg-icon icon-class='partner5' style='width: 96px; height: 32px' />
+            <svg-icon icon-class='partner5' style='width: 96px; height: 32px'/>
           </a>
         </div>
         <div class='col-xs-12 col-sm-2 col-md-2 mobile-hidden'>
           <a class='btn-partner' href='mailto:business@jokerfi.com'>Become a partner
-            <svg-icon icon-class='right-arrow' style='width: 13px; height: 13px' />
+            <svg-icon icon-class='right-arrow' style='width: 13px; height: 13px'/>
           </a>
         </div>
       </div>
@@ -636,280 +640,280 @@
 </template>
 
 <script lang='ts'>
-import {
-  reactive,
-  defineComponent, onMounted,
-} from 'vue';
-import SvgIcon from '@/components/SvgIcon.vue';
-import * as echarts from 'echarts';
-import { useRouter } from 'vue-router';
+  import {
+    reactive,
+    defineComponent, onMounted,
+  } from 'vue';
+  import SvgIcon from '@/components/SvgIcon.vue';
+  import * as echarts from 'echarts';
+  import { useRouter } from 'vue-router';
 
-export default defineComponent({
-  name: 'landingPage',
-  components: {
-    SvgIcon,
-  },
-  setup() {
-    const imageUrls = reactive({});
+  export default defineComponent({
+    name: 'landingPage',
+    components: {
+      SvgIcon,
+    },
+    setup() {
+      const imageUrls = reactive({});
 
-    function returnHome() {
-      const home = document.querySelector('#home');
-      if (home) {
-        home.scrollIntoView(true);
-      }
-    }
-
-    function returnAbout() {
-      const about = document.querySelector('#about');
-      if (about) {
-        about.scrollIntoView(true);
-      }
-    }
-
-    function returnTokenMetrics() {
-      const about = document.querySelector('#tokenMetrics');
-      if (about) {
-        about.scrollIntoView(true);
-      }
-    }
-
-    function drawPie() {
-      // create echarts instance based on DOM node
-      const chartDom: HTMLElement = document.getElementById('jktchart') as HTMLElement;
-      var myChart = echarts.init(chartDom);
-      var option;
-      const width = window.innerWidth;
-
-      if (width < 768) {
-        option = {
-          title: {
-            text: ['{a|TOTAL TOKEN ISSUANCE}', '{b|1,000,000,000 JKT}'].join('\n'),
-            left: 'center',
-            top: 'middle',
-            textStyle: {
-              rich: {
-                a: {
-                  color: '#CD2A16',
-                  lineHeight: 15,
-                  height: 20,
-                  fontSize: 4,
-                  padding: [10, 10],
-                  fontFamily: 'Open Sans',
-                  fontWeight: 'bold',
-                },
-                b: {
-                  color: '#FFFFFF',
-                  fontSize: 9,
-                  fontWeight: 'bold',
-                  padding: 10,
-                  fontFamily: 'Open Sans',
-                },
-              },
-            },
-          },
-          tooltip: {
-            trigger: 'item',
-          },
-          series: [{
-            name: 'JKT',
-            type: 'pie',
-            radius: ['55%', '70%'],
-            data: [{
-              value: 50,
-              name: 'DeFi',
-            },
-              {
-                value: 40,
-                name: 'GameFi',
-              },
-              {
-                value: 3,
-                name: 'Marketing Promotion',
-              },
-              {
-                value: 4,
-                name: 'Early Investor',
-              },
-              {
-                value: 2,
-                name: 'Technical Team',
-              },
-              {
-                value: 1,
-                name: 'Pre-sale before launch',
-              },
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)',
-              },
-            },
-            labelLine: {
-              length: 30,
-              length2: 20,
-            },
-            clockwise: true,
-            startAngle: 270,
-            label: {
-              formatter: '{name|{b}: {c}%}',
-              rich: {
-                name: {
-                  fontSize: 6,
-                  color: 'white',
-                  fontWeight: 'normal',
-                },
-              },
-            },
-            color: [
-              '#CD2A16',
-              '#5759627F',
-              '#575962',
-              '#9D9D9D',
-              '#D8D8D8',
-              '#FFFFFF',
-              '#fc8452',
-              '#9a60b4',
-              '#ea7ccc',
-            ],
-          }],
-        };
-      } else {
-        option = {
-          title: {
-            text: [
-              '{a|TOTAL TOKEN ISSUANCE}',
-              '{b|1,000,000,000 JKT}',
-              '{c|50% DeFi mining | 40% in-game mining\n' +
-              '|10% Technical team, investors & makreting fees}',
-            ].join('\n'),
-            left: 'center',
-            top: 'middle',
-            textStyle: {
-              rich: {
-                a: {
-                  color: '#CD2A16',
-                  lineHeight: 15,
-                  height: 20,
-                  padding: [10, 10],
-                  fontFamily: 'Open Sans',
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                },
-                b: {
-                  color: '#FFFFFF',
-                  fontSize: 32,
-                  fontWeight: 'bold',
-                  padding: 10,
-                  fontFamily: 'Open Sans',
-                },
-                c: {
-                  color: '#979797',
-                  fontSize: 14,
-                  padding: 10,
-                  fontFamily: 'Open Sans',
-                  fontWeight: 'normal',
-                },
-              },
-            },
-          },
-          tooltip: {
-            trigger: 'item',
-          },
-          series: [{
-            name: 'JKT',
-            type: 'pie',
-            radius: ['55%', '70%'],
-            data: [{
-              value: 50,
-              name: 'DeFi',
-            },
-              {
-                value: 40,
-                name: 'GameFi',
-              },
-              {
-                value: 3,
-                name: 'Marketing Promotion',
-              },
-              {
-                value: 4,
-                name: 'Early Investor',
-              },
-              {
-                value: 2,
-                name: 'Technical Team',
-              },
-              {
-                value: 1,
-                name: 'Pre-sale before launch',
-              },
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)',
-              },
-            },
-            labelLine: {
-              length: 70,
-              length2: 50,
-            },
-            clockwise: true,
-            startAngle: 270,
-            label: {
-              formatter: '{name|{b}: {c}%}',
-              rich: {
-                name: {
-                  fontSize: 18,
-                  color: 'white',
-                  fontWeight: 'normal',
-                },
-              },
-            },
-            color: [
-              '#CD2A16',
-              '#5759627F',
-              '#575962',
-              '#9D9D9D',
-              '#D8D8D8',
-              '#FFFFFF',
-              '#fc8452',
-              '#9a60b4',
-              '#ea7ccc',
-            ],
-          }],
-        };
+      function returnHome() {
+        const home = document.querySelector('#home');
+        if (home) {
+          home.scrollIntoView(true);
+        }
       }
 
-      option && myChart.setOption(option);
-    }
+      function returnAbout() {
+        const about = document.querySelector('#about');
+        if (about) {
+          about.scrollIntoView(true);
+        }
+      }
 
-    const router = useRouter();
+      function returnTokenMetrics() {
+        const about = document.querySelector('#tokenMetrics');
+        if (about) {
+          about.scrollIntoView(true);
+        }
+      }
 
-    function onClick() {
-      let search = router.currentRoute.value.query;
-      router.push({
-        path: '/splashScreen',
-        query: search,
+      function drawPie() {
+        // create echarts instance based on DOM node
+        const chartDom: HTMLElement = document.getElementById('jktchart') as HTMLElement;
+        var myChart = echarts.init(chartDom);
+        var option;
+        const width = window.innerWidth;
+
+        if (width < 768) {
+          option = {
+            title: {
+              text: ['{a|TOTAL TOKEN ISSUANCE}', '{b|1,000,000,000 JKT}'].join('\n'),
+              left: 'center',
+              top: 'middle',
+              textStyle: {
+                rich: {
+                  a: {
+                    color: '#CD2A16',
+                    lineHeight: 15,
+                    height: 20,
+                    fontSize: 4,
+                    padding: [10, 10],
+                    fontFamily: 'Open Sans',
+                    fontWeight: 'bold',
+                  },
+                  b: {
+                    color: '#FFFFFF',
+                    fontSize: 9,
+                    fontWeight: 'bold',
+                    padding: 10,
+                    fontFamily: 'Open Sans',
+                  },
+                },
+              },
+            },
+            tooltip: {
+              trigger: 'item',
+            },
+            series: [{
+              name: 'JKT',
+              type: 'pie',
+              radius: ['55%', '70%'],
+              data: [{
+                value: 50,
+                name: 'DeFi',
+              },
+                {
+                  value: 40,
+                  name: 'GameFi',
+                },
+                {
+                  value: 3,
+                  name: 'Marketing Promotion',
+                },
+                {
+                  value: 4,
+                  name: 'Early Investor',
+                },
+                {
+                  value: 2,
+                  name: 'Technical Team',
+                },
+                {
+                  value: 1,
+                  name: 'Pre-sale before launch',
+                },
+              ],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+                },
+              },
+              labelLine: {
+                length: 30,
+                length2: 20,
+              },
+              clockwise: true,
+              startAngle: 270,
+              label: {
+                formatter: '{name|{b}: {c}%}',
+                rich: {
+                  name: {
+                    fontSize: 6,
+                    color: 'white',
+                    fontWeight: 'normal',
+                  },
+                },
+              },
+              color: [
+                '#CD2A16',
+                '#5759627F',
+                '#575962',
+                '#9D9D9D',
+                '#D8D8D8',
+                '#FFFFFF',
+                '#fc8452',
+                '#9a60b4',
+                '#ea7ccc',
+              ],
+            }],
+          };
+        } else {
+          option = {
+            title: {
+              text: [
+                '{a|TOTAL TOKEN ISSUANCE}',
+                '{b|1,000,000,000 JKT}',
+                '{c|50% DeFi mining | 40% in-game mining\n' +
+                '|10% Technical team, investors & makreting fees}',
+              ].join('\n'),
+              left: 'center',
+              top: 'middle',
+              textStyle: {
+                rich: {
+                  a: {
+                    color: '#CD2A16',
+                    lineHeight: 15,
+                    height: 20,
+                    padding: [10, 10],
+                    fontFamily: 'Open Sans',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  },
+                  b: {
+                    color: '#FFFFFF',
+                    fontSize: 32,
+                    fontWeight: 'bold',
+                    padding: 10,
+                    fontFamily: 'Open Sans',
+                  },
+                  c: {
+                    color: '#979797',
+                    fontSize: 14,
+                    padding: 10,
+                    fontFamily: 'Open Sans',
+                    fontWeight: 'normal',
+                  },
+                },
+              },
+            },
+            tooltip: {
+              trigger: 'item',
+            },
+            series: [{
+              name: 'JKT',
+              type: 'pie',
+              radius: ['55%', '70%'],
+              data: [{
+                value: 50,
+                name: 'DeFi',
+              },
+                {
+                  value: 40,
+                  name: 'GameFi',
+                },
+                {
+                  value: 3,
+                  name: 'Marketing Promotion',
+                },
+                {
+                  value: 4,
+                  name: 'Early Investor',
+                },
+                {
+                  value: 2,
+                  name: 'Technical Team',
+                },
+                {
+                  value: 1,
+                  name: 'Pre-sale before launch',
+                },
+              ],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+                },
+              },
+              labelLine: {
+                length: 70,
+                length2: 50,
+              },
+              clockwise: true,
+              startAngle: 270,
+              label: {
+                formatter: '{name|{b}: {c}%}',
+                rich: {
+                  name: {
+                    fontSize: 18,
+                    color: 'white',
+                    fontWeight: 'normal',
+                  },
+                },
+              },
+              color: [
+                '#CD2A16',
+                '#5759627F',
+                '#575962',
+                '#9D9D9D',
+                '#D8D8D8',
+                '#FFFFFF',
+                '#fc8452',
+                '#9a60b4',
+                '#ea7ccc',
+              ],
+            }],
+          };
+        }
+
+        option && myChart.setOption(option);
+      }
+
+      const router = useRouter();
+
+      function onClick() {
+        let search = router.currentRoute.value.query;
+        router.push({
+          path: '/splashScreen',
+          query: search,
+        });
+      }
+
+      onMounted(() => {
+        drawPie();
       });
-    }
 
-    onMounted(() => {
-      drawPie();
-    });
-
-    return {
-      imageUrls,
-      returnHome,
-      returnAbout,
-      returnTokenMetrics,
-      onClick,
-    };
-  },
-});
+      return {
+        imageUrls,
+        returnHome,
+        returnAbout,
+        returnTokenMetrics,
+        onClick,
+      };
+    },
+  });
 </script>
 
 <style scoped src='../../assets/css/landingPage/animate.css'></style>

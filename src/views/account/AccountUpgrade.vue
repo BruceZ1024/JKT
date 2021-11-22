@@ -92,7 +92,7 @@
                 intro='You have successfully upgraded your account. Now you can power up your earnings.'
                 target-url='account' target-name='My Account'
                 :button-visible='true' @closeSuccessPopup='showSuccess = false'></result-popup>
-<loading-overlay :show='loading'></loading-overlay>
+  <loading-overlay :show='loading'></loading-overlay>
 </template>
 
 <script>
@@ -109,7 +109,7 @@
   import { formatCurrency } from '@/utils/baseUtils';
   import { vipLevel } from '@/const/vipLevel';
   import ResultPopup from '@/components/ResultPopup.vue';
-  import LoadingOverlay from '@/components/LoadingOverlay.vue'
+  import LoadingOverlay from '@/components/LoadingOverlay.vue';
   import { Toast } from 'vant';
 
   export default defineComponent({
@@ -157,7 +157,7 @@
 
       const onVIPSelect = async () => {
         if (checked.value > '0' && checked.value > userInfo.value.eUserLevel) {
-          vipPrice.value = 'Loading...'
+          vipPrice.value = 'Loading...';
           let selectedVipLevel = parseInt(checked.value);
           const [a, b] = await Promise.all([Web3Provider.getInstance().calculateVipPrice(selectedVipLevel), Web3Provider.getInstance().getJKTDecimals()]);
           vipPrice.value = formatCurrency(a / Math.pow(10, b));
@@ -169,7 +169,10 @@
       };
 
       const onPay = async () => {
-        if(loading.value){return};
+        if (loading.value) {
+          return;
+        }
+        ;
         let selectedVipLevel = parseInt(checked.value);
         if (selectedVipLevel > 0 && checked.value > userInfo.value.eUserLevel && selectedVipLevel <= 3) {
           loading.value = true;
