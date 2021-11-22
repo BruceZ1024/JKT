@@ -20,7 +20,7 @@
             @load="onLoad"
   >
     <div class='game-li' v-for='(item, index) in list' :key='item.gameName'>
-      <van-image :src='item.picUrl'  class='game-pic'></van-image>
+      <van-image :src='item.picUrl' class='game-pic'></van-image>
       <div class='game-info'>
         <span class='game-name'> {{item.gameName}} </span>
         <span class='game-power'>
@@ -161,7 +161,8 @@
       display: flex;
       justify-content: space-between;
     }
-  .game-pic {
+
+    .game-pic {
       width: 127px !important;
       height: 83px !important;
       max-width: 127px;
