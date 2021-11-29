@@ -6,10 +6,11 @@
           <svg-icon style='width:24px; height: 24px' icon-class='clarity_coin-bag-solid'></svg-icon>
         </span>
         <span class='earning-title'>GameFi Earning</span>
-        <span class='earning-subtitle'>3852,44</span>
+        <span class='earning-subtitle'>0&nbsp;JKT</span>
       </template>
       <template #value>
-        <span class='earning-claimed'>To be claimed</span>
+        <!-- <van-button round color='#CD2A16' hairline size='mini' class='earning-claimed'>To be claimed</van-button> -->
+        <div class='earning-claimed'><span >To be claimed</span></div>
       </template>
     </van-cell>
   </van-cell-group>
@@ -73,7 +74,7 @@
           tags: [
             'NFT', 'Adventurer', 'Sweet',
           ],
-          disabled: false,
+          disabled: true,
         },
         {
           picUrl: comingSoonImage1,
@@ -150,6 +151,12 @@
     font-weight: 600;
     color: #fff;
     margin-top: 30px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-style:solid;
+    border-width: 1px;
+    border-color: #FFFFFF;
+    border-radius: 10px ;
   }
 
   .game-list {

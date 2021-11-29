@@ -6,7 +6,7 @@
           <svg-icon style='width:24px; height: 24px' icon-class='clarity_coin-bag-solid'></svg-icon>
         </span>
         <span class='earning-title'>DeFi Earning</span>
-        <span class='earning-subtitle'>{{ countData.earningCount }}</span>
+        <span class='earning-subtitle'>{{ countData.earningCount }} JKT</span>
       </template>
       <template #value>
         <span class='earning-claimed' @click='toClaimed'>To be claimed</span>
@@ -305,6 +305,12 @@
       font-weight: 600;
       color: #fff;
       margin-top: 30px;
+      padding-left: 8px;
+      padding-right: 8px;
+      border-style:solid;
+      border-width: 1px;
+      border-color: #FFFFFF;
+      border-radius: 10px ;
     }
   }
 

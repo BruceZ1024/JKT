@@ -24,7 +24,7 @@
         <div class="account-label-container">
           <van-cell-group inset class="account-cell-group-dark ">
             <van-field class="account-cell-dark" v-model="invitation" center clearable label=""
-                       placeholder="Insert invitation address">
+                       placeholder="Input invitation address">
             </van-field>
           </van-cell-group>
         </div>

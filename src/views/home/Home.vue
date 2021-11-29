@@ -1,7 +1,7 @@
 <template>
   <van-swipe class="home-swipe" :autoplay="5000">
     <van-swipe-item v-for="(image, index) in images" :key="index">
-      <van-image :src="image"/>
+      <van-image @click="index == 0 ? window.open('https://www.biconomy.com/') : undefined" class="image" :src="image"/>
     </van-swipe-item>
   </van-swipe>
 
@@ -9,7 +9,7 @@
     <van-row class="home-notice">
 
       <van-col span="24">
-        <van-notice-bar class="notice-bar" text="Play Mech Master on JokerManor and earn JKT in DEFI">
+        <van-notice-bar class="notice-bar" text="Play games on JokerManor and earn JKT in DEFI">
           <template #left-icon>
             <svg-icon icon-class='notice' class="notice-icon"></svg-icon>
           </template>
@@ -90,7 +90,8 @@
     onMounted,
     ref,
   } from 'vue';
-  import image1 from '@/assets/images/home/first-swipe.png';
+  import image1 from '@/assets/images/home/home_image1.png';
+  import image2 from '@/assets/images/home/home_image2.png';
   import SvgIcon from '@/components/SvgIcon.vue';
   import Web3Provider from '../../utils/Web3Provider';
   import {
@@ -111,7 +112,7 @@
     },
     setup() {
       const images = [
-        image1, image1, image1,
+        image1, image2
       ];
       const jktTokenAddress = ref(JKT_TOKEN_ADDRESS);
       const totalJKT = ref(formatCurrency(1000000000));
@@ -142,10 +143,27 @@
 </script>
 
 <style lang="scss" scoped>
-  .home-swipe .van-swipe-item {
-    width: 343px;
-    height: 343px;
+。van-notice-bar__wrap{
+  border-style:solid;
+    border-width: 1px;
+    border-color: #FFFFFF;
+    border-radius: 3px ;
+}
+
+@media screen and (min-width: 426px) {
+    .home-swipe .van-swipe-item {
+      width: 426px;
+      height: 426px;
+    }
   }
+
+  @media screen and (max-width: 426px) {
+    .home-swipe .van-swipe-item {
+      width: 100vw;
+      height: 100vw;
+    }
+  }
+  
 
   .show-content {
     margin-left: 15px;
@@ -238,6 +256,9 @@
     line-height: 16px;
     color: #FFFFFF;
     vertical-align: middle;
+  }
+  .image {
+    min-height: 426;
   }
 
   .copy-icon {
