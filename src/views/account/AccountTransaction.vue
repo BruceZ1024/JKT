@@ -1,5 +1,10 @@
 <template>
-  <van-cell center title="$ 34221" label="ID: 342324">
+ <van-cell :label="'$ '+(showAmount ? USDTBalance : '*******')">
+    <template #title>
+      {{showAmount ? JKTBalance : '********'}}
+      <svg-icon :icon-class="showAmount ? 'show' : 'hidden'" @click="toggleShow()" style='width:16px; height:16px;'
+                class="right-icon-account"></svg-icon>
+    </template>
     <template #icon>
       <svg-icon icon-class='big-wallet' style='width:48px; height:48px;' class="right-icon-account"></svg-icon>
     </template>
@@ -76,11 +81,17 @@
     useRouter,
   } from 'vue-router';
   import {
+    formatCurrency,
+  } from '@/utils/baseUtils';
+  import {
     copyToClipboard,
   } from '@/utils/clipboard';
   import request from '@/utils/request';
   import Web3Provider from '../../utils/Web3Provider';
-
+   import BigNumber from 'bignumber.js';
+  import {
+    JKT_DECIMAL,
+  } from '@/const/address/tokenAddress';
   export default {
     components: {
       SvgIcon,
@@ -104,9 +115,28 @@
       const depositFinished = ref(false);
       const userAddress = ref('');
 
+      const JKTBalance = ref();
+      JKTBalance.value = 'Loading...';
+      const USDTBalance = ref();
+      USDTBalance.value = 'Loading...';
+      const JKTBalanceNum = ref(0);
+      const showAmount = ref(localStorage.getItem('showAmount') !== null ? JSON.parse(localStorage.getItem('showAmount')) : true);
+
       onMounted(async () => {
         userAddress.value = await Web3Provider.getInstance().getAccountAddress();
+        const total = await Web3Provider.getInstance().getJKTBalance();
+        JKTBalanceNum.value = new BigNumber(total).div(new BigNumber(10).pow(JKT_DECIMAL)).toNumber();
+        JKTBalance.value = formatCurrency(JKTBalanceNum.value);
+
+        const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
+        USDTBalance.value = formatCurrency(new BigNumber(total).div(new BigNumber(exchangeOfUsdtToJkt)));
+        console.log(JKTBalance.value)
       });
+
+      const toggleShow = () => {
+        showAmount.value = !showAmount.value;
+        localStorage.setItem('showAmount', showAmount.value);
+      };
 
       const depositOnLoad = async () => {
         request.get('/rechargelog', {
@@ -141,6 +171,10 @@
         withdrawFinished,
         depositLoading,
         depositFinished,
+        USDTBalance,
+        toggleShow,
+        showAmount,
+        JKTBalance,
         depositOnLoad,
         copyToClipboard,
       };

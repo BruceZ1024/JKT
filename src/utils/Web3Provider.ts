@@ -651,4 +651,23 @@ export default class Web3Provider {
       return false;
     }
   }
+
+   /**
+   * Get information for login
+   */
+    public async getSignInfo() {
+      try {
+        await this.prepareConnectWallet();
+        const signText = 'login@' + new Date().getTime();
+        const signature  = await this.provider.request({method:"personal_sign", params:[this.currentAccount, signText]});
+        const retObj = {signText, signature};
+        console.info(`signature: ${signature}`);
+        localStorage.setItem('signInfo', JSON.stringify(retObj));
+        return retObj
+      } catch (error) {
+        localStorage.removeItem('signInfo');
+        console.error(error);
+        return undefined;
+      }
+    }
 }

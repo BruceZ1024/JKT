@@ -28,7 +28,8 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-          target: 'https://www.biconomy.com/api/v2',
+          //target: 'https://www.biconomy.com/api/v2',
+          target: 'http://8.142.121.31/api',
           changeOrigin: true,
           pathRewrite: {
               '^/api': ''

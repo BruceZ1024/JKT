@@ -210,6 +210,9 @@
       const transferAddress = ref();
       transferAddress.value = undefined;
 
+      const signInfo = ref();
+      signInfo.value = localStorage.getItem('signInfo') ? JSON.parse(localStorage.getItem('signInfo')) : undefined;
+
       const JKTBalance = ref();
       JKTBalance.value = 'Loading...';
       const USDTBalance = ref();
@@ -255,8 +258,8 @@
           loading.value = true;
           const res = await Web3Provider.getInstance().transferMoney(transferAddress.value, new BigNumber(ammount).times(new BigNumber(10).pow(JKT_DECIMAL)));
           if (res) {
-            Toast.success('Deposit success !!!');
-            //Toast.success('The process will take 3~5 minutes, please check later');
+            //Toast.success('Deposit success !!!');
+            Toast.success('The process will take 3~5 minutes, please check later');
             initData();
 
           } else {
@@ -288,9 +291,10 @@
               amount: amountWithdraw,
             },
           }).then((res) => {
-            if (res.code === 0) {
-              Toast.success(res.result);
-              //Toast.success('The process will take 3~5 minutes, please check later');
+            console.log(res)
+            if (res.code === 0 || res === 'OK') {
+              //Toast.success(res.result);
+              Toast.success('The process will take 3~5 minutes, please check later');
               initData();
             }
             showWithdraw.value = false;
@@ -327,7 +331,25 @@
         });
       };
 
+      const signIn = async () => {
+        if (!signInfo.value) {
+          loading.value = true;
+          signInfo.value = await Web3Provider.getInstance().getSignInfo();
+        }
+        if (signInfo.value) {
+          await request.post('/login', signInfo.value).catch((err) => {
+            Toast.fail('Login failed !!!');
+            console.log(err);
+          });
+        } else {
+          Toast.fail('Please signin first !!!');
+        }
+        loading.value =  false;
+
+      };
+
       const getTransferAddress = async () => {
+        await signIn();
         if (!transferAddress.value) {
           await request.get('/getaddress', {
             params: {
