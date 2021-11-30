@@ -52,7 +52,7 @@
           </van-cell>
           <van-divider :style="{ borderColor: '#FFFFFF', padding: '0 16px' }"></van-divider>
           <van-cell title='Platinum - 30% extra power'
-                    label='JKT~ $500) | + 15% from 2nd level invitees)' clickable
+                    label='JKT~ $1000) | + 15% from 2nd level invitees)' clickable
                     @click="onVIPLevelClick('3')">
             <template #icon>
               <svg-icon icon-class='platinum' style='width:34px; height:34px;'

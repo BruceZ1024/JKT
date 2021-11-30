@@ -89,7 +89,6 @@
       }
 
       async function onRedeemDone() {
-        console.log('onRedeemDone');
         const ratioItem = tagsList.value.find((item) => item.active === true);
         if (!ratioItem && !state.ratio) {
           Toast.fail('Please choose percentage!');
@@ -103,7 +102,6 @@
           loading.value = true;
 
           const res = await Web3Provider.getInstance().redeem(props.farmData.lpToken, ratio);
-          console.log(res);
           if (res) {
             loading.value = false;
             Toast.success('Redeem success!');

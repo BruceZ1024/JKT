@@ -32,7 +32,6 @@ export default {
       return 'svg-icon';
     });
     const styleExternalIcon = computed(() => {
-      console.log(1);
       return {
         mask: `url(${props.iconClass}) no-repeat 50% 50%`,
         '-webkit-mask': `url(${props.iconClass}) no-repeat 50% 50%`,

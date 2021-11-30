@@ -291,7 +291,6 @@
               amount: amountWithdraw,
             },
           }).then((res) => {
-            console.log(res)
             if (res.code === 0 || res === 'OK') {
               //Toast.success(res.result);
               Toast.success('The process will take 3~5 minutes, please check later');
@@ -303,7 +302,6 @@
             showWithdraw.value = false;
             loading.value = false;
             Toast.fail('Withdraw failed !!!');
-            console.log(err);
           });
           ;
         }
@@ -328,7 +326,7 @@
         //     balance.value = res.result;
         //   }
         // }).catch((err) => {
-        //   console.log(err);
+        //   console.error(err);
         // });
       };
 
@@ -360,7 +358,7 @@
               transferAddress.value = res.result;
             }
           }).catch((err) => {
-            console.log(err);
+            console.error(err);
           });
         }
 

@@ -135,7 +135,6 @@
       }
 
       async function onStake() {
-        console.log('onStake');
         if (loading.value) {
           return;
         }
@@ -158,7 +157,6 @@
             // single coin stake
             res = await Web3Provider.getInstance().stake(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, 100);
           }
-          console.log(res);
 
           if (!res) {
             loading.value = false;

@@ -7,6 +7,7 @@ import {
   MINER_TOKEN_ADDRESS,
   BSC_CHAIN_ID,
 } from '@/const/address/tokenAddress';
+import { Toast } from 'vant';
 
 const JKT_ABI = require('../const/abi/jkt_abi.json');
 const MINER_ABI = require('../const/abi/miner_abi.json');
@@ -63,7 +64,7 @@ export default class Web3Provider {
           web3Provider.initContracts();
           this.prepared = true;
         } else {
-          console.log('Please change to BSC chain');
+          Toast.fail('Please change to BSC chain!');
         }
       }
     }
@@ -80,14 +81,14 @@ export default class Web3Provider {
         this.eventManager.emit('accountsChanged');
         if (accounts.length !== 0) {
           const [a] = accounts;
-          console.info(`change account: ${a}`);
+          // console.info(`change account: ${a}`);
         }
       },
     );
 
     // chainChanged event
     this.provider.on('chainChanged', (chainId: string) => {
-      console.info(`change chainId: ${chainId}`);
+      // console.info(`change chainId: ${chainId}`);
       this.checkChainId(chainId);
     });
   }
@@ -100,17 +101,16 @@ export default class Web3Provider {
 
     try {
       if (this.provider) {
-        console.info('Ethereum successfully detected!');
+        // console.info('Ethereum successfully detected!');
         // From now on, this should always be true:
         // provider === window.ethereum
         return true;
       } else {
         // if the provider is not detected, detectEthereumProvider resolves to null
-        console.error('Please install MetaMask!');
+        Toast.fail('Please install MetaMask!');
         return false;
       }
     } catch (error) {
-      console.error(error);
       return false;
     }
   }
@@ -123,13 +123,12 @@ export default class Web3Provider {
       const accounts = await this.provider.request({ method: 'eth_requestAccounts' });
       const [a] = accounts;
       this.currentAccount = a;
-      console.info(`currentAccount: ${this.currentAccount}`);
+      // console.info(`currentAccount: ${this.currentAccount}`);
     } catch (error) {
       this.currentAccount = undefined;
       // Some unexpected error.
       // For backwards compatibility reasons, if no accounts are available,
       // eth_accounts will return an empty array.
-      console.error(error);
     }
   }
 
@@ -151,7 +150,7 @@ export default class Web3Provider {
     const chainId = await this.provider.request({
       method: 'eth_chainId',
     });
-    console.info(`current chainId: ${chainId}`);
+    // console.info(`current chainId: ${chainId}`);
     return chainId;
   }
 
@@ -200,7 +199,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const parentAddr = await this.minerContract.methods.getParent(this.currentAccount).call();
-      console.info(`getParent: ${parentAddr}`);
+      // console.info(`getParent: ${parentAddr}`);
       return parentAddr;
     } catch (e) {
       return false;
@@ -215,7 +214,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.bindParent(parentAccount).send({ from: this.currentAccount });
-      console.info(`bindParentAccount: ${JSON.stringify(res)}`);
+      // console.info(`bindParentAccount: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
       return false;
@@ -235,7 +234,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.getUserInfoEx(this.currentAccount).call();
-      console.info(`getUserInfoEx: ${JSON.stringify(res)}`);
+      // console.info(`getUserInfoEx: ${JSON.stringify(res)}`);
       const [eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT] = res;
       return {
         eUserLevel, eSelfHash, eTeamHash, ePendingCoin, eTakedCoin, eBurnJKT,
@@ -261,7 +260,7 @@ export default class Web3Provider {
   public async getHashInformation() {
     await this.prepareConnectWallet();
     const res = await this.minerContract.methods.getHashInfo().call();
-    console.info(`getHashInfo: ${JSON.stringify(res)}`);
+    // console.info(`getHashInfo: ${JSON.stringify(res)}`);
     const [eTotalHashRate, eTotalLpHashRate, eStartBlock, eLpBurn, eVipBurn, eLastUpdateBlock, eOneShareGet, eOneShareScale, eTotalMint, eThresholdMutiple] = res;
     return {
       eTotalHashRate,
@@ -285,7 +284,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const price = await this.minerContract.methods.getVipPrice(this.currentAccount, updateLevel).call();
-      console.info(`getVipPrice: ${price}`);
+      // console.info(`getVipPrice: ${price}`);
       return price;
     } catch (e) {
       return false;
@@ -306,7 +305,7 @@ export default class Web3Provider {
         }
       }
       const res = await this.minerContract.methods.buyVip(newLevel).send({ from: this.currentAccount });
-      console.info(`buyVip: ${JSON.stringify(res)}`);
+      // console.info(`buyVip: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
       return false;
@@ -320,7 +319,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const exchange = await this.minerContract.methods.getExchangeCountOfOneUsdt(this.jktTokenAddress).call();
-      console.info(`getExchangeCountOfOneUsdt: ${exchange}`);
+      // console.info(`getExchangeCountOfOneUsdt: ${exchange}`);
       return exchange;
     } catch (e) {
       return undefined;
@@ -335,7 +334,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const bal = await this.jktContract.methods.balanceOf(this.currentAccount).call();
-      console.info(`balance: ${bal}`);
+      // console.info(`balance: ${bal}`);
       return bal;
     } catch (e) {
       return false;
@@ -349,7 +348,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const decimals = await this.jktContract.methods.decimals().call();
-      console.info(`decimals: ${decimals}`);
+      // console.info(`decimals: ${decimals}`);
       return decimals;
     } catch (e) {
       return false;
@@ -363,7 +362,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const total = await this.jktContract.methods.totalSupply().call();
-      console.info(`total: ${total}`);
+      // console.info(`total: ${total}`);
       return total;
     } catch (e) {
       return false;
@@ -377,7 +376,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const bal = await contract.methods.balanceOf(this.currentAccount).call();
-      console.info(`balance: ${bal}`);
+      // console.info(`balance: ${bal}`);
       return bal;
     } catch (e) {
       return false;
@@ -391,7 +390,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const decimals = await contract.methods.decimals().call();
-      console.info(`decimals: ${decimals}`);
+      // console.info(`decimals: ${decimals}`);
       return decimals;
     } catch (e) {
       return false;
@@ -406,7 +405,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const symbol: string = await contract.methods.symbol().call();
-      console.info(`symbol: ${symbol}`);
+      // console.info(`symbol: ${symbol}`);
       return symbol;
     } catch (error) {
       return '';
@@ -420,7 +419,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const allowance: string = await contract.methods.allowance(this.currentAccount, this.minerTokenAddress).call();
-      console.info(`allowance: ${allowance}`);
+      // console.info(`allowance: ${allowance}`);
       return allowance;
     } catch (error) {
       return '0';
@@ -434,7 +433,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const res = await contract.methods.approve(this.minerTokenAddress, ethers.constants.MaxUint256).send({ from: this.currentAccount });
-      console.info(`approve: ${JSON.stringify(res)}`);
+      // console.info(`approve: ${JSON.stringify(res)}`);
       return res;
     } catch (error) {
       return false;
@@ -448,7 +447,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const reward = await this.minerContract.methods.getPendingReward(this.currentAccount).call();
-      console.info(`getPendingReward: ${reward}`);
+      // console.info(`getPendingReward: ${reward}`);
       return reward;
     } catch (e) {
       return false;
@@ -462,7 +461,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.withdrawLpReward().send({ from: this.currentAccount });
-      console.info(`withdrawLpReward: ${JSON.stringify(res)}`);
+      // console.info(`withdrawLpReward: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
       return false;
@@ -477,7 +476,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const lpTokenList = await this.minerContract.methods.getPools().call();
-      console.info(`getPools: ${lpTokenList}`);
+      // console.info(`getPools: ${lpTokenList}`);
       return lpTokenList;
     } catch (e) {
       return [];
@@ -493,7 +492,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.getLpInfo(this.currentAccount, lpToken).call();
-      console.info(`getStakePoolInfo: ${JSON.stringify(res)}`);
+      // console.info(`getStakePoolInfo: ${JSON.stringify(res)}`);
       const [lpTokenStaked, jktStaked, power, serviceCharge, getPower, apy] = res;
       return { lpTokenStaked, jktStaked, power, serviceCharge, getPower, apy };
     } catch (e) {
@@ -510,7 +509,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.takeBack(lpToken, percent).send({ from: this.currentAccount });
-      console.info(`takeBack: ${JSON.stringify(res)}`);
+      // console.info(`takeBack: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
       return false;
@@ -527,7 +526,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const res = await this.minerContract.methods.getLpPayJKT(lpToken, amount, percent).call();
-      console.info(`getLpPayJKT: ${JSON.stringify(res)}`);
+      // console.info(`getLpPayJKT: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
       return false;
@@ -542,7 +541,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const apy = await this.minerContract.methods.getApy(lpScale).call();
-      console.info(`getApy: ${apy}`);
+      // console.info(`getApy: ${apy}`);
       return apy;
     } catch (e) {
       return false;
@@ -558,7 +557,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const lpScale = await this.minerContract.methods.getHashRateByPct(lpToken, percent).call();
-      console.info(`getHashRateByPct: ${lpScale}`);
+      // console.info(`getHashRateByPct: ${lpScale}`);
       return lpScale;
     } catch (e) {
       return false;
@@ -575,7 +574,7 @@ export default class Web3Provider {
     try {
       await this.prepareConnectWallet();
       const power = await this.minerContract.methods.getPower(lpToken, amount, percent).call();
-      console.info(`getPower: ${power}`);
+      // console.info(`getPower: ${power}`);
       return power;
     } catch (e) {
       return false;
@@ -596,7 +595,7 @@ export default class Web3Provider {
         from: this.currentAccount,
         value: value,
       });
-      console.info(`deposit: ${JSON.stringify(res)}`);
+      // console.info(`deposit: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
       return false;
@@ -614,7 +613,7 @@ export default class Web3Provider {
       const res = await this.jktContract.methods.transfer(toAddress, amount).send({
         from: this.currentAccount,
       });
-      console.info(`transfer: ${JSON.stringify(res)}`);
+      // console.info(`transfer: ${JSON.stringify(res)}`);
       return res;
     } catch (e) {
       return false;
@@ -645,7 +644,7 @@ export default class Web3Provider {
     try {
       const wei = await this.provider.request({ method: 'eth_getBalance', params: [this.currentAccount, 'latest'] });
       const balance = Web3.utils.fromWei(wei, 'ether');
-      console.info(`getWalletBalance: ${balance}`);
+      // console.info(`getWalletBalance: ${balance}`);
       return balance;
     } catch (error) {
       return false;
@@ -661,12 +660,11 @@ export default class Web3Provider {
         const signText = 'login@' + new Date().getTime();
         const signature  = await this.provider.request({method:"personal_sign", params:[this.currentAccount, signText]});
         const retObj = {signText, signature};
-        console.info(`signature: ${signature}`);
+        // console.info(`signature: ${signature}`);
         localStorage.setItem('signInfo', JSON.stringify(retObj));
         return retObj
       } catch (error) {
         localStorage.removeItem('signInfo');
-        console.error(error);
         return undefined;
       }
     }

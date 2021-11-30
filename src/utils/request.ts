@@ -17,7 +17,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: any) => {
     const res = response.data;
-    console.log(response)
     if (res.code !== '0' && res.code !== 0 && res !== 'OK') {
       return Toast.fail(res.message || 'Error');
       // return Promise.reject(new Error(res.msg || 'Error'));

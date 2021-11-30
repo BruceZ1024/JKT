@@ -130,7 +130,6 @@
 
         const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
         USDTBalance.value = formatCurrency(new BigNumber(total).div(new BigNumber(exchangeOfUsdtToJkt)));
-        console.log(JKTBalance.value)
       });
 
       const toggleShow = () => {
