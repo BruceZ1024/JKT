@@ -9,7 +9,7 @@
       <svg-icon icon-class='big-wallet' style='width:48px; height:48px;' class="right-icon-account"></svg-icon>
     </template>
     <template #right-icon>
-      <van-button type="danger" disabled class="btn-small-account-min-width" @click="goTo('/account/transaction')" size="small">
+      <van-button type="danger" class="btn-small-account-min-width" @click="goTo('/account/transaction')" size="small">
         Transactions
       </van-button>
     </template>
@@ -52,10 +52,10 @@
         <svg-icon icon-class='small-jkt' style='width:34px; height:34px;' class="right-icon-account"></svg-icon>
       </template>
       <template #right-icon>
-        <van-button plain size="small" disabled='true' class="btn-small-account-min-width right-icon-account btn-plain-red-white-dark"
+        <van-button plain size="small"  class="btn-small-account-min-width right-icon-account btn-plain-red-white-dark"
                     @click="showWithdraw = true">Withdraw
         </van-button>
-        <van-button class="btn-small-account-min-width" disabled='true' type="danger" size="small" @click="showDeposit = true">Deposit
+        <van-button class="btn-small-account-min-width"  type="danger" size="small" @click="showDeposit = true">Deposit
         </van-button>
       </template>
     </van-cell>
@@ -211,7 +211,7 @@
       transferAddress.value = undefined;
 
       const signInfo = ref();
-      signInfo.value = localStorage.getItem('signInfo') ? JSON.parse(localStorage.getItem('signInfo')) : undefined;
+      signInfo.value = localStorage.getItem('signature') ? localStorage.getItem('signature') : undefined;
 
       const JKTBalance = ref();
       JKTBalance.value = 'Loading...';
@@ -316,27 +316,30 @@
 
         const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
         USDTBalance.value = formatCurrency(new BigNumber(total).div(new BigNumber(exchangeOfUsdtToJkt)));
-        balance.value = 0;
-        // request.get('/getbalance', {
-        //   params: {
-        //     userid: userAddress.value,
-        //   },
-        // }).then((res) => {
-        //   if (res.code === 0) {
-        //     balance.value = res.result;
-        //   }
-        // }).catch((err) => {
-        //   console.error(err);
-        // });
+        request.get('/getbalance', {
+          params: {
+            userid: userAddress.value,
+          },
+        }).then((res) => {
+          if (res.code === 0) {
+            balance.value = res.result;
+          }
+        }).catch((err) => {
+          console.error(err);
+        });
       };
 
       const signIn = async () => {
+        let signObj = undefined;
         if (!signInfo.value) {
           loading.value = true;
-          signInfo.value = await Web3Provider.getInstance().getSignInfo();
+          signObj = await Web3Provider.getInstance().getSignInfo();
+          signInfo.value = signObj.signature;
+        } else {
+          signObj = await Web3Provider.getInstance().getSignInfo();
         }
         if (signInfo.value) {
-          await request.post('/login', signInfo.value).catch((err) => {
+          await request.post('/login', signObj).catch((err) => {
             Toast.fail('Login failed !!!');
           });
         } else {
@@ -367,7 +370,7 @@
       onMounted(async () => {
         userInfo.value = await Web3Provider.getInstance().getUserInfo();
         userAddress.value = await Web3Provider.getInstance().getAccountAddress();
-        // await getTransferAddress();
+        await getTransferAddress();
         await initData();
       });
 

@@ -16,7 +16,7 @@ function getURL() {
   });
 
   const domain = new URL(window.location.href).hostname;
-  return config[domain] || '';
+  return config[domain] || '/api';
 }
 
 export default { baseUrl: getURL() };

@@ -52,7 +52,7 @@
             <span class='farm-info-power'>GET {{ item.lpTokenInfo?.getPower || '------' }}% POWER</span>
             <van-button class='farm-btn-redeem' plain type='primary' :loading='false'
                         @click='handleRedeem(index)'
-                        :disabled='(item.lpTokenInfo?.stakedInfo[item.lpTokenInfo.stakedInfo.length -2]  || `0.00`) === `0.00`'>
+                        :disabled='(item.lpTokenInfo?.stakedInfo[0]  || `0.000`) === `0.000`'>
               Redeem
             </van-button>
             <van-button class='farm-btn-stake' type='danger' :loading='false'
@@ -203,13 +203,13 @@
           const lpInfo = await Web3Provider.getInstance().getStakePoolInfo(lpTokenAddress);
           const allowance = await Web3Provider.getInstance().checkAllowance(contract);
           const farmApy = new BigNumber(lpInfo.apy).div(new BigNumber(10).pow(JKT_DECIMAL)).times(100).toFixed(2);
-          const jktStaked = formatCurrency(new BigNumber(lpInfo.jktStaked).div(new BigNumber(10).pow(JKT_DECIMAL)));
-          const lpTokenStaked = formatCurrency(new BigNumber(lpInfo.lpTokenStaked).div(new BigNumber(10).pow(farmlist.value[i].decimal)));
+          const jktStaked = formatCurrency(new BigNumber(lpInfo.jktStaked).div(new BigNumber(10).pow(JKT_DECIMAL)), '', 3);
+          const lpTokenStaked = formatCurrency(new BigNumber(lpInfo.lpTokenStaked).div(new BigNumber(10).pow(farmlist.value[i].decimal)), '', 3);
           const power = new BigNumber(lpInfo.power).div(new BigNumber(10).pow(JKT_DECIMAL)).toFixed(2);
 
           const stakeInfoArray: any = [];
           if (farmlist.value[i].authTypes.length === 2) {
-            stakeInfoArray.push(lpTokenStaked, jktStaked, power);
+            stakeInfoArray.push(jktStaked, lpTokenStaked, power);
           } else {
             stakeInfoArray.push(lpTokenStaked, power);
           }

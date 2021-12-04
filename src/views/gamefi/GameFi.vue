@@ -5,12 +5,12 @@
           <span class='cell-icon'>
           <svg-icon style='width:24px; height: 24px' icon-class='clarity_coin-bag-solid'></svg-icon>
         </span>
-        <span class='earning-title'>GameFi Earning</span>
-        <span class='earning-subtitle'>0&nbsp;JKT</span>
+        <span class='earning-title'>GameFi Balance</span>
+        <span class='earning-subtitle'>{{balance}}&nbsp;JKT</span>
       </template>
       <template #value>
         <!-- <van-button round color='#CD2A16' hairline size='mini' class='earning-claimed'>To be claimed</van-button> -->
-        <div class='earning-claimed'><span >To be claimed</span></div>
+        <!-- <div class='earning-claimed'><span >To be claimed</span></div> -->
       </template>
     </van-cell>
   </van-cell-group>
@@ -41,21 +41,27 @@
     </div>
   </van-list>
   <note-popup :note-show='state.noteShow' :url='state.gameUrl' @noteClose='handleNoteClose'></note-popup>
+  <loading-overlay :show='loading'></loading-overlay>
 </template>
 
 <script lang='ts'>
 
-  import { defineComponent, reactive, ref } from 'vue';
+  import { defineComponent, reactive, ref, onMounted } from 'vue';
   import SvgIcon from '@/components/SvgIcon.vue';
   import NotePopup from '@/components/NotePopup.vue';
   import sweetChaseImage from '@/assets/images/gamefi/sweet-chase.png';
   import comingSoonImage1 from '@/assets/images/gamefi/coming-soon1.png';
   import comingSoonImage2 from '@/assets/images/gamefi/coming-soon2.png';
   import comingSoonImage3 from '@/assets/images/gamefi/coming-soon3.png';
-
+  import Web3Provider from '../../utils/Web3Provider';
+  import request from '@/utils/request';
+  import LoadingOverlay from '@/components/LoadingOverlay.vue';
+    import {
+    Toast,
+  } from 'vant';
   export default defineComponent({
     name: 'gameFi',
-    components: { SvgIcon, NotePopup },
+    components: { SvgIcon, NotePopup, LoadingOverlay },
     setup() {
       const state = reactive({
         listLoad: false,
@@ -107,6 +113,16 @@
           disabled: true,
         },
       ];
+      const userAddress = ref();
+      userAddress.value = '';
+      const signInfo = ref();
+      signInfo.value = localStorage.getItem('signature') ? localStorage.getItem('signature') : undefined;
+
+      const balanceNum = ref(0);
+      const balance = ref();
+      balance.value = 'Loading...';
+
+      const loading = ref(false);
 
       function toPlay(index: number) {
         state.noteShow = true;
@@ -117,7 +133,42 @@
         state.noteShow = false;
       }
 
-      return { state, list, toPlay, handleNoteClose };
+      const signIn = async () => {
+        let signObj;
+        if (!signInfo.value) {
+          loading.value = true;
+          signObj = await Web3Provider.getInstance().getSignInfo();
+          signInfo.value = signObj.signature;
+        } else {
+          signObj = await Web3Provider.getInstance().getSignInfo();
+        }
+        if (signInfo.value) {
+          await request.post('/login', signObj).catch((err) => {
+            Toast.fail('Login failed !!!');
+          });
+        } else {
+          Toast.fail('Please signin first !!!');
+        }
+        loading.value =  false;
+
+      };
+      onMounted(async () => {
+        userAddress.value = await Web3Provider.getInstance().getAccountAddress();
+        await signIn();
+        request.get('/getbalance', {
+          params: {
+            userid: userAddress.value,
+          },
+        }).then((res) => {
+          if (res['code'] === 0) {
+            balance.value = res['result'];
+          }
+        }).catch((err) => {
+          console.error(err);
+        });
+      });
+
+      return { state, list, toPlay, handleNoteClose, balance };
     },
   });
 </script>

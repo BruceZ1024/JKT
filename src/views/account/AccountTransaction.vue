@@ -20,7 +20,7 @@
   </van-cell>
   <van-tabs v-model:active="activeName">
     <van-tab title="Withdraw" name="Withdraw">
-      <van-list v-model:loading="withdrawLoading" :finished="withdrawFinished" finished-text="No more"
+      <van-list v-model:loading="withdrawLoading" :finished="withdrawFinished" finished-text="No more" loading-text="Loading..."
                 @load="withdrawOnLoad">
         <van-cell-group v-for="item in withdrawLogs" :key="item.ID" inset class="van-cell-group-margin">
           <van-cell class="padding-bottom-0" center :title="'+ '+item.amount" :label="item.tx_id">
@@ -44,7 +44,7 @@
       </van-list>
     </van-tab>
     <van-tab title="Deposit" name="Deposit">
-      <van-list v-model:loading="depositLoading" :finished="depositFinished" finished-text="No more"
+      <van-list v-model:loading="depositLoading" :finished="depositFinished" finished-text="No more" loading-text="Loading..."
                 @load="depositOnLoad">
         <van-cell-group v-for="item in depositLogs" :key="item.ID" inset class="van-cell-group-margin">
           <van-cell class="padding-bottom-0" center :title="'+ '+item.amount" :label="item.tx_hash">

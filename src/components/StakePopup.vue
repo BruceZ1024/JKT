@@ -214,7 +214,9 @@
         const inputNum = new BigNumber(state.inputValue || 0).times(new BigNumber(10).pow(state.decimal));
         if (props.lpTokenList) {
           const valueB = await Web3Provider.getInstance().transferLpTokenToJKT(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, state.ratio);
-          state.inputBValue = (new BigNumber(valueB).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
+          
+          state.inputBValue = (new BigNumber(valueB).div(new BigNumber(10).pow(JKT_DECIMAL))).toFixed(4);
+          // state.inputBValue = (new BigNumber(valueB).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
           if (Number(state.inputBValue) > Number(state.jktBalanceNum)) {
             Toast.fail('You do not have enough JKT balance!');
             state.inputValue = undefined;
@@ -227,14 +229,17 @@
       async function getAPY() {
         const lpScale = await Web3Provider.getInstance().getHashRate(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, state.ratio);
         const apy = await Web3Provider.getInstance().getApyForStake(lpScale);
-        state.apy = new BigNumber(apy).div(new BigNumber(10).pow(state.decimal)).times(100).toFixed(0);
+        state.apy = new BigNumber(apy).div(new BigNumber(10).pow(JKT_DECIMAL)).times(100).toFixed(0);
+        // state.apy = new BigNumber(apy).div(new BigNumber(10).pow(state.decimal)).times(100).toFixed(0);
       }
 
       async function getComputingPower() {
         const inputNum = new BigNumber(state.inputValue || 0).times(new BigNumber(10).pow(state.decimal));
         if (props.lpTokenList) {
-          const powerNum = await Web3Provider.getInstance().getComputingPower(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, state.ratio);
-          state.power = (new BigNumber(powerNum).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
+          let ratio = props.lpTokenList[0].authTypes.length === 1 ? 100 : state.ratio;
+          const powerNum = await Web3Provider.getInstance().getComputingPower(props.lpTokenList[0].lpTokenInfo.lpTokenAddress, inputNum, ratio);
+          state.power = (new BigNumber(powerNum).div(new BigNumber(10).pow(JKT_DECIMAL))).toFixed(4);
+          // state.power = (new BigNumber(powerNum).div(new BigNumber(10).pow(state.decimal))).toFixed(4);
         }
       }
 

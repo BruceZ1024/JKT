@@ -4,6 +4,8 @@ import {
   JKT_TOKEN_ADDRESS,
   USDT_TOKEN_ADDRESS,
   USDT_LP_TOKEN_ADDRESS,
+  BTC_TOKEN_ADDRESS,
+  ETH_TOKEN_ADDRESS
 } from './address/tokenAddress';
 
 
@@ -26,18 +28,15 @@ const farmConfig = {
       ],
     },
     {
-      'farmSymbol': 'JKT-BIT',
-      'farmIcon': 'BIT',
-      'authTypes': ['BIT', 'JKT'],
-      'lpToken': BIT_TOKEN_ADDRESS,
+      'farmSymbol': 'JKT-USDT(LP)',
+      'farmIcon': 'USDT-LP',
+      'authTypes': ['JKT-USDT(LP)'],
+      'lpToken': USDT_LP_TOKEN_ADDRESS,
       'decimal': 18,
       'stakeList': [
         {
-          'title': 'JKT Staked:',
+          'title': 'LP Staked:',
           'description': 'Rewards in JKT',
-        },
-        {
-          'title': 'BIT Staked:',
         },
         {
           'title': 'Power:',
@@ -64,15 +63,18 @@ const farmConfig = {
       ],
     },
     {
-      'farmSymbol': 'JKT-USDT(LP)',
-      'farmIcon': 'USDT-LP',
-      'authTypes': ['JKT-USDT(LP)'],
-      'lpToken': USDT_LP_TOKEN_ADDRESS,
-      'decimal': 18,
+      'farmSymbol': 'JKT-BIT',
+      'farmIcon': 'BIT',
+      'authTypes': ['BIT', 'JKT'],
+      'lpToken': BIT_TOKEN_ADDRESS,
+      'decimal': 9,
       'stakeList': [
         {
-          'title': 'LP Staked:',
+          'title': 'JKT Staked:',
           'description': 'Rewards in JKT',
+        },
+        {
+          'title': 'BIT Staked:',
         },
         {
           'title': 'Power:',
@@ -98,6 +100,44 @@ const farmConfig = {
         },
       ],
     },
+    // {
+    //   'farmSymbol': 'JKT-BTC',
+    //   'farmIcon': 'BTC',
+    //   'authTypes': ['BTC', 'JKT'],
+    //   'lpToken': BTC_TOKEN_ADDRESS,
+    //   'decimal': 18,
+    //   'stakeList': [
+    //     {
+    //       'title': 'JKT Staked:',
+    //       'description': 'Rewards in JKT',
+    //     },
+    //     {
+    //       'title': 'BTC Staked:',
+    //     },
+    //     {
+    //       'title': 'Power:',
+    //     },
+    //   ],
+    // },
+    // {
+    //   'farmSymbol': 'JKT-ETH',
+    //   'farmIcon': 'ETH',
+    //   'authTypes': ['ETH', 'JKT'],
+    //   'lpToken': ETH_TOKEN_ADDRESS,
+    //   'decimal': 18,
+    //   'stakeList': [
+    //     {
+    //       'title': 'JKT Staked:',
+    //       'description': 'Rewards in JKT',
+    //     },
+    //     {
+    //       'title': 'ETH Staked:',
+    //     },
+    //     {
+    //       'title': 'Power:',
+    //     },
+    //   ],
+    // },
   ],
 };
 

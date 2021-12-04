@@ -657,14 +657,18 @@ export default class Web3Provider {
     public async getSignInfo() {
       try {
         await this.prepareConnectWallet();
-        const signText = 'login@' + new Date().getTime();
-        const signature  = await this.provider.request({method:"personal_sign", params:[this.currentAccount, signText]});
+        localStorage.removeItem('signInfo');
+        const expiration = new Date((new Date().getTime() + 0.5*60*60*1000)).toISOString();
+        const signText = `JokerManor Login
+                          Address: ${this.currentAccount}
+                          Expiration: ${expiration}`;
+        const signature  = localStorage.getItem('signature') ? localStorage.getItem('signature') : await this.provider.request({method:"personal_sign", params:[this.currentAccount, signText]});
         const retObj = {signText, signature};
         // console.info(`signature: ${signature}`);
-        localStorage.setItem('signInfo', JSON.stringify(retObj));
+        localStorage.setItem('signature', signature);
         return retObj
       } catch (error) {
-        localStorage.removeItem('signInfo');
+        localStorage.removeItem('signature');
         return undefined;
       }
     }
