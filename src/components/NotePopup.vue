@@ -46,7 +46,9 @@ export default defineComponent({
     }
 
     function handleConfirm(url: string) {
-      window.location.href = url;
+      handleClose();
+      // window.location.href = url;
+      window.open(url);
     }
 
     watchEffect(() => {

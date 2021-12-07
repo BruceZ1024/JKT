@@ -210,9 +210,6 @@
       const transferAddress = ref();
       transferAddress.value = undefined;
 
-      const signInfo = ref();
-      signInfo.value = localStorage.getItem('signature') ? localStorage.getItem('signature') : undefined;
-
       const JKTBalance = ref();
       JKTBalance.value = 'Loading...';
       const USDTBalance = ref();
@@ -277,7 +274,7 @@
           Toast.fail('Input number should less than balance and bigger than 0!');
           return;
         }
-        if (balance.value === '0') {
+        if (balance.value === '0' || balance.value === 'Loading...') {
           Toast.fail('No balance to withdraw!');
           return;
         }
@@ -285,12 +282,10 @@
         if (transferAddress.value && ammount > 0) {
           loading.value = true;
           await request.post('/withdraw', {
-            data: {
               address: userAddress.value,
               from_address: transferAddress.value,
-              amount: amountWithdraw,
-            },
-          }).then((res) => {
+              amount: amountWithdraw.value,
+            }).then((res) => {
             if (res.code === 0 || res === 'OK') {
               //Toast.success(res.result);
               Toast.success('The process will take 3~5 minutes, please check later');
@@ -298,10 +293,15 @@
             }
             showWithdraw.value = false;
             loading.value = false;
-          }).catch((err) => {
-            showWithdraw.value = false;
-            loading.value = false;
-            Toast.fail('Withdraw failed !!!');
+          }).catch(async (err) => {
+            if(err.response && err.response.status === 403){
+              await signIn(handleWithdraw);
+            } else {
+              showWithdraw.value = false;
+              loading.value = false;
+              Toast.fail('Withdraw failed');
+            }
+            
           });
           ;
         }
@@ -316,41 +316,50 @@
 
         const exchangeOfUsdtToJkt = await Web3Provider.getInstance().getExchangeOfUsdtToJkt();
         USDTBalance.value = formatCurrency(new BigNumber(total).div(new BigNumber(exchangeOfUsdtToJkt)));
+        getbalance();
+      };
+
+      const signIn = async (callBackFunc) => {
+        console.log(callBackFunc)
+        loading.value =  true;
+        const signObj = await Web3Provider.getInstance().getSignInfo();
+        if(signObj){
+          await request.post('/login', signObj).then(res => {
+            if(callBackFunc){
+              callBackFunc();
+            }
+          }).catch((err) => {
+            Toast.fail('Login failed');
+            loading.value =  false;
+          });
+        } else {
+          Toast.fail('Login failed');
+        }
+        
+        loading.value =  false;
+
+      };
+
+      const getbalance = async () => {
         request.get('/getbalance', {
           params: {
             userid: userAddress.value,
           },
         }).then((res) => {
-          if (res.code === 0) {
-            balance.value = res.result;
+          if (res['code'] === 0) {
+            balance.value = res['result'];
           }
-        }).catch((err) => {
-          console.error(err);
+        }).catch(async (err) => {
+          if(err.response && err.response.status === 403){
+            await signIn(getbalance);
+          } else {
+            console.error(err);
+          }
+          
         });
       };
 
-      const signIn = async () => {
-        let signObj = undefined;
-        if (!signInfo.value) {
-          loading.value = true;
-          signObj = await Web3Provider.getInstance().getSignInfo();
-          signInfo.value = signObj.signature;
-        } else {
-          signObj = await Web3Provider.getInstance().getSignInfo();
-        }
-        if (signInfo.value) {
-          await request.post('/login', signObj).catch((err) => {
-            Toast.fail('Login failed !!!');
-          });
-        } else {
-          Toast.fail('Please signin first !!!');
-        }
-        loading.value =  false;
-
-      };
-
       const getTransferAddress = async () => {
-        await signIn();
         if (!transferAddress.value) {
           await request.get('/getaddress', {
             params: {
@@ -360,8 +369,12 @@
             if (res.code === 0) {
               transferAddress.value = res.result;
             }
-          }).catch((err) => {
-            console.error(err);
+          }).catch(async (err) => {
+            if(err.response && err.response.status === 403){
+              await signIn(getTransferAddress);
+            } else {
+              console.error(err);
+            }
           });
         }
 
@@ -370,6 +383,7 @@
       onMounted(async () => {
         userInfo.value = await Web3Provider.getInstance().getUserInfo();
         userAddress.value = await Web3Provider.getInstance().getAccountAddress();
+        //await signIn(undefined);
         await getTransferAddress();
         await initData();
       });

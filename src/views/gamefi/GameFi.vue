@@ -76,11 +76,11 @@
           picUrl: sweetChaseImage,
           gameName: 'Sweet Chase',
           power: '100%',
-          gameUrl: 'https://www.jokerfi.com/pumpingpig/',
+          gameUrl: '/games/sweetchase',
           tags: [
             'NFT', 'Adventurer', 'Sweet',
           ],
-          disabled: true,
+          disabled: false,
         },
         {
           picUrl: comingSoonImage1,
@@ -115,8 +115,6 @@
       ];
       const userAddress = ref();
       userAddress.value = '';
-      const signInfo = ref();
-      signInfo.value = localStorage.getItem('signature') ? localStorage.getItem('signature') : undefined;
 
       const balanceNum = ref(0);
       const balance = ref();
@@ -133,28 +131,26 @@
         state.noteShow = false;
       }
 
-      const signIn = async () => {
-        let signObj;
-        if (!signInfo.value) {
-          loading.value = true;
-          signObj = await Web3Provider.getInstance().getSignInfo();
-          signInfo.value = signObj.signature;
-        } else {
-          signObj = await Web3Provider.getInstance().getSignInfo();
-        }
-        if (signInfo.value) {
-          await request.post('/login', signObj).catch((err) => {
-            Toast.fail('Login failed !!!');
+      const signIn = async (callBackFunc) => {
+        loading.value =  true;
+        const signObj = await Web3Provider.getInstance().getSignInfo();
+        if(signObj){
+          await request.post('/login', signObj).then(res => {
+            if(callBackFunc){
+              callBackFunc();
+            }
+          }).catch((err) => {
+            Toast.fail('Login failed');
+            loading.value =  false;
           });
         } else {
-          Toast.fail('Please signin first !!!');
+          Toast.fail('Login failed');
         }
         loading.value =  false;
 
       };
-      onMounted(async () => {
-        userAddress.value = await Web3Provider.getInstance().getAccountAddress();
-        await signIn();
+
+      const getbalance = async () => {
         request.get('/getbalance', {
           params: {
             userid: userAddress.value,
@@ -163,9 +159,19 @@
           if (res['code'] === 0) {
             balance.value = res['result'];
           }
-        }).catch((err) => {
-          console.error(err);
+        }).catch(async (err) => {
+          if(err.response && err.response.status === 403){
+            await signIn(getbalance);
+          } else {
+            console.error(err);
+          }
+          
         });
+      };
+      onMounted(async () => {
+        userAddress.value = await Web3Provider.getInstance().getAccountAddress();
+        //await signIn();
+        await getbalance();
       });
 
       return { state, list, toPlay, handleNoteClose, balance };
