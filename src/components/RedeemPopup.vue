@@ -35,9 +35,10 @@
       </van-tag>
     </div>
     <div class='pop-intro'>
-      Direct JKT redemption charges {{ farmData.lpTokenInfo.serviceCharge }}% if you pledged within 7 days, and
-      it
-      will turn to 1% after 7 days.
+      Direct JKT redemption charges 5% if you pledged within 7 days, and it will turn to 1% after 7 days.
+    </div>
+    <div class='pop-intro'>
+      Current charge: {{ farmData.lpTokenInfo.serviceCharge }}%
     </div>
     <div class='pop-btns'>
       <van-button class='button cancel-btn' type='default' :loading='false' @click='onRedeemCancel'>
