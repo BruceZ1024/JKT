@@ -56,7 +56,7 @@
               Redeem
             </van-button>
             <van-button class='farm-btn-stake' type='danger' :loading='false'
-                        @click='handleStake(index)'>
+                        @click='handleStake(index)' :disabled='true'>
               Stake
             </van-button>
           </van-row>
@@ -307,10 +307,10 @@
       margin-top: 30px;
       padding-left: 8px;
       padding-right: 8px;
-      border-style:solid;
+      border-style: solid;
       border-width: 1px;
       border-color: #FFFFFF;
-      border-radius: 10px ;
+      border-radius: 10px;
     }
   }
 
