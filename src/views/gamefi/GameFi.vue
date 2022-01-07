@@ -50,9 +50,8 @@
   import SvgIcon from '@/components/SvgIcon.vue';
   import NotePopup from '@/components/NotePopup.vue';
   import sweetChaseImage from '@/assets/images/gamefi/sweet-chase.png';
-  import comingSoonImage1 from '@/assets/images/gamefi/coming-soon1.png';
-  import comingSoonImage2 from '@/assets/images/gamefi/coming-soon2.png';
-  import comingSoonImage3 from '@/assets/images/gamefi/coming-soon3.png';
+  import throneImage from '@/assets/images/gamefi/throne.png';
+  import getMeHighImage from '@/assets/images/gamefi/get-me-high.png';
   import Web3Provider from '../../utils/Web3Provider';
   import request from '@/utils/request';
   import LoadingOverlay from '@/components/LoadingOverlay.vue';
@@ -73,6 +72,16 @@
       const list = ref();
       list.value = [
         {
+          picUrl: throneImage,
+          gameName: 'Throne',
+          power: '100%',
+          gameUrl: 'https://tt.mfofo.com/games/ThrOne',
+          tags: [
+            'MOBA', 'Metaverse', 'WAR',
+          ],
+          disabled: false,
+        },
+        {
           picUrl: sweetChaseImage,
           gameName: 'Sweet Chase',
           power: '100%',
@@ -83,32 +92,12 @@
           disabled: false,
         },
         {
-          picUrl: comingSoonImage1,
+          picUrl: getMeHighImage,
           gameName: 'Coming Soon',
           power: '100%',
           gameUrl: '',
           tags: [
-            'NFT', 'Metaverse', 'SSR Card',
-          ],
-          disabled: true,
-        },
-        {
-          picUrl: comingSoonImage2,
-          gameName: 'Coming Soon',
-          power: '100%',
-          gameUrl: '',
-          tags: [
-            'NFT', 'WAR', 'SSR Card',
-          ],
-          disabled: true,
-        },
-        {
-          picUrl: comingSoonImage3,
-          gameName: 'Coming Soon',
-          power: '100%',
-          gameUrl: '',
-          tags: [
-            'NFT', 'RBG', 'SSR Card',
+            'NFT', 'CASUAL', 'PUZZLE',
           ],
           disabled: true,
         },

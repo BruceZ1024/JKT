@@ -74,22 +74,22 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-  {
-    path: '/deFi',
-    name: 'deFi',
-    component: Layout,
-    children: [
-      {
-        path: '/deFi',
-        name: 'deFi',
-        meta: {
-          title: 'DeFi',
-          keepAlive: false,
-        },
-        component: () => import('@/views/defi/DeFi.vue'),
-      },
-    ],
-  },
+  // {
+  //   path: '/deFi',
+  //   name: 'deFi',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: '/deFi',
+  //       name: 'deFi',
+  //       meta: {
+  //         title: 'DeFi',
+  //         keepAlive: false,
+  //       },
+  //       component: () => import('@/views/defi/DeFi.vue'),
+  //     },
+  //   ],
+  // },
   {
     path: '/account',
     name: 'account',

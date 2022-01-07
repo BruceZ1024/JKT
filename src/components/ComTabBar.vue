@@ -43,12 +43,12 @@
           active: gamefiActive,
           inactive: gamefiInactive,
         },
-        {
-          title: 'DeFi',
-          path: '/deFi',
-          active: defiIActive,
-          inactive: defiInactive,
-        },
+        // {
+        //   title: 'DeFi',
+        //   path: '/deFi',
+        //   active: defiIActive,
+        //   inactive: defiInactive,
+        // },
         {
           title: 'Account',
           path: '/account',
